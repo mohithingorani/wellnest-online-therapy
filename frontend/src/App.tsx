@@ -1,5 +1,6 @@
 import NavBar from "./components/NavBar";
 import SecureButton from "./components/SecureButton";
+import SupportBox from "./components/SupportBox";
 import Tag from "./components/Tag";
 import { tagsData } from "./data";
 
@@ -13,13 +14,13 @@ export default function LandingPage() {
         <NavBar />
       </nav>
 
-      <main className="px-28">
+      <main className="px-16 xl:px-28">
         <SecureButton />
 
         <section className="flex mt-6 justify-between">
           <div className=" flex-1">
             {/* HEADING  */}
-            <div className="font-playfair text-7xl flex flex-col gap-2">
+            <div className="font-playfair text-6xl 2xl:text-7xl flex flex-col gap-2">
               <div className="text-[#0D393E] font-medium">
                 You don't have to
               </div>
@@ -28,7 +29,7 @@ export default function LandingPage() {
             </div>
 
             {/* SUBTEXT */}
-            <div className="font-nunito text-2xl mt-6 text-[#3E464E]">
+            <div className="font-nunito text-xl 2xl:text-2xl mt-6 text-[#3E464E]">
               <div>Thoughtful, personalised therapy that</div>
               <div>fits your life. Anytime, anywhere.</div>
             </div>
@@ -38,7 +39,7 @@ export default function LandingPage() {
               <ExploreResourcesButton />
             </div>
 
-            <div className="mt-8 flex gap-4">
+            <div className="mt-8 flex gap-2 xl:gap-4">
               {tagsData.map((tag) => (
                 <Tag
                   color={tag.color}
@@ -53,13 +54,13 @@ export default function LandingPage() {
           <div className="flex-1 relative">
             <img src="/image.png" alt="image" className="w-full"/>
             <img src="/petal.svg" alt="petal" className="absolute top-5 left-10" />
-            <img src="/leaves.svg" alt="petal" className="absolute  bottom-20 -left-20" />
-            <div className="absolute shadow-sm bottom-8 left-10 text-xl font-bold w-48 text-[#1A555B] p-4 rounded-xl font-nunito bg-[#F5F1ED]">
+            <img src="/leaves.svg" alt="leaf" className="hidden 2xl:inline-block absolute  bottom-20 -left-20" />
+            <div className="hidden 2xl:inline-block absolute shadow-sm bottom-8 left-10 text-xl font-bold w-48 text-[#1A555B] p-4 rounded-xl font-nunito bg-[#F5F1ED]">
               A safe space to be heard.
 
             </div>
 
-             <div className="absolute shadow-sm top-50 right-5 text-xl w-52 h-72 p-4 rounded-xl font-nunito bg-[#F5F1ED]">
+             <div className="hidden 2xl:inline-block absolute shadow-sm top-50 right-5 text-xl w-52 h-72 p-4 rounded-xl font-nunito bg-[#F5F1ED]">
               <div className="relative w-full h-full">
                 <div className="w-15 h-15 flex justify-center p-4 bg-[#417C7E] rounded-full">
                 <img src="/heart.svg" alt="heart" />
@@ -77,6 +78,11 @@ export default function LandingPage() {
 
           </div>
         </section>
+
+        <div className="mt-8 w-full rounded-3xl  p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
+          <SupportBox/>
+        </div>
+
       </main>
     </>
   );
@@ -84,7 +90,7 @@ export default function LandingPage() {
 
 
 
-const base = "w-48 rounded-full border font-nunito h-12 border-[#0D393E]";
+const base = "w-42 2xl:w-48 rounded-full border font-nunito h-12 border-[#0D393E]";
 
 function FindTherapistButton() {
   return (
