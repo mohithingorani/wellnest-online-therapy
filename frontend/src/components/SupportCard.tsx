@@ -12,15 +12,15 @@ export default function SupportCard({
   className: string;
 }) {
   return (
-    <div className="flex w-44 flex-col items-center text-center gap-2">
+    <div className="flex w-full md:w-44 md:flex-col gap-4 md:items-center md:text-center lg:gap-2">
       
       {/* ICON */}
       <div className={`w-17.5 h-17.5 rounded-full ${className} flex items-center justify-center`}>
         <img src={`/support/${image}.svg`} alt={heading} className="w-6 h-6" />
       </div>
-
+<div>
       {/* NUMBER */}
-      <div className="font-semibold text-xl">
+      <div className="hidden md:inline-block font-semibold text-xl">
         {number}
       </div>
 
@@ -32,6 +32,7 @@ export default function SupportCard({
       {/* SUBTEXT */}
       <div className="text-xs text-[#3A5F63] leading-relaxed max-w-40">
         {subtext}
+      </div>
       </div>
     </div>
   );

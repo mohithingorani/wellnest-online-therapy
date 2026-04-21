@@ -2,7 +2,7 @@ import SupportCard from "./SupportCard";
 
 export default function SupportBox() {
   return (
-    <div className="text-[#0D393E] font-nunito flex gap-16">
+    <div className="text-[#0D393E] font-nunito flex flex-col lg:flex-row xl:gap-16">
       
       {/* LEFT */}
       <div className="flex flex-col gap-4 max-w-60">
@@ -10,7 +10,7 @@ export default function SupportBox() {
           HOW IT WORKS
         </div>
 
-        <div className="font-playfair font-semibold text-3xl leading-snug">
+        <div className="font-playfair font-semibold text-xl lg:text-3xl leading-snug">
           Support, made simple
         </div>
 
@@ -20,7 +20,7 @@ export default function SupportBox() {
       </div>
 
       {/* RIGHT */}
-      <div className="flex flex-1 items-center justify-between border-l-3 border-[#CDD7D9] pl-12">
+      <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center justify-between lg:border-l-3 border-[#CDD7D9] p-6 md:p-2 xl:pl-12">
         <SupportCard
           className="bg-[#235C61]"
           image="person"

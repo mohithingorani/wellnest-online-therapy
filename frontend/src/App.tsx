@@ -9,18 +9,18 @@ import { tagsData } from "./data";
 export default function LandingPage() {
 
   return (
-    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF]">
+    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] py-4">
       <nav>
         <NavBar />
       </nav>
 
-      <main className="px-8 lg:px-18 xl:px-16 2xl:px-24">
+      <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24">
         <SecureButton />
 
         <section className="flex mt-6 justify-between">
-          <div className=" flex-1">
+          <div className=" flex-1 ">
             {/* HEADING  */}
-            <div className="font-playfair text-6xl xl:text-7xl flex flex-col gap-2">
+            <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2">
               <div className="text-[#0D393E] font-medium">
                 You don't have to
               </div>
@@ -29,17 +29,16 @@ export default function LandingPage() {
             </div>
 
             {/* SUBTEXT */}
-            <div className="font-nunito text-xl 2xl:text-2xl mt-6 text-[#3E464E]">
+            <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E]">
               <div>Thoughtful, personalised therapy that</div>
               <div>fits your life. Anytime, anywhere.</div>
             </div>
 
-            <div className="flex mt-6 gap-12">
+            <div className="flex justify-center md:justify-start mt-6 gap-6 lg:gap-12">
               <FindTherapistButton />
               <ExploreResourcesButton />
             </div>
-
-            <div className="mt-8 w-fit lg:h-18 2xl:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="mt-8 w-fit lg:h-18 2xl:mt-16 grid sm:grid-cols-3 gap-3">
               {tagsData.map((tag) => (
                 <Tag
                   color={tag.color}
@@ -79,7 +78,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <div className="mt-4 w-full rounded-3xl  p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
+        <div className="mt-8 w-full rounded-3xl p-4 lg:p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
           <SupportBox/>
         </div>
 
@@ -90,7 +89,7 @@ export default function LandingPage() {
 
 
 
-const base = "w-42 2xl:w-48 rounded-full border font-nunito h-12 border-[#0D393E]";
+const base = " w-38 md:w-42 2xl:w-48 rounded-full border font-nunito h-8 md:h-12 border-[#0D393E] text-sm";
 
 function FindTherapistButton() {
   return (
