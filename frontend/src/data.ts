@@ -1,0 +1,26 @@
+export const tagsData = [
+  {
+    color: "F9CBB2",
+    logo: "lock",
+    heading: "100% Confidential",
+    text: "Yours privacy is ours top priority.",
+  },
+  {
+    color: "C3E0DC",
+    logo: "shield",
+    heading: "Verified Therapist",
+    text: "Licensed professionals you can trust.",
+  },
+  {
+    color: "C8E1EA",
+    logo: "camera",
+    heading: "Flexible Sessions",
+    text: "Video, chat, or in-person you choose.",
+  },
+];
+
+export const colorMap : Record<string,string> = {
+  F9CBB2: "bg-[#F9CBB2]",
+  C3E0DC: "bg-[#C3E0DC]",
+  C8E1EA: "bg-[#C8E1EA]",
+};

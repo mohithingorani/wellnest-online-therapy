@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+}
+
+@theme {
+  --font-nunito:"Nunito",sans-serif;
+  --font-playfair:"Playfair Display", serif;
+}
