@@ -12,18 +12,33 @@ export default function Tag({
   logo: string;
 }) {
   return (
-    <div className="flex gap-3 w-fit font-nunito h-12  2xl:h-16">
+    <div className="flex gap-2  2xl:gap-4 w-fit items-center font-nunito">
+      
+      {/* Icon */}
       <div
-        className={`${colorMap[color]} rounded-full w-12 h-12 2xl:w-16 2xl:h-16 flex justify-center items-center`}
+        className={`${colorMap[color]} 
+        rounded-full 
+        w-full
+        h-full
+        max-w-12 max-h-12 
+        lg:max-w-12 lg:max-h-12 
+        2xl:max-w-16 2xl:max-h-16 
+        flex justify-center items-center`}
       >
-        <img src={`/tags/${logo}.svg`} alt="lock" />
+        <img
+          className=" sm:w-6 sm:h-6  lg:w-6 lg:h-6"
+          src={`/tags/${logo}.svg`}
+          alt={logo}
+        />
       </div>
 
-      <div className="text-xs 2xl:text-sm w-40 font-bold">
-        <div className=" text-[#3D4D55]">{heading}</div>
-        <div className="text-[#8E9193]">{text}</div>
+      {/* Text */}
+      <div className="text-sm sm:text-xs  w-full sm:w-40 font-bold">
+        <div className="text-[#3D4D55]">{heading}</div>
+        <div className="text-[#8E9193] font-medium">
+          {text}
+        </div>
       </div>
     </div>
   );
 }
-

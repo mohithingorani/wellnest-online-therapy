@@ -9,18 +9,18 @@ import { tagsData } from "./data";
 export default function LandingPage() {
 
   return (
-    <>
+    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF]">
       <nav>
         <NavBar />
       </nav>
 
-      <main className="px-16 xl:px-28">
+      <main className="px-8 lg:px-18 xl:px-16 2xl:px-24">
         <SecureButton />
 
         <section className="flex mt-6 justify-between">
           <div className=" flex-1">
             {/* HEADING  */}
-            <div className="font-playfair text-6xl 2xl:text-7xl flex flex-col gap-2">
+            <div className="font-playfair text-6xl xl:text-7xl flex flex-col gap-2">
               <div className="text-[#0D393E] font-medium">
                 You don't have to
               </div>
@@ -39,7 +39,7 @@ export default function LandingPage() {
               <ExploreResourcesButton />
             </div>
 
-            <div className="mt-8 2xl:mt-16 flex gap-2 xl:gap-4">
+            <div className="mt-8 w-fit 2xl:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {tagsData.map((tag) => (
                 <Tag
                   color={tag.color}
@@ -51,21 +51,21 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="flex-1 relative">
+          <div className="hidden xl:inline-block flex-1 relative">
             <img src="/image.png" alt="image" className="w-full"/>
             <img src="/petal.svg" alt="petal" className="absolute top-5 left-10" />
-            <img src="/leaves.svg" alt="leaf" className="hidden 2xl:inline-block absolute  bottom-20 -left-20" />
-            <div className="hidden 2xl:inline-block absolute shadow-sm bottom-8 left-10 text-xl font-bold w-48 text-[#1A555B] p-4 rounded-xl font-nunito bg-[#F5F1ED]">
+            <img src="/leaves.svg" alt="leaf" className=" absolute  bottom-20 -left-20" />
+            <div className="absolute shadow-sm bottom-8 left-10 2xl:text-xl font-bold w-48 text-[#1A555B] p-4 rounded-xl font-nunito bg-[#F5F1ED]">
               A safe space to be heard.
 
             </div>
 
-             <div className="hidden 2xl:inline-block absolute shadow-sm top-50 right-5 text-xl w-52 h-72 p-4 rounded-xl font-nunito bg-[#F5F1ED]">
+             <div className="absolute shadow-sm top-50 right-5 2xl:text-xl w-38 h-60 2xl:w-52 2xl:h-72 p-4 rounded-xl font-nunito bg-[#F5F1ED]">
               <div className="relative w-full h-full">
-                <div className="w-15 h-15 flex justify-center p-4 bg-[#417C7E] rounded-full">
+                <div className="w-12 h-12 2xl:w-15 2xl:h-15 flex justify-center p-4 bg-[#417C7E] rounded-full">
                 <img src="/heart.svg" alt="heart" />
                 </div>
-                <div className="mt-2 font-bold text-[#1A555B] ">
+                <div className=" mt-2 font-bold text-[#1A555B] ">
                   It’s okay to not be okay.
                 </div>
                 <div className="text-sm font-medium mt-2 text-[#868B8F]">
@@ -84,7 +84,7 @@ export default function LandingPage() {
         </div>
 
       </main>
-    </>
+    </div>
   );
 }
 
