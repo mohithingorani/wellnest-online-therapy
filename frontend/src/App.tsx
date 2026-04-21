@@ -39,7 +39,7 @@ export default function LandingPage() {
               <ExploreResourcesButton />
             </div>
 
-            <div className="mt-8 flex gap-2 xl:gap-4">
+            <div className="mt-8 2xl:mt-16 flex gap-2 xl:gap-4">
               {tagsData.map((tag) => (
                 <Tag
                   color={tag.color}
