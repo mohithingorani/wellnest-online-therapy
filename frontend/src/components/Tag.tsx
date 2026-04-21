@@ -12,9 +12,9 @@ export default function Tag({
   logo: string;
 }) {
   return (
-    <div className="flex gap-3 w-fit font-nunito  h-14">
+    <div className="flex gap-3 w-fit font-nunito  h-16">
       <div
-        className={`${colorMap[color]} rounded-full w-14 h-14 flex justify-center items-center`}
+        className={`${colorMap[color]} rounded-full w-16 h-16 flex justify-center items-center`}
       >
         <img src={`/tags/${logo}.svg`} alt="lock" />
       </div>

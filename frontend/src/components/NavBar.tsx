@@ -1,14 +1,20 @@
 export default function NavBar(){
-    return <div className="flex justify-between items-center py-6 px-16 ">
+    return <div className="flex justify-between  items-center py-6 px-16 ">
         
-        {/* LOGO */}
-        <div className="flex items-center gap-3">
+      
+      <div className="md:hidden">
+        <img className="" src="/burger.svg" alt="menu"/>
+      </div> 
+
+  {/* LOGO */}
+        <div className="flex  items-center gap-3">
             <img src="/logos/wellnest.svg" alt="wellest logo"/>
-            <div className="font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
+            <div className="hidden md:inline-block font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
         </div>
 
+ 
         {/* ROUTES */}
-        <div className=" font-nunito text-[#63676A] font-bold text-base flex justify-center gap-16">
+        <div className=" font-nunito  text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6  xl:gap-12">
             <div>Therapy</div>
             <div>How it Works</div>
             <div>Therapists</div>
@@ -17,7 +23,7 @@ export default function NavBar(){
         </div>
 
         {/* BUTTONS */}
-        <div className="flex justify-between gap-4 ">
+        <div className="hidden  xl:flex  justify-between gap-4 ">
             <LoginButton/>
             <SignUpButton/>
         </div>
