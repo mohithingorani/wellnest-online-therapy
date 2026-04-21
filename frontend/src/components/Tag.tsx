@@ -12,15 +12,14 @@ export default function Tag({
   logo: string;
 }) {
   return (
-    <div className="flex gap-2  2xl:gap-4 w-fit items-center font-nunito">
+    <div className="flex h-full gap-2  2xl:gap-4 w-fit items-center font-nunito">
       
       {/* Icon */}
       <div
         className={`${colorMap[color]} 
         rounded-full 
-        w-full
-        h-full
-        max-w-12 max-h-12 
+        w-full h-full
+        max-w-12 max-h-12
         lg:max-w-12 lg:max-h-12 
         2xl:max-w-16 2xl:max-h-16 
         flex justify-center items-center`}

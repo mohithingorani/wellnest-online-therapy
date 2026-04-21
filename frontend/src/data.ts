@@ -9,7 +9,7 @@ export const tagsData = [
     color: "C3E0DC",
     logo: "shield",
     heading: "Verified Therapist",
-    text: "Licensed professionals you can trust.",
+    text: "Licensed therapists you can trust.",
   },
   {
     color: "C8E1EA",

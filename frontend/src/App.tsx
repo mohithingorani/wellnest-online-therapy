@@ -39,7 +39,7 @@ export default function LandingPage() {
               <ExploreResourcesButton />
             </div>
 
-            <div className="mt-8 w-fit 2xl:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="mt-8 w-fit lg:h-18 2xl:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {tagsData.map((tag) => (
                 <Tag
                   color={tag.color}
@@ -79,7 +79,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <div className="mt-8 w-full rounded-3xl  p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
+        <div className="mt-4 w-full rounded-3xl  p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
           <SupportBox/>
         </div>
 
