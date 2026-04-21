@@ -20,7 +20,7 @@ export default function SupportBox() {
       </div>
 
       {/* RIGHT */}
-      <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center justify-between lg:border-l-3 border-[#CDD7D9] p-6 md:p-2 xl:pl-12">
+      <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full items-center justify-between lg:border-l-3 border-[#CDD7D9] p-6 md:p-2 xl:pl-12">
         <SupportCard
           className="bg-[#235C61]"
           image="person"
