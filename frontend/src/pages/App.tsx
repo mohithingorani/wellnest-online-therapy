@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
 import SupportBox from "../components/SupportBox";
@@ -7,7 +8,7 @@ import { tagsData } from "../data";
 
 export default function LandingPage() {
   return (
-    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] py-4">
+    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
       <nav>
         <NavBar />
       </nav>
@@ -94,6 +95,7 @@ export default function LandingPage() {
           <TherapistSection />
         </div>
       </main>
+      <Footer/>
     </div>
   );
 }

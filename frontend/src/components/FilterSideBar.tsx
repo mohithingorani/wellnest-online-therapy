@@ -1,13 +1,14 @@
-function FilterSection({ title, children }:{
-    title:string,children:any
+function FilterSection({ title, children,img }:{
+    title:string,children:any,img:string
 }) {
   return (
     <div className="border-b border-[#EFEAE7] pb-4">
-      <div className="flex justify-between items-center mb-3">
+      <div className="flex justify-start gap-1 items-center mb-3">
+        <img width={16} height={12} src={`/filter/${img}.svg`} alt="" />
         <h4 className="font-nunito text-sm font-semibold text-[#0D393E]">
           {title}
         </h4>
-        <span className="text-xs text-[#6B7280] cursor-pointer">⌃</span>
+        {/* <span className="text-xs text-[#6B7280] cursor-pointer">⌃</span> */}
       </div>
       <div className="flex flex-col gap-2">{children}</div>
     </div>
@@ -45,7 +46,7 @@ export default function FiltersSidebar() {
       </div>
 
       {/* Concerns */}
-      <FilterSection title="Concerns">
+      <FilterSection title="Concerns" img="leaf" >
         <Checkbox label="Anxiety" />
         <Checkbox label="Depression" />
         <Checkbox label="Stress" />
@@ -57,7 +58,7 @@ export default function FiltersSidebar() {
       </FilterSection>
 
       {/* Therapy approaches */}
-      <FilterSection title="Therapy approaches">
+      <FilterSection title="Therapy approaches" img="tree">
         <Checkbox label="CBT" />
         <Checkbox label="Mindfulness" />
         <Checkbox label="Psychodynamic" />
@@ -69,7 +70,7 @@ export default function FiltersSidebar() {
       </FilterSection>
 
       {/* Session type */}
-      <FilterSection title="Session type">
+      <FilterSection title="Session type" img="camera">
         <Radio name="session" label="All" />
         <Radio name="session" label="Video" />
         <Radio name="session" label="Chat" />
@@ -77,14 +78,14 @@ export default function FiltersSidebar() {
       </FilterSection>
 
       {/* Availability */}
-      <FilterSection title="Availability">
+      <FilterSection title="Availability" img="calender">
         <Radio name="availability" label="All" />
         <Radio name="availability" label="Available this week" />
         <Radio name="availability" label="Available this weekend" />
       </FilterSection>
 
       {/* Gender */}
-      <FilterSection title="Gender preference">
+      <FilterSection title="Gender preference" img="person">
         <Radio name="gender" label="No preference" />
         <Radio name="gender" label="Female" />
         <Radio name="gender" label="Male" />

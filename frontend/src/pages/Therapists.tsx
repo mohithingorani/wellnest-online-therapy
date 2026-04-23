@@ -1,4 +1,5 @@
 import FiltersSidebar from "../components/FilterSideBar";
+import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
 import TherapistCard2 from "../components/TherapistCard2";
@@ -6,7 +7,7 @@ import TherapistCard2 from "../components/TherapistCard2";
 export default function TherapistsPage() {
 
   return (
-    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] py-4">
+    <div className="bg-linear-to-b bg-[#FFFDF8]  pt-4">
       <nav>
         <NavBar />
       </nav>
@@ -115,6 +116,7 @@ export default function TherapistsPage() {
 
     </section>
         </main> 
+        <Footer/>
     </div>
   );
 }
