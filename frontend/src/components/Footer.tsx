@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-3">
               <img src="/logos/wellnest.svg" className="w-6 h-6" />
-              <span className="font-semibold text-lg">WellNest</span>
+              <span className=" tracking-wide text-2xl">WellNest</span>
             </div>
 
             <p className="text-sm text-gray-300 max-w-sm">

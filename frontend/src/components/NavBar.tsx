@@ -1,4 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 export default function NavBar(){
+
+  const paths = [
+  { name: "Therapy", path: "/therapy" },
+  { name: "How it Works", path: "/how-it-works" },
+  { name: "Therapists", path: "/therapists" },
+  { name: "Resources", path: "/resources" },
+  { name: "About", path: "/about" },
+];
+  const navigate = useNavigate();
+
+
+
     return <div className="flex justify-between  items-center px-8 py-4 lg:py-6 lg:px-16 ">
         
       
@@ -7,19 +21,21 @@ export default function NavBar(){
       </div> 
 
   {/* LOGO */}
-        <div className="flex  items-center gap-3">
+        <button onClick={()=>{
+          navigate("/");
+        }} className="flex  items-center gap-3">
             <img className="w-8 md:w-fit" src="/logos/wellnest.svg" alt="wellest logo"/>
             <div className="hidden md:inline-block font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
-        </div>
+        </button>
 
  
         {/* ROUTES */}
-        <div className=" font-nunito  text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6 lg:gap-10 xl:gap-12  2xl:gap-15">
-            <div>Therapy</div>
-            <div>How it Works</div>
-            <div>Therapists</div>
-            <div>Resources</div>
-            <div>About</div>
+        <div className=" font-nunito *:hover:text-green-900 text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6 lg:gap-10 xl:gap-12  2xl:gap-15   ">
+          {paths.map((path)=>{
+            return <button onClick={()=>{
+              navigate(path.path);
+            }}>{path.name}</button>
+          })}
         </div>
 
         {/* BUTTONS */}
