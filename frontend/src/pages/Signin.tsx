@@ -36,7 +36,7 @@ export default function Signin() {
                 </div>
 
                 <div>
-                    footer
+                    © 2026 WellNest. All rights reserved.
                 </div>
 
 
