@@ -36,8 +36,12 @@ export default function FiltersSidebar() {
   return (
 <div className="bg-[#F9F7F5]/50 border border-[#EFEAE7] rounded-2xl p-4 flex flex-col gap-5 sticky top-6 max-h-[90vh] overflow-y-auto">      
       {/* Hide filters */}
-      <div className="text-sm text-[#0D393E] font-medium cursor-pointer">
-        Hide filters
+      <div className="text-sm text-[#0D393E] flex items-center gap-2 font-medium cursor-pointer">
+        <img src="/filter.svg" alt="filter"/>
+        <div>
+            Hide filters
+            </div>
+
       </div>
 
       {/* Concerns */}

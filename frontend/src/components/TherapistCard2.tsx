@@ -34,10 +34,10 @@ export default function TherapistCard2() {
           </p>
 
           {/* Rating */}
-          <div className="flex items-center gap-1 mt-1 text-xs md:text-sm">
+          <div className="flex items-center text-[#6B7280] gap-1 mt-1 text-xs md:text-sm">
             <span className="text-yellow-500">★</span>
-            <span className="font-medium">5.0</span>
-            <span className="text-[#6B7280]">(248)</span>
+            <span>5.0</span>
+            <span>(248)</span>
           </div>
 
           {/* Tags (limit on mobile) */}
@@ -55,7 +55,7 @@ export default function TherapistCard2() {
       </div>
 
       {/* META (mobile compact) */}
-      <div className="flex justify-between text-xs md:text-sm text-[#4B5563]">
+      <div className="flex flex-col justify-between text-xs md:text-sm text-[#4B5563]">
         <div className="flex items-center gap-1">
           <img src="/camera.svg" className="w-3 h-3 md:w-4 md:h-4"/>
           Video, Chat
