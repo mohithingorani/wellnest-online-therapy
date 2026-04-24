@@ -91,9 +91,9 @@ export default function LandingPage() {
         <div className="mt-8 w-full rounded-3xl p-4 lg:p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
           <SupportBox />
         </div>
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <TherapistSection />
-        </div>
+        </div> */}
       </main>
       <Footer/>
     </div>

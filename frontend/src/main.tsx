@@ -4,13 +4,15 @@ import App from "./pages/App.tsx";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Signin from "./pages/Signin.tsx";
 import TherapistsPage from "./pages/Therapists.tsx";
+import TherapistPage2 from "./Therapist.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Routes>
       <Route index element={<App />} />
-      <Route path="sign-in" element={<Signin />} />
-      <Route path="therapists" element={<TherapistsPage />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/therapists" element={<TherapistsPage />} />
+      <Route path="/therapists/:id" element={<TherapistPage2/>}/>
     </Routes>
   </BrowserRouter>,
 );

@@ -4,7 +4,7 @@ function FilterSection({ title, children,img }:{
   return (
     <div className="border-b border-[#EFEAE7] pb-4">
       <div className="flex justify-start gap-1 items-center mb-3">
-        <img width={16} height={12} src={`/filter/${img}.svg`} alt="" />
+        <img width={16} height={14} src={`/filter/${img}.svg`} alt="" />
         <h4 className="font-nunito text-sm font-semibold text-[#0D393E]">
           {title}
         </h4>
