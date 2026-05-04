@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
 import SupportBox from "../components/SupportBox";
 import Tag from "../components/Tag";
-import TherapistSection from "../components/TherapistSection";
+// import TherapistSection from "../components/TherapistSection";
 import { tagsData } from "../data";
 
 export default function LandingPage() {

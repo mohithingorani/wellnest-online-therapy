@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom"
+// import { useParams } from "react-router-dom"
 import NavBar from "./components/NavBar";
 
 export default function TherapistPage2(){
-    const params = useParams();
-    const id = params.id;
+    // const params = useParams();
+    // const id = params.id;
     return <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
          <nav>
         <NavBar />

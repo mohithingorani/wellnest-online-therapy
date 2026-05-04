@@ -73,7 +73,6 @@ export default function FiltersSidebar() {
       <FilterSection title="Session type" img="camera">
         <Radio name="session" label="All" />
         <Radio name="session" label="Video" />
-        <Radio name="session" label="Chat" />
         <Radio name="session" label="In-person" />
       </FilterSection>
 

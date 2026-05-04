@@ -1,10 +1,8 @@
 export default function TherapistCard2() {
   return (
     <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4">
-      
       {/* TOP: IMAGE + CONTENT */}
       <div className="flex gap-4">
-        
         {/* IMAGE */}
         <div className="relative shrink-0">
           <img
@@ -20,7 +18,6 @@ export default function TherapistCard2() {
 
         {/* CONTENT */}
         <div className="flex-1">
-          
           {/* Name */}
           <div className="flex items-center gap-1">
             <h3 className="text-sm md:text-lg font-playfair text-[#0D393E] font-semibold leading-tight">
@@ -57,12 +54,12 @@ export default function TherapistCard2() {
       {/* META (mobile compact) */}
       <div className="flex flex-col justify-between text-xs md:text-sm text-[#4B5563]">
         <div className="flex items-center gap-1">
-          <img src="/camera.svg" className="w-3 h-3 md:w-4 md:h-4"/>
-          Video, Chat
+          <img src="/camera.svg" className="w-3 h-3 md:w-4 md:h-4" />
+          Video, In-Person
         </div>
 
         <div className="flex items-center gap-1">
-          <img src="/globe.svg" className="w-3 h-3 md:w-4 md:h-4"/>
+          <img src="/globe.svg" className="w-3 h-3 md:w-4 md:h-4" />
           English, Hindi
         </div>
       </div>
@@ -74,7 +71,7 @@ export default function TherapistCard2() {
         </button>
 
         <button className="w-10 h-10 md:w-11 md:h-11 rounded-full shadow flex items-center justify-center">
-          <img src="/heart2.svg" className="w-4 h-4"/>
+          <img src="/heart2.svg" className="w-4 h-4" />
         </button>
       </div>
     </div>
