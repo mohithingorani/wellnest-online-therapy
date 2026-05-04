@@ -102,7 +102,7 @@ export default function TherapistPage2() {
               </div>
               <div>
                 <div className="font-semibold text-[#0D393E]">Session type</div>
-                <div className="text-[#3E464E] text-sm">Video, Chat</div>
+                <div className="text-[#3E464E] text-sm">Video, In person</div>
               </div>
             </div>
 
@@ -124,15 +124,19 @@ export default function TherapistPage2() {
         </div>
 
         {/* LOWER SECTION */}
-        <section className="mt-10 grid lg:grid-cols-2 gap-8">
+        <section className="mt-10 bg-[#F1F2F1] grid lg:grid-cols-2 gap-8 rounded-2xl">
           {/* LEFT */}
-          <div className="bg-[#F1F2F1] p-6 rounded-2xl">
-            <h2 className="font-playfair text-2xl text-[#0D393E] mb-4">
+          <div className=" p-6 ">
+            <div className="lg:border-r border-black/10">
+            <div className="flex justify-start items-center mb-4 gap-2">
+            <img src="/ticks/leaf.svg" alt="leaf"/>
+            <h2 className="font-playfair text-2xl text-[#0D393E] ">
               Is this right for you?
             </h2>
-
+</div>
             <div className="grid md:grid-cols-2 gap-6 text-sm">
               <div>
+                
                 <h3 className="font-semibold mb-2">I can help you with</h3>
                 <ul className="space-y-3 text-[#3E464E]">
                   {[
@@ -172,10 +176,11 @@ export default function TherapistPage2() {
                 </ul>
               </div>
             </div>
+            </div>
           </div>
 
           {/* RIGHT */}
-          <div className="bg-[#F1F2F1] p-6 rounded-2xl">
+          <div className=" p-6 ">
             <h2 className="font-playfair text-2xl text-[#0D393E] mb-4">
               Get to know me
             </h2>

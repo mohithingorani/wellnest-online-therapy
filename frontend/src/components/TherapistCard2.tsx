@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function TherapistCard2() {
+  const navigate = useNavigate();
   return (
     <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4">
       {/* TOP: IMAGE + CONTENT */}
@@ -66,7 +69,9 @@ export default function TherapistCard2() {
 
       {/* CTA */}
       <div className="flex gap-2">
-        <button className="flex-1 h-10 md:h-11 rounded-lg bg-[#0D393E] text-white text-sm font-medium">
+        <button onClick={()=>{
+          navigate("/therapists/1");
+        }} className="flex-1 h-10 md:h-11 rounded-lg bg-[#0D393E] text-white text-sm font-medium">
           View profile
         </button>
 
