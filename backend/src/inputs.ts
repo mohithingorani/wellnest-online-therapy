@@ -1,14 +1,10 @@
 import { z } from "zod";
 
-/**
- * Common helpers
- */
+// Common
 const id = z.number().int().positive();
 const uuid = z.string().uuid();
 
-/**
- * User
- */
+// User
 export const UserSchema = z.object({
   id,
   email: z.string().email(),
@@ -28,13 +24,29 @@ export const UpdateUserSchema = z.object({
   name: z.string().min(1).optional(),
 });
 
-/**
- * Specialty
- */
+export const AuthSignupSchema = z.object({
+  email: z.string().email(),
+  name: z.string().min(1),
+  password: z.string().min(8),
+});
+
+export const AuthLoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+export const PublicUserSchema = z.object({
+  id,
+  email: z.string().email(),
+  name: z.string().min(1),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+//  Specialty
 export const SpecialtySchema = z.object({
   id: uuid,
   name: z.string().min(1),
-
   createdAt: z.date(),
 });
 
@@ -42,9 +54,8 @@ export const CreateSpecialtySchema = z.object({
   name: z.string().min(1),
 });
 
-/**
- * Therapist
- */
+// Therapist
+ 
 export const TherapistSchema = z.object({
   id,
   experience: z.number().int().nonnegative(),
@@ -59,11 +70,12 @@ export const CreateTherapistSchema = z.object({
   experience: z.number().int().nonnegative(),
   name: z.string().min(1),
 
-  // pass IDs when creating
+// pass IDs when creating
   specialtyIds: z.array(uuid).optional(),
 });
 
 export const UpdateTherapistSchema = z.object({
+  name: z.string().min(1).optional(),
   experience: z.number().int().nonnegative().optional(),
   specialtyIds: z.array(uuid).optional(),
 });

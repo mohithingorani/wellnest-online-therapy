@@ -1,15 +1,26 @@
 import express from 'express';
 import dotenv from "dotenv"
+import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
 import therapistRoutes from './routes/therapists';
 import pingRoutes from './routes/ping';
 import specialityRoutes from './routes/specialties';
-dotenv.config();
-const app = express();
+import userRoutes from "./routes/users";
+import { openApiSpec } from "./swagger";
 
+dotenv.config();
+
+const app = express();
 app.use(express.json());
+app.use(cookieParser());
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
+app.get("/api/openapi.json", (_req, res) => {
+    res.json(openApiSpec);
+});
 app.use("/api/therapists", therapistRoutes);
 app.use("/api/ping", pingRoutes);
 app.use("/api/specialties", specialityRoutes);
+app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 3001;
 
