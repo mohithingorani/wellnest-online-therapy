@@ -1,3 +1,4 @@
+// import "../index.css"
 export default function Footer() {
   return (
     <footer className="bg-[#0D393E] text-white mt-16">
@@ -24,9 +25,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Company</h4>
             <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <span>About us</span>
-              <span>Careers</span>
-              <span>Contact</span>
+              <button className="w-fit">About us</button>
+              <button className="w-fit">Careers</button>
+              <button className="w-fit">Contact</button>
             </div>
           </div>
 
@@ -34,9 +35,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Support</h4>
             <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <span>Help center</span>
-              <span>Privacy policy</span>
-              <span>Terms of service</span>
+              <button className="w-fit">Help center</button>
+              <button className="w-fit">Privacy policy</button>
+              <button className="w-fit">Terms of service</button>
             </div>
           </div>
 
@@ -44,9 +45,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Resources</h4>
             <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <span>Articles</span>
-              <span>Guides</span>
-              <span>Community</span>
+              <button className="w-fit">Articles</button>
+              <button className="w-fit">Guides</button>
+              <button className="w-fit">Community</button>
             </div>
           </div>
         </div>

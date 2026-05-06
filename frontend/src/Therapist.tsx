@@ -1,17 +1,16 @@
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
-import Tag from "./components/Tag";
 
 export default function TherapistPage2() {
   return (
-    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4 text-[#235C61]">
+    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4 text-[#235C61] font-nunito">
       <NavBar />
 
       <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24 mt-8">
         {/* HERO SECTION */}
         <section className="flex flex-col lg:flex-row gap-10 items-center lg:items-start">
           {/* IMAGE */}
-          <div className="relative w-[280px] md:w-[360px]">
+          <div className="relative w-70 md:w-90">
             <img
               src="/therapist/bg.svg"
               className="absolute -left-6 top-20 z-0"
@@ -81,7 +80,7 @@ export default function TherapistPage2() {
 
         {/* INFO STRIP */}
         <div className="div flex justify-center w-full">
-          <section className="mt-10 grid md:grid-cols-3 w-full md:w-fit gap-4 bg-[#E6F4F6] lg:px-24 p-6 lg:py-12 rounded-2xl">
+          <section className="mt-10 grid md:grid-cols-3 w-full md:w-fit gap-4 bg-[#E6F4F6] lg:px-12 p-6 lg:py-6 rounded-2xl">
             {/* ITEM 1 */}
             <div className="flex items-center gap-4">
               <div className="bg-[#c5e1ea] w-12 h-12 rounded-full flex justify-center items-center">
@@ -124,7 +123,7 @@ export default function TherapistPage2() {
         </div>
 
         {/* LOWER SECTION */}
-        <section className="mt-10 bg-[#F1F2F1] grid lg:grid-cols-2 gap-8 rounded-2xl">
+        <section className="mt-10 bg-[#F1F2F1] grid lg:grid-cols-2 lg:gap-8 rounded-2xl">
           {/* LEFT */}
           <div className=" p-6 ">
             <div className="lg:border-r border-black/10">

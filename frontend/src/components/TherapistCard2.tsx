@@ -14,7 +14,7 @@ export default function TherapistCard2() {
             className="w-20 h-20 md:w-28 md:h-28 rounded-xl object-cover"
           />
 
-          <div className="absolute bottom-1 left-1 bg-white/90 text-[#0D393E] text-[10px] px-2 py-[2px] rounded shadow">
+          <div className="absolute bottom-1 left-1 bg-white/90 text-[#0D393E] text-[10px] px-2 py-0.5 rounded shadow">
             8+ yrs
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function TherapistCard2() {
             {["Anxiety", "Depression", "Stress"].map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] md:text-xs px-2 py-[2px] rounded-full bg-[#E6F0F2] text-[#0D393E]"
+                className="text-[10px] md:text-xs px-2 py-0.5 rounded-full bg-[#E6F0F2] text-[#0D393E]"
               >
                 {tag}
               </span>
