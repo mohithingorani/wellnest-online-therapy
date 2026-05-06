@@ -1,5 +1,21 @@
-function FilterSection({ title, children,img }:{
-    title:string,children:any,img:string
+import { useState } from "react";
+
+export interface FiltersState {
+  concerns: string[];
+  therapyApproaches: string[];
+  sessionType: string;
+  gender: string;
+}
+
+interface FilterProps {
+  filters: FiltersState;
+  setFilters: React.Dispatch<React.SetStateAction<FiltersState>>;
+}
+
+function FilterSection({ title, children, img }: {
+  title: string;
+  children: React.ReactNode;
+  img: string;
 }) {
   return (
     <div className="border-b border-[#EFEAE7] pb-4">
@@ -8,91 +24,191 @@ function FilterSection({ title, children,img }:{
         <h4 className="font-nunito text-sm font-semibold text-[#0D393E]">
           {title}
         </h4>
-        {/* <span className="text-xs text-[#6B7280] cursor-pointer">⌃</span> */}
       </div>
       <div className="flex flex-col gap-2">{children}</div>
     </div>
   );
 }
 
-function Checkbox({ label }:{label:string}) {
+interface CheckboxProps {
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+}
+
+function Checkbox({ label, checked, onChange }: CheckboxProps) {
   return (
     <label className="flex items-center gap-2 text-sm text-[#4B5563] cursor-pointer">
-      <input type="checkbox" className="accent-[#0D393E]" />
+      <input
+        type="checkbox"
+        className="accent-[#0D393E]"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+      />
       {label}
     </label>
   );
 }
 
-function Radio({ label, name }:{label:string, name:string}) {
+interface RadioProps {
+  label: string;
+  name: string;
+  value: string;
+  checked: boolean;
+  onChange: (value: string) => void;
+}
+
+function Radio({ label, name, value, checked, onChange }: RadioProps) {
   return (
     <label className="flex items-center gap-2 text-sm text-[#4B5563] cursor-pointer">
-      <input type="radio" name={name} className="accent-[#0D393E]" />
+      <input
+        type="radio"
+        name={name}
+        className="accent-[#0D393E]"
+        checked={checked}
+        onChange={() => onChange(value)}
+      />
       {label}
     </label>
   );
 }
 
-export default function FiltersSidebar() {
+const CONCERNS = [
+  "Anxiety", "Depression", "Stress", "Relationship Issues", "Trauma",
+  "Burnout", "Self Esteem", "Panic Attacks", "OCD", "ADHD",
+  "Grief", "Anger Management", "Social Anxiety", "Loneliness", "Family Conflict"
+];
+
+const THERAPY_APPROACHES = [
+  "CBT", "Mindfulness", "Psychodynamic", "Humanistic", "Solution-focused"
+];
+
+export default function FiltersSidebar({ filters, setFilters }: FilterProps) {
+  const [showAllConcerns, setShowAllConcerns] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleConcernChange = (concern: string, checked: boolean) => {
+    setFilters((prev) => ({
+      ...prev,
+      concerns: checked
+        ? [...prev.concerns, concern]
+        : prev.concerns.filter((c) => c !== concern),
+    }));
+  };
+
+  const handleTherapyApproachChange = (approach: string, checked: boolean) => {
+    setFilters((prev) => ({
+      ...prev,
+      therapyApproaches: checked
+        ? [...prev.therapyApproaches, approach]
+        : prev.therapyApproaches.filter((a) => a !== approach),
+    }));
+  };
+
+  const handleSessionTypeChange = (value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      sessionType: prev.sessionType === value ? "" : value,
+    }));
+  };
+
+  const handleGenderChange = (value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      gender: prev.gender === value ? "" : value,
+    }));
+  };
+
+  const clearAll = () => {
+    setFilters({
+      concerns: [],
+      therapyApproaches: [],
+      sessionType: "",
+      gender: "",
+    });
+  };
+
+  const visibleConcerns = showAllConcerns ? CONCERNS : CONCERNS.slice(0, 6);
+
+  if (!isVisible) {
+    return (
+      <div className="lg:col-span-1">
+        <button
+          onClick={() => setIsVisible(true)}
+          className="flex items-center gap-2 text-sm text-[#0D393E] font-medium cursor-pointer hover:text-[#47898E] transition-colors duration-200 bg-[#F9F7F5]/50 border border-[#EFEAE7] rounded-2xl p-4"
+        >
+          <img src="/filter.svg" alt="filter" />
+          <div>Show filters</div>
+        </button>
+      </div>
+    );
+  }
+
   return (
-<div className="bg-[#F9F7F5]/50 border border-[#EFEAE7] rounded-2xl p-4 flex flex-col gap-5 sticky top-6 max-h-[90vh] overflow-y-auto hover:shadow-md transition-shadow duration-300">      
-      {/* Hide filters */}
-      <div className="text-sm text-[#0D393E] flex items-center gap-2 font-medium cursor-pointer hover:text-[#47898E] transition-colors duration-200">
+    <div className="bg-[#F9F7F5]/50 border border-[#EFEAE7] rounded-2xl p-4 flex flex-col gap-5 sticky top-6 max-h-[90vh] overflow-y-auto hover:shadow-md transition-shadow duration-300">      
+      <div 
+        className="text-sm text-[#0D393E] flex items-center gap-2 font-medium cursor-pointer hover:text-[#47898E] transition-colors duration-200"
+        onClick={() => setIsVisible(false)}
+      >
         <img src="/filter.svg" alt="filter"/>
-        <div>
-            Hide filters
-            </div>
-
+        <div>Hide filters</div>
       </div>
 
-      {/* Concerns */}
-      <FilterSection title="Concerns" img="leaf" >
-        <Checkbox label="Anxiety" />
-        <Checkbox label="Depression" />
-        <Checkbox label="Stress" />
-        <Checkbox label="Relationship issues" />
-        <Checkbox label="Trauma" />
-        <span className="text-xs text-[#0D393E] cursor-pointer mt-1 hover:text-[#47898E] hover:underline transition-all duration-200">
-          Show more
-        </span>
+      <FilterSection title="Concerns" img="leaf">
+        {visibleConcerns.map((concern) => (
+          <Checkbox
+            key={concern}
+            label={concern}
+            checked={filters.concerns.includes(concern)}
+            onChange={(checked) => handleConcernChange(concern, checked)}
+          />
+        ))}
+        {!showAllConcerns && (
+          <span 
+            className="text-xs text-[#0D393E] cursor-pointer mt-1 hover:text-[#47898E] hover:underline transition-all duration-200"
+            onClick={() => setShowAllConcerns(true)}
+          >
+            Show more
+          </span>
+        )}
+        {showAllConcerns && (
+          <span 
+            className="text-xs text-[#0D393E] cursor-pointer mt-1 hover:text-[#47898E] hover:underline transition-all duration-200"
+            onClick={() => setShowAllConcerns(false)}
+          >
+            Show less
+          </span>
+        )}
       </FilterSection>
 
-      {/* Therapy approaches */}
       <FilterSection title="Therapy approaches" img="tree">
-        <Checkbox label="CBT" />
-        <Checkbox label="Mindfulness" />
-        <Checkbox label="Psychodynamic" />
-        <Checkbox label="Humanistic" />
-        <Checkbox label="Solution-focused" />
-        <span className="text-xs text-[#0D393E] cursor-pointer mt-1 hover:text-[#47898E] hover:underline transition-all duration-200">
-          Show more
-        </span>
+        {THERAPY_APPROACHES.map((approach) => (
+          <Checkbox
+            key={approach}
+            label={approach}
+            checked={filters.therapyApproaches.includes(approach)}
+            onChange={(checked) => handleTherapyApproachChange(approach, checked)}
+          />
+        ))}
       </FilterSection>
 
-      {/* Session type */}
       <FilterSection title="Session type" img="camera">
-        <Radio name="session" label="All" />
-        <Radio name="session" label="Video" />
-        <Radio name="session" label="In-person" />
+        <Radio name="session" label="All" value="" checked={filters.sessionType === ""} onChange={handleSessionTypeChange} />
+        <Radio name="session" label="Video" value="Online" checked={filters.sessionType === "Online"} onChange={handleSessionTypeChange} />
+        <Radio name="session" label="In-person" value="Offline" checked={filters.sessionType === "Offline"} onChange={handleSessionTypeChange} />
+        <Radio name="session" label="Chat" value="Chat" checked={filters.sessionType === "Chat"} onChange={handleSessionTypeChange} />
       </FilterSection>
 
-      {/* Availability */}
-      <FilterSection title="Availability" img="calender">
-        <Radio name="availability" label="All" />
-        <Radio name="availability" label="Available this week" />
-        <Radio name="availability" label="Available this weekend" />
-      </FilterSection>
-
-      {/* Gender */}
       <FilterSection title="Gender preference" img="person">
-        <Radio name="gender" label="No preference" />
-        <Radio name="gender" label="Female" />
-        <Radio name="gender" label="Male" />
-        <Radio name="gender" label="Non-binary" />
+        <Radio name="gender" label="No preference" value="" checked={filters.gender === ""} onChange={handleGenderChange} />
+        <Radio name="gender" label="Female" value="Female" checked={filters.gender === "Female"} onChange={handleGenderChange} />
+        <Radio name="gender" label="Male" value="Male" checked={filters.gender === "Male"} onChange={handleGenderChange} />
       </FilterSection>
 
-      {/* Clear */}
-      <div className="text-sm text-[#0D393E] font-medium cursor-pointer hover:text-[#E77D3C] transition-colors duration-200">
+      <div
+        className="text-sm text-[#0D393E] font-medium cursor-pointer hover:text-[#E77D3C] transition-colors duration-200"
+        onClick={clearAll}
+      >
         Clear all
       </div>
     </div>

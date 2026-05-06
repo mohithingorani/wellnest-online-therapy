@@ -18,6 +18,8 @@ export default function UserManagement() {
   const [editMode, setEditMode] = useState(false);
   const [editForm, setEditForm] = useState({ name: "", email: "" });
   const [deleteConfirm, setDeleteConfirm] = useState<User | null>(null);
+  const [createMode, setCreateMode] = useState(false);
+  const [createForm, setCreateForm] = useState({ name: "", email: "", password: "" });
   const { addToast } = useToast();
 
   useEffect(() => {
@@ -64,6 +66,22 @@ export default function UserManagement() {
       loadUsers();
     } catch (e) {
       addToast("Failed to delete user", "error");
+    }
+  };
+
+  const handleCreate = async () => {
+    if (!createForm.name || !createForm.email || !createForm.password) {
+      addToast("Name, email, and password are required", "error");
+      return;
+    }
+    try {
+      await adminApi.createUser(createForm);
+      addToast("User created successfully", "success");
+      setCreateMode(false);
+      setCreateForm({ name: "", email: "", password: "" });
+      loadUsers();
+    } catch (e) {
+      addToast("Failed to create user", "error");
     }
   };
 
@@ -150,8 +168,19 @@ export default function UserManagement() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white font-playfair">Users</h1>
-        <div className="w-72">
-          <SearchInput value={search} onChange={setSearch} placeholder="Search users..." />
+        <div className="flex items-center gap-4">
+          <div className="w-72">
+            <SearchInput value={search} onChange={setSearch} placeholder="Search users..." />
+          </div>
+          <button
+            onClick={() => setCreateMode(true)}
+            className="px-4 py-2.5 bg-[#47898E] text-white font-nunito font-medium rounded-xl hover:bg-[#3d787d] transition-colors flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Add User
+          </button>
         </div>
       </div>
 
@@ -215,6 +244,55 @@ export default function UserManagement() {
         confirmText="Delete"
         variant="danger"
       />
+
+      <Modal isOpen={createMode} onClose={() => setCreateMode(false)} title="Add New User" size="md">
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Name</label>
+            <input
+              type="text"
+              value={createForm.name}
+              onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
+              placeholder="John Doe"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Email</label>
+            <input
+              type="email"
+              value={createForm.email}
+              onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
+              placeholder="john@example.com"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Password</label>
+            <input
+              type="password"
+              value={createForm.password}
+              onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+              placeholder="Enter password"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+            />
+          </div>
+          <div className="flex gap-3 pt-4">
+            <button
+              onClick={() => setCreateMode(false)}
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#1f1f1f] text-gray-300 font-nunito font-medium hover:bg-[#1f1f1f] transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreate}
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#47898E] text-white font-nunito font-medium hover:bg-[#3d787d] transition-colors"
+            >
+              Create User
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

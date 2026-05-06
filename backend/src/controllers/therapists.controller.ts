@@ -17,6 +17,8 @@ export async function getTherapists(req: Request, res: Response) {
     const therapists = await prisma.therapist.findMany({
       include: {
         specialities: true,
+        sessionTypes: true,
+        therapyTypes: true,
       },
     });
 
@@ -50,6 +52,8 @@ export async function getTherapistById(req: Request, res: Response) {
       where: { id: parsedParams.data.id },
       include: {
         specialities: true,
+        sessionTypes: true,
+        therapyTypes: true,
       },
     });
 
@@ -88,6 +92,7 @@ export const createTherapist = async (req: Request, res: Response) => {
             data: {
                 name: parsed.data.name,
                 experience: parsed.data.experience,
+                gender: parsed.data.gender || "Prefer not to say",
                 specialities: {
                     connect: parsed.data.specialtyIds?.map((id) => ({ id })) || [],
                 },
@@ -96,7 +101,7 @@ export const createTherapist = async (req: Request, res: Response) => {
 
         const therapistWithSpecialties = await prisma.therapist.findUnique({
             where: { id: therapist.id },
-            include: { specialities: true },
+            include: { specialities: true, sessionTypes: true, therapyTypes: true },
         });
 
         const finalParsed = TherapistSchema.parse(therapistWithSpecialties);
@@ -151,6 +156,9 @@ export const updateTherapist = async (req: Request, res: Response) => {
       data: {
         name: parsedBody.data.name,
         experience: parsedBody.data.experience,
+        ...(parsedBody.data.gender !== undefined
+          ? { gender: parsedBody.data.gender }
+          : {}),
         ...(parsedBody.data.specialtyIds !== undefined
           ? {
               specialities: {
@@ -163,7 +171,7 @@ export const updateTherapist = async (req: Request, res: Response) => {
 
     const updatedTherapist = await prisma.therapist.findUnique({
       where: { id: parsedParams.data.id },
-      include: { specialities: true },
+      include: { specialities: true, sessionTypes: true, therapyTypes: true },
     });
 
     const finalParsed = TherapistSchema.parse(updatedTherapist);

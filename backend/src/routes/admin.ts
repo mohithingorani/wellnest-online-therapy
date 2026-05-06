@@ -375,4 +375,121 @@ router.get("/activity", async (req, res) => {
   }
 });
 
+router.post("/users", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, email and password are required",
+      });
+    }
+
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: "Email already exists",
+      });
+    }
+
+    const passwordHash = await argon2.hash(password);
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        passwordHash,
+      },
+    });
+
+    res.json({
+      success: true,
+      data: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        sessionCount: 0,
+        status: "active",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to create user",
+    });
+  }
+});
+
+router.post("/therapists", async (req, res) => {
+  try {
+    const { name, experience, specialtyIds } = req.body;
+
+    if (!name || !experience) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and experience are required",
+      });
+    }
+
+    const specialties = specialtyIds?.length 
+      ? { connect: specialtyIds.map((id: string) => ({ id })) }
+      : undefined;
+
+    const gender = (req.body as any).gender || "Prefer not to say";
+
+    const therapist = await prisma.therapist.create({
+      data: {
+        name,
+        experience: parseInt(experience),
+        gender,
+        ...(specialties && { specialities: specialties }),
+      },
+      include: { specialities: true, sessionTypes: true, therapyTypes: true },
+    });
+
+    res.json({
+      success: true,
+      data: {
+        id: therapist.id,
+        name: therapist.name,
+        experience: therapist.experience,
+        gender: therapist.gender,
+        specialities: therapist.specialities,
+        sessionTypes: therapist.sessionTypes,
+        therapyTypes: therapist.therapyTypes,
+        createdAt: therapist.createdAt,
+        updatedAt: therapist.updatedAt,
+        status: "active",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to create therapist",
+    });
+  }
+});
+
+router.get("/specialties", async (req, res) => {
+  try {
+    const specialties = await prisma.concerns.findMany({
+      orderBy: { name: "asc" },
+    });
+
+    res.json({ success: true, data: specialties });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch specialties",
+    });
+  }
+});
+
 export default router;

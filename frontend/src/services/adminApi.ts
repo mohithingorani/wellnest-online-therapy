@@ -42,6 +42,11 @@ export interface Activity {
   timestamp: string;
 }
 
+export interface Specialty {
+  id: string;
+  name: string;
+}
+
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
@@ -105,4 +110,21 @@ export const adminApi = {
 
   getActivity: () =>
     fetchApi<{ success: boolean; data: Activity[] }>("/admin/activity"),
+
+  createUser: (data: { name: string; email: string; password: string }) =>
+    fetchApi<{ success: boolean; data: User }>("/admin/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }),
+
+  createTherapist: (data: { name: string; experience: number; specialtyIds?: string[] }) =>
+    fetchApi<{ success: boolean; data: Therapist }>("/admin/therapists", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }),
+
+  getSpecialties: () =>
+    fetchApi<{ success: boolean; data: Specialty[] }>("/admin/specialties"),
 };

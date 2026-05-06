@@ -50,6 +50,24 @@ export const SpecialtySchema = z.object({
   createdAt: z.date(),
 });
 
+// SessionType
+export const SessionTypeSchema = z.object({
+  id,
+  name: z.string().min(1),
+  description: z.string().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+// TherapyType
+export const TherapyTypeSchema = z.object({
+  id,
+  name: z.string().min(1),
+  description: z.string().nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
 export const CreateSpecialtySchema = z.object({
   name: z.string().min(1),
 });
@@ -60,7 +78,10 @@ export const TherapistSchema = z.object({
   id,
   experience: z.number().int().nonnegative(),
   name: z.string().min(1),
+  gender: z.string(),
   specialities: z.array(SpecialtySchema),
+  sessionTypes: z.array(SessionTypeSchema),
+  therapyTypes: z.array(TherapyTypeSchema),
 
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -69,6 +90,7 @@ export const TherapistSchema = z.object({
 export const CreateTherapistSchema = z.object({
   experience: z.number().int().nonnegative(),
   name: z.string().min(1),
+  gender: z.string().optional(),
 
 // pass IDs when creating
   specialtyIds: z.array(uuid).optional(),
@@ -77,6 +99,7 @@ export const CreateTherapistSchema = z.object({
 export const UpdateTherapistSchema = z.object({
   name: z.string().min(1).optional(),
   experience: z.number().int().nonnegative().optional(),
+  gender: z.string().optional(),
   specialtyIds: z.array(uuid).optional(),
 });
 

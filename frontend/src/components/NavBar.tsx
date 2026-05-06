@@ -6,7 +6,6 @@ export default function NavBar(){
 
   const paths = [
   { name: "Therapy", path: "/therapy" },
-  { name: "How it Works", path: "/how-it-works" },
   { name: "Therapists", path: "/therapists" },
   { name: "Resources", path: "/resources" },
   { name: "About", path: "/about" },

@@ -4,7 +4,7 @@ import { z } from "zod";
 import {prisma} from "../db/prisma"
 export async function getSpecialties(req: Request, res: Response) {
   try {
-    const specialties = await prisma.specialty.findMany();
+    const specialties = await prisma.concerns.findMany();
 
     const parsed = SpecialtyArraySchema.parse(specialties);
 
@@ -32,7 +32,7 @@ export async function createSpecialty(req: Request, res: Response) {
       });
     }
 
-    const specialty = await prisma.specialty.create({
+    const specialty = await prisma.concerns.create({
       data: {
         name: parsed.data.name,
       },

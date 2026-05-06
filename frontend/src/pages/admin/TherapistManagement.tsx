@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminApi } from "../../services/adminApi";
-import type { Therapist } from "../../services/adminApi";
+import type { Therapist, Specialty } from "../../services/adminApi";
 import { DataTable } from "../../components/admin/DataTable";
 import { SearchInput } from "../../components/admin/SearchInput";
 import { Modal } from "../../components/admin/Modal";
@@ -11,6 +11,7 @@ import { useToast } from "../../components/admin/Toast";
 
 export default function TherapistManagement() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);
+  const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
@@ -18,11 +19,20 @@ export default function TherapistManagement() {
   const [editMode, setEditMode] = useState(false);
   const [editForm, setEditForm] = useState({ name: "", experience: 0 });
   const [deleteConfirm, setDeleteConfirm] = useState<Therapist | null>(null);
+  const [createMode, setCreateMode] = useState(false);
+  const [createForm, setCreateForm] = useState({ name: "", experience: 0, specialtyIds: [] as string[] });
   const { addToast } = useToast();
 
   useEffect(() => {
     loadTherapists();
+    loadSpecialties();
   }, []);
+
+  const loadSpecialties = () => {
+    adminApi.getSpecialties().then((res) => {
+      if (res.success) setSpecialties(res.data);
+    });
+  };
 
   const loadTherapists = () => {
     adminApi
@@ -53,6 +63,22 @@ export default function TherapistManagement() {
       loadTherapists();
     } catch (e) {
       addToast("Failed to update therapist", "error");
+    }
+  };
+
+  const handleCreate = async () => {
+    if (!createForm.name || !createForm.experience) {
+      addToast("Name and experience are required", "error");
+      return;
+    }
+    try {
+      await adminApi.createTherapist(createForm);
+      addToast("Therapist created successfully", "success");
+      setCreateMode(false);
+      setCreateForm({ name: "", experience: 0, specialtyIds: [] });
+      loadTherapists();
+    } catch (e) {
+      addToast("Failed to create therapist", "error");
     }
   };
 
@@ -153,8 +179,19 @@ export default function TherapistManagement() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white font-playfair">Therapists</h1>
-        <div className="w-72">
-          <SearchInput value={search} onChange={setSearch} placeholder="Search therapists..." />
+        <div className="flex items-center gap-4">
+          <div className="w-72">
+            <SearchInput value={search} onChange={setSearch} placeholder="Search therapists..." />
+          </div>
+          <button
+            onClick={() => setCreateMode(true)}
+            className="px-4 py-2.5 bg-[#47898E] text-white font-nunito font-medium rounded-xl hover:bg-[#3d787d] transition-colors flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Add Therapist
+          </button>
         </div>
       </div>
 
@@ -218,6 +255,69 @@ export default function TherapistManagement() {
         confirmText="Delete"
         variant="danger"
       />
+
+      <Modal isOpen={createMode} onClose={() => setCreateMode(false)} title="Add New Therapist" size="md">
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Name</label>
+            <input
+              type="text"
+              value={createForm.name}
+              onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
+              placeholder="Dr. John Smith"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Experience (years)</label>
+            <input
+              type="number"
+              value={createForm.experience || ""}
+              onChange={(e) => setCreateForm({ ...createForm, experience: parseInt(e.target.value) || 0 })}
+              placeholder="5"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2 font-nunito">Specialties (optional)</label>
+            <div className="flex flex-wrap gap-2">
+              {specialties.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => {
+                    const ids = createForm.specialtyIds.includes(s.id)
+                      ? createForm.specialtyIds.filter((id) => id !== s.id)
+                      : [...createForm.specialtyIds, s.id];
+                    setCreateForm({ ...createForm, specialtyIds: ids });
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-nunito transition-colors ${
+                    createForm.specialtyIds.includes(s.id)
+                      ? "bg-[#47898E] text-white"
+                      : "bg-[#1f1f1f] text-gray-400 hover:bg-[#2a2a2a]"
+                  }`}
+                >
+                  {s.name}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="flex gap-3 pt-4">
+            <button
+              onClick={() => setCreateMode(false)}
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#1f1f1f] text-gray-300 font-nunito font-medium hover:bg-[#1f1f1f] transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleCreate}
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#47898E] text-white font-nunito font-medium hover:bg-[#3d787d] transition-colors"
+            >
+              Create Therapist
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
