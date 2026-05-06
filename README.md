@@ -105,7 +105,7 @@ npm install
 # Configure environment variables
 # Create .env file with:
 # DATABASE_URL=postgresql://user:password@localhost:5432/wellnest
-# PORT=3001
+# PORT=3000
 # SESSION_SECRET=your-secret-key
 
 # Generate Prisma client
@@ -118,7 +118,7 @@ npx prisma migrate dev
 npm run dev
 ```
 
-The backend runs at `http://localhost:3001` with Swagger docs at `/api/docs`.
+The backend runs at `http://localhost:3000` with Swagger docs at `/api/docs`.
 
 ### Frontend Setup
 
@@ -168,7 +168,7 @@ The frontend runs at `http://localhost:5173` (default Vite port).
 ### Backend (.env)
 ```
 DATABASE_URL=postgresql://user:password@localhost:5432/wellnest
-PORT=3001
+PORT=3000
 ```
 
 ## Scripts

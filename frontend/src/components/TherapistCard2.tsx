@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function TherapistCard2() {
   const navigate = useNavigate();
   return (
-    <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:shadow-lg hover:border-[#d4d0cc] transition-all duration-300 hover:-translate-y-0.5">
+    <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:shadow-lg hover:border-[#d4d0cc] transition-all duration-300 ">
       {/* TOP: IMAGE + CONTENT */}
       <div className="flex gap-4">
         {/* IMAGE */}

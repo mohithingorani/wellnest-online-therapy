@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import therapistRoutes from './routes/therapists';
 import pingRoutes from './routes/ping';
@@ -11,6 +12,10 @@ import { openApiSpec } from "./swagger";
 dotenv.config();
 
 const app = express();
+app.use(cors({
+  origin: "http://localhost:5174",
+  credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
@@ -22,7 +27,7 @@ app.use("/api/ping", pingRoutes);
 app.use("/api/specialties", specialityRoutes);
 app.use("/api/users", userRoutes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 function startApp() {
     app.listen(PORT,()=>{
