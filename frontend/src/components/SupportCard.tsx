@@ -12,7 +12,7 @@ export default function SupportCard({
   className: string;
 }) {
   return (
-    <div className="flex w-full md:w-44 md:flex-col gap-4 md:items-center md:text-center lg:gap-2">
+    <div className="flex w-full md:w-44 md:flex-col gap-4 md:items-center md:text-center lg:gap-2 hover:scale-105 transition-transform duration-300 cursor-default">
       
       {/* ICON */}
       <div className={`w-17.5 h-17.5 rounded-full ${className} flex items-center justify-center`}>

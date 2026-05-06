@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function TherapistCard2() {
   const navigate = useNavigate();
   return (
-    <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4">
+    <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:shadow-lg hover:border-[#d4d0cc] transition-all duration-300 hover:-translate-y-0.5">
       {/* TOP: IMAGE + CONTENT */}
       <div className="flex gap-4">
         {/* IMAGE */}
@@ -71,11 +71,11 @@ export default function TherapistCard2() {
       <div className="flex gap-2">
         <button onClick={()=>{
           navigate("/therapists/1");
-        }} className="flex-1 h-10 md:h-11 rounded-lg bg-[#0D393E] text-white text-sm font-medium">
+        }} className="flex-1 h-10 md:h-11 rounded-lg bg-[#0D393E] text-white text-sm font-medium hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300 ">
           View profile
         </button>
 
-        <button className="w-10 h-10 md:w-11 md:h-11 rounded-full shadow flex items-center justify-center">
+        <button className="w-10 h-10 md:w-11 md:h-11 rounded-full shadow flex items-center justify-center hover:bg-[#E6F0F2] hover:scale-110 transition-all duration-300">
           <img src="/heart2.svg" className="w-4 h-4" />
         </button>
       </div>

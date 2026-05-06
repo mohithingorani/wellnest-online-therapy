@@ -49,7 +49,7 @@ export default function TherapistsPage() {
         <label className="text-xs text-[#6B7280] font-nunito">
           What can we help you with?
         </label>
-        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm">
+        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 cursor-pointer hover:border-[#d1d5db]">
           <option>Select a concern</option>
         </select>
       </div>
@@ -59,7 +59,7 @@ export default function TherapistsPage() {
         <label className="text-xs text-[#6B7280] font-nunito">
           Therapy type
         </label>
-        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm">
+        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 cursor-pointer hover:border-[#d1d5db]">
           <option>All therapy types</option>
         </select>
       </div>
@@ -69,7 +69,7 @@ export default function TherapistsPage() {
         <label className="text-xs text-[#6B7280] font-nunito">
           Session type
         </label>
-        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm">
+        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 cursor-pointer hover:border-[#d1d5db]">
           <option>All session types</option>
         </select>
       </div>
@@ -79,14 +79,14 @@ export default function TherapistsPage() {
         <label className="text-xs text-[#6B7280] font-nunito">
           Location / Language
         </label>
-        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm">
+        <select className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 cursor-pointer hover:border-[#d1d5db]">
           <option>All</option>
         </select>
       </div>
 
       {/* Search Button */}
       <div className="flex items-end">
-        <button className="w-full h-12 rounded-lg font-nunito bg-[#0D393E] text-white font-medium flex items-center justify-center gap-3">
+        <button className="w-full h-12 rounded-lg font-nunito bg-[#0D393E] text-white font-medium flex items-center justify-center gap-3 hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300">
           <img src="/search.svg" alt="search" />
           <div>Search</div>
         </button>

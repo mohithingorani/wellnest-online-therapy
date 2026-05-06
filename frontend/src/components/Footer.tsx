@@ -25,9 +25,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Company</h4>
             <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <button className="w-fit">About us</button>
-              <button className="w-fit">Careers</button>
-              <button className="w-fit">Contact</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">About us</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Careers</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Contact</button>
             </div>
           </div>
 
@@ -35,9 +35,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Support</h4>
             <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <button className="w-fit">Help center</button>
-              <button className="w-fit">Privacy policy</button>
-              <button className="w-fit">Terms of service</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Help center</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Privacy policy</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Terms of service</button>
             </div>
           </div>
 
@@ -45,9 +45,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Resources</h4>
             <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <button className="w-fit">Articles</button>
-              <button className="w-fit">Guides</button>
-              <button className="w-fit">Community</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Articles</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Guides</button>
+              <button className="w-fit text-left hover:text-white transition-colors duration-200">Community</button>
             </div>
           </div>
         </div>
@@ -66,9 +66,9 @@ export default function Footer() {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full lg:w-80 h-11 px-4 bg-white rounded-l-lg text-black outline-none"
+              className="w-full lg:w-80 h-11 px-4 bg-white rounded-l-lg text-black outline-none focus:ring-2 focus:ring-[#47898E]/50 transition-all duration-200"
             />
-            <button className="bg-white px-4 rounded-r-lg flex items-center justify-center">
+            <button className="bg-white px-4 rounded-r-lg flex items-center justify-center hover:bg-[#E6F0F2] transition-colors duration-200">
               <img src="/send.svg" className="w-4 h-4" />
             </button>
           </div>

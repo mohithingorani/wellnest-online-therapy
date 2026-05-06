@@ -29,12 +29,12 @@ export default function NavBar(){
         </button>
 
  
-        {/* ROUTES */}
-        <div className=" font-nunito *:hover:text-green-900 text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6 lg:gap-10 xl:gap-12  2xl:gap-15   ">
+{/* ROUTES */}
+        <div className=" font-nunito text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6 lg:gap-10 xl:gap-12 2xl:gap-15   ">
           {paths.map((path)=>{
             return <button onClick={()=>{
               navigate(path.path);
-            }}>{path.name}</button>
+            }} className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#47898E] after:transition-all after:duration-300 hover:text-[#47898E] hover:after:w-full">{path.name}</button>
           })}
         </div>
 
@@ -49,11 +49,11 @@ export default function NavBar(){
 
 
 const base =
-  "font-nunito w-40 text-base rounded-xl py-2 border";
+  "font-nunito w-40 text-base rounded-xl py-2 border transition-all duration-300";
 
 export function LoginButton() {
   return (
-    <button className={`${base} bg-[#D9D9D9]/20 text-[#0D393E] border-[#0D393E]`}>
+    <button className={`${base} bg-[#D9D9D9]/20 text-[#0D393E] border-[#0D393E] hover:bg-[#D9D9D9]/40 hover:scale-[1.02]`}>
       Log in
     </button>
   );
@@ -61,7 +61,7 @@ export function LoginButton() {
 
 function SignUpButton() {
   return (
-    <button className={`${base} bg-[#0D393E] text-white border-[#0D393E]`}>
+    <button className={`${base} bg-[#0D393E] text-white border-[#0D393E] hover:bg-[#2a5459] hover:scale-[1.02] hover:shadow-lg`}>
       Get Started
     </button>
   );

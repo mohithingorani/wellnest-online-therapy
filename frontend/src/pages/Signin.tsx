@@ -9,14 +9,14 @@ export default function Signin() {
             </div>
             <div className="bg-white md:rounded-2xl lg:rounded-3xl p-6 flex flex-col justify-between h-full">
 
-                {/* TOP */}
+{/* TOP */}
                 <div className="flex justify-between">
 
                     <div className="flex justify-start gap-2 items-center">
                         <img className="w-8 md:w-fit" src="/logos/wellnest.svg" alt="wellest logo"/>
                         <div className="hidden md:inline-block font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
                     </div>
-                    <button className="flex text-lg justify-start gap-2 items-center">
+                    <button className="flex text-lg justify-start gap-2 items-center hover:text-[#47898E] transition-colors duration-200">
                         <img src="/profile.svg" alt="profile"/>
                         <div>Sign Up</div>
                     </button>
@@ -27,28 +27,28 @@ export default function Signin() {
               
                 <div className="px-6 flex text-sm flex-col gap-4">
                     <div className="lg:text-3xl md:text-5xl mb-2 tracking-wide">Sign In</div>
-                    <input type="text" placeholder="Email ID" className="px-5 py-4  rounded-2xl border-2 border-black/20 w-full" />
+                    <input type="text" placeholder="Email ID" className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200" />
 
-                   <input type="text" placeholder="Password" className=" px-5 py-4  rounded-2xl border-2 border-black/20 w-full" />
+                   <input type="text" placeholder="Password" className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200" />
 
-                   <div  className="flex justify-center text-lg gap-4 items-center text-white px-3 py-2 md:px-5 md:py-3  rounded-2xl border-2 border-[#235C61] bg-[#235C61] w-full" >
+                   <div  className="flex justify-center text-lg gap-4 items-center text-white px-3 py-2 md:px-5 md:py-3 rounded-2xl border-2 border-[#235C61] bg-[#235C61] w-full cursor-pointer hover:bg-[#1a474b] hover:border-[#1a474b] hover:shadow-lg hover:scale-[1.01] transition-all duration-200" >
                         <img src="/go.svg" alt="Enter" />
                         <div>
                             Sign In
                         </div>
 
                    </div>
-                   <div className="text-base text-center">
-                    or
-                   </div>
+                    <div className="text-base text-center">
+                     or
+                    </div>
 
-    <div  className="flex justify-center text-lg gap-4 items-center text-black px-3 py-2 md:px-5 md:py-3  rounded-2xl border-2 border-black/20 bg-white w-full" >
+    <div  className="flex justify-center text-lg gap-4 items-center text-black px-3 py-2 md:px-5 md:py-3 rounded-2xl border-2 border-black/20 bg-white w-full cursor-pointer hover:bg-gray-50 hover:border-gray-400 hover:scale-[1.01] transition-all duration-200" >
                         <img src="/google.svg" alt="Enter" />
                         <div>
                             Continue With Google
                         </div>
 
-                   </div>
+                    </div>
                 </div>
 
                 <div className="text-sm">

@@ -101,15 +101,15 @@ export default function LandingPage() {
 }
 
 const base =
-  " w-38 md:w-45 2xl:w-52 rounded-full border font-nunito h-12 md:h-14 border-[#0D393E] text-sm";
+  " w-38 md:w-45 2xl:w-52 rounded-full border font-nunito h-12 md:h-14 border-[#0D393E] text-sm transition-all duration-300";
 
 function FindTherapistButton() {
   return (
-    <button className={`${base} text-white bg-[#0D393E]`}>
+    <button className={`${base} text-white bg-[#0D393E] hover:bg-[#2a5459] hover:shadow-lg hover:scale-105`}>
       Find a therapist
     </button>
   );
 }
 function ExploreResourcesButton() {
-  return <button className={`${base}`}>Explore Resources</button>;
+  return <button className={`${base}   hover:shadow-lg hover:scale-105`}>Explore Resources</button>;
 }
