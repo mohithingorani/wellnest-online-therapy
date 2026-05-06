@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import argon2 from 'argon2';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@prisma/client';
 
@@ -81,6 +82,18 @@ async function main() {
       },
     });
   }
+
+  const adminPassword = await argon2.hash('admin123');
+  await prisma.admin.upsert({
+    where: { email: 'admin@wellnest.com' },
+    update: {},
+    create: {
+      email: 'admin@wellnest.com',
+      password: adminPassword,
+      name: 'Admin',
+      role: 'super_admin',
+    },
+  });
 
   console.log('Seed completed!');
 }

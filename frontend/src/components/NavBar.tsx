@@ -130,7 +130,7 @@ export default function NavBar(){
 
 
 const base =
-  "font-nunito w-40 text-base rounded-xl py-2 border transition-all duration-300";
+  "font-nunito w-40 text-base rounded-xl py-2 border transition-all duration-300 hover:shadow-lg";
 
 export function LoginButton() {
   const navigate = useNavigate();

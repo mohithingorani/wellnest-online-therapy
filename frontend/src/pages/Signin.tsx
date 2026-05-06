@@ -29,8 +29,8 @@ export default function Signin() {
 
   return <div className="h-screen  lg:p-4 w-full font-nunito flex justify-center">
         <div className="bg-[#235C61] max-w-7xl w-full h-full md:p-4 lg:p-6 grid lg:grid-cols-2 lg:rounded-4xl">
-            <div className="relative overflow-hidden hidden lg:inline-block rounded-bl-4xl">
-                <div className="absolute text-4xl leading-10 font-medium top-20 text-white left-1/2 -translate-x-1/2">
+            <div className="relative overflow-hidden hidden lg:inline-block rounded-bl-4xl opacity-0 animate-fade-in">
+                <div className="absolute text-4xl leading-10 font-medium top-20 text-white left-1/2 -translate-x-1/2 animate-fade-in-down">
                     Your story matters here.
                 </div>
                 <img width={600} className="absolute -bottom-2 -left-2" src="/signup.png" alt="WellNest"/>
@@ -40,7 +40,7 @@ export default function Signin() {
 {/* TOP */}
                 <div className="flex justify-between">
 
-                    <div className="flex justify-start gap-2 items-center">
+                    <div className="flex justify-start gap-2 items-center opacity-0 animate-fade-in-up">
                         <img className="w-8 md:w-fit" src="/logos/wellnest.svg" alt="wellest logo"/>
                         <div className="hidden md:inline-block font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
                     </div>
@@ -50,10 +50,10 @@ export default function Signin() {
                     </button>
 
                 </div>
-                
+
                 {/* FORM */}
-              
-                <div className="px-6 flex text-sm flex-col gap-4">
+
+                <div className="px-6 flex text-sm flex-col gap-4 opacity-0 animate-fade-in-up animation-delay-200">
                     <div className="lg:text-3xl md:text-5xl mb-2 tracking-wide">Sign In</div>
 
                     {error && (
@@ -63,40 +63,40 @@ export default function Signin() {
                     )}
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                      <input 
-                        type="email" 
-                        placeholder="Email ID" 
+                      <input
+                        type="email"
+                        placeholder="Email ID"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 text-base md:text-lg" 
+                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 text-base md:text-lg"
                         required
                       />
 
-                      <input 
-                        type="password" 
-                        placeholder="Password" 
+                      <input
+                        type="password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 text-base md:text-lg" 
+                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 text-base md:text-lg"
                         required
                         minLength={8}
                       />
 
-                      <button 
+                      <button
                         type="submit"
                         disabled={loading}
-                        className="flex justify-center text-lg gap-4 items-center text-white px-3 py-2 md:px-5 md:py-3 rounded-2xl border-2 border-[#235C61] bg-[#235C61] w-full cursor-pointer hover:bg-[#1a474b] hover:border-[#1a474b] hover:shadow-lg hover:scale-[1.01] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed" 
+                        className="flex justify-center text-lg gap-4 items-center text-white px-3 py-2 md:px-5 md:py-3 rounded-2xl border-2 border-[#235C61] bg-[#235C61] w-full cursor-pointer hover:bg-[#1a474b] hover:border-[#1a474b] hover:shadow-lg hover:scale-[1.01] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <img src="/go.svg" alt="Enter" />
                         <div>{loading ? "Signing In..." : "Sign In"}</div>
 
                       </button>
                     </form>
-                    <div className="text-base text-center">
+                    <div className="text-base text-center opacity-0 animate-fade-in animation-delay-300">
                      or
                     </div>
 
-    <div  className="flex justify-center text-lg gap-4 items-center text-black px-3 py-2 md:px-5 md:py-3 rounded-2xl border-2 border-black/20 bg-white w-full cursor-pointer hover:bg-gray-50 hover:border-gray-400 hover:scale-[1.01] transition-all duration-200" >
+    <div  className="flex justify-center text-lg gap-4 items-center text-black px-3 py-2 md:px-5 md:py-3 rounded-2xl border-2 border-black/20 bg-white w-full cursor-pointer hover:bg-gray-50 hover:border-gray-400 hover:scale-[1.01] transition-all duration-200 opacity-0 animate-fade-in-up animation-delay-400" >
                         <img src="/google.svg" alt="Enter" />
                         <div>
                             Continue With Google

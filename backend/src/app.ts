@@ -7,6 +7,7 @@ import therapistRoutes from './routes/therapists';
 import pingRoutes from './routes/ping';
 import specialityRoutes from './routes/specialties';
 import userRoutes from "./routes/users";
+import adminRoutes from "./routes/admin";
 import { openApiSpec } from "./swagger";
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use("/api/therapists", therapistRoutes);
 app.use("/api/ping", pingRoutes);
 app.use("/api/specialties", specialityRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 3000;
 

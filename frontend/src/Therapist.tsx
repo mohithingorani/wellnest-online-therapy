@@ -10,10 +10,10 @@ export default function TherapistPage2() {
         {/* HERO SECTION */}
         <section className="flex flex-col lg:flex-row gap-10 items-center lg:items-start">
           {/* IMAGE */}
-          <div className="relative w-70 md:w-90">
+          <div className="relative w-70 md:w-90 opacity-0 animate-fade-in">
             <img
               src="/therapist/bg.svg"
-              className="absolute -left-6 top-20 z-0"
+              className="absolute -left-6 top-20 z-0 animate-float"
               alt="bg"
             />
             <img
@@ -25,28 +25,28 @@ export default function TherapistPage2() {
 
           {/* INFO */}
           <div className="flex-1 flex flex-col gap-4 text-center lg:text-left">
-            <div className="flex items-center gap-2 justify-center lg:justify-start">
+            <div className="flex items-center gap-2 justify-center lg:justify-start opacity-0 animate-fade-in-up">
               <div className="text-xs bg-[#E6F4F1] text-[#0D393E] px-3 py-1 rounded-full">
                 Verified Therapist
               </div>
             </div>
 
-            <h1 className="font-playfair text-3xl md:text-5xl text-[#0D393E] font-medium">
+            <h1 className="font-playfair text-3xl md:text-5xl text-[#0D393E] font-medium opacity-0 animate-fade-in-up animation-delay-100">
               Dr. Ananya Sharma
             </h1>
 
-            <p className="text-lg md:text-xl text-[#3E464E]">
+            <p className="text-lg md:text-xl text-[#3E464E] opacity-0 animate-fade-in-up animation-delay-200">
               Clinical Psychologist
             </p>
 
             {/* STATS */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-[#5F6C72]">
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-[#5F6C72] opacity-0 animate-fade-in-up animation-delay-300">
               <div>8+ years experience</div>
               <div>5000+ sessions</div>
             </div>
 
             {/* TAGS */}
-            <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start opacity-0 animate-fade-in-up animation-delay-400">
               {["Anxiety", "Depression", "Stress", "Trauma", "Self-esteem"].map(
                 (tag) => (
                   <span

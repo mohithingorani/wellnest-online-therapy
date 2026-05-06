@@ -31,8 +31,8 @@ export default function SignUp() {
   return (
     <div className="h-screen lg:p-4 w-full font-nunito flex justify-center">
       <div className="bg-[#235C61] max-w-7xl w-full h-full md:p-4 lg:p-6 grid lg:grid-cols-2 lg:rounded-4xl">
-        <div className="relative overflow-hidden hidden lg:inline-block rounded-bl-4xl">
-          <div className="absolute text-4xl leading-10 font-medium top-20 text-white left-1/2 -translate-x-1/2">
+        <div className="relative overflow-hidden hidden lg:inline-block rounded-bl-4xl opacity-0 animate-fade-in">
+          <div className="absolute text-4xl leading-10 font-medium top-20 text-white left-1/2 -translate-x-1/2 animate-fade-in-down">
             Your story matters here.
           </div>
           <img width={600} className="absolute -bottom-2 -left-2" src="/signup.png" alt="WellNest"/>
@@ -40,7 +40,7 @@ export default function SignUp() {
         <div className="bg-white md:rounded-2xl lg:rounded-3xl p-6 flex flex-col justify-between h-full">
           {/* TOP */}
           <div className="flex justify-between">
-            <div className="flex justify-start gap-2 items-center">
+            <div className="flex justify-start gap-2 items-center opacity-0 animate-fade-in-up">
               <img className="w-8 md:w-fit" src="/logos/wellnest.svg" alt="wellest logo"/>
               <div className="hidden md:inline-block font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
             </div>
@@ -51,7 +51,7 @@ export default function SignUp() {
           </div>
 
           {/* FORM */}
-          <div className="px-6 flex text-sm flex-col gap-4">
+          <div className="px-6 flex text-sm flex-col gap-4 opacity-0 animate-fade-in-up animation-delay-200">
             <div className="lg:text-3xl md:text-5xl mb-2 tracking-wide">Create Account</div>
 
             {error && (

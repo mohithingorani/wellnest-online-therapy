@@ -8,6 +8,8 @@ declare global {
     interface Request {
       authUser?: AuthUser;
       sessionToken?: string;
+      adminId?: number;
+      adminRole?: string;
     }
   }
 }
