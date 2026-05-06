@@ -8,6 +8,7 @@ export interface Therapist {
   specialities: { id: string; name: string }[];
   sessionTypes: { id: number; name: string }[];
   therapyTypes: { id: number; name: string }[];
+  languages: { id: number; name: string }[];
 }
 
 export async function fetchTherapists(): Promise<Therapist[]> {

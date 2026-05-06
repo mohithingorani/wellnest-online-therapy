@@ -1,7 +1,53 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
+import { fetchTherapist } from "./services/api";
 
 export default function TherapistPage2() {
+  const { id } = useParams<{ id: string }>();
+  const [therapist, setTherapist] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (id) {
+      fetchTherapist(parseInt(id))
+        .then(setTherapist)
+        .catch((e) => setError(e.message))
+        .finally(() => setLoading(false));
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
+        <NavBar />
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="text-[#0D393E]">Loading...</div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !therapist) {
+    return (
+      <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
+        <NavBar />
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="text-red-500">Therapist not found</div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const specialties = therapist.specialities?.map((s: any) => s.name) || [];
+  const sessionTypes = therapist.sessionTypes?.map((s: any) => s.name) || [];
+  const therapyTypes = therapist.therapyTypes?.map((t: any) => t.name) || [];
+  const languages = therapist.languages?.map((l: any) => l.name) || [];
+
   return (
     <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4 text-[#235C61] font-nunito">
       <NavBar />
@@ -29,49 +75,73 @@ export default function TherapistPage2() {
               <div className="text-xs bg-[#E6F4F1] text-[#0D393E] px-3 py-1 rounded-full">
                 Verified Therapist
               </div>
+              <div className="text-xs bg-[#E77D3C]/10 text-[#E77D3C] px-3 py-1 rounded-full">
+                {therapist.gender || "Gender not specified"}
+              </div>
             </div>
 
             <h1 className="font-playfair text-3xl md:text-5xl text-[#0D393E] font-medium opacity-0 animate-fade-in-up animation-delay-100">
-              Dr. Ananya Sharma
+              {therapist.name}
             </h1>
 
             <p className="text-lg md:text-xl text-[#3E464E] opacity-0 animate-fade-in-up animation-delay-200">
-              Clinical Psychologist
+              Licensed Therapist
             </p>
 
             {/* STATS */}
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-[#5F6C72] opacity-0 animate-fade-in-up animation-delay-300">
-              <div>8+ years experience</div>
-              <div>5000+ sessions</div>
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+                </svg>
+                {therapist.experience}+ years experience
+              </div>
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                {Math.floor(therapist.experience * 50)}+ sessions
+              </div>
+              {languages.length > 0 && (
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 8H5a1 1 0 110 2H3V3a1 1 0 011-1zm0 6a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 12H5a1 1 0 110 2H3v-1a1 1 0 011-1z" clipRule="evenodd" />
+                  </svg>
+                  {languages.join(", ")}
+                </div>
+              )}
             </div>
 
             {/* TAGS */}
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start opacity-0 animate-fade-in-up animation-delay-400">
-              {["Anxiety", "Depression", "Stress", "Trauma", "Self-esteem"].map(
-                (tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 bg-[#E6F4F1] text-[#0D393E] rounded-full text-sm"
-                  >
-                    {tag}
-                  </span>
-                ),
+              {specialties.slice(0, 5).map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 bg-[#E6F4F1] text-[#0D393E] rounded-full text-sm"
+                >
+                  {tag}
+                </span>
+              ))}
+              {specialties.length > 5 && (
+                <span className="px-3 py-1 bg-[#E6F4F1] text-[#0D393E] rounded-full text-sm">
+                  +{specialties.length - 5} more
+                </span>
               )}
             </div>
 
             {/* DESCRIPTION */}
             <p className="text-[#3E464E] max-w-xl">
-              Hi, I’m Ananya. I help adults navigate anxiety, overthinking, and
+              Hi, I'm {therapist.name?.split(" ")[1] || "there"}. I help adults navigate anxiety, overthinking, and
               life transitions with compassion and evidence-based care.
-              Together, we’ll work toward clarity, healing, and growth.
+              Together, we'll work toward clarity, healing, and growth.
             </p>
 
             {/* BUTTONS */}
             <div className="flex gap-4 justify-center lg:justify-start mt-2">
-              <button className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl">
+              <button className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl hover:bg-[#2a5459] transition-all duration-300 shadow-lg hover:shadow-xl">
                 Book a session
               </button>
-              <button className="border border-[#0D393E] w-50 px-6 py-3 rounded-2xl">
+              <button className="border border-[#0D393E] w-50 px-6 py-3 rounded-2xl hover:bg-[#E6F4F1] transition-all duration-300">
                 Message first
               </button>
             </div>
@@ -101,7 +171,7 @@ export default function TherapistPage2() {
               </div>
               <div>
                 <div className="font-semibold text-[#0D393E]">Session type</div>
-                <div className="text-[#3E464E] text-sm">Video, In person</div>
+                <div className="text-[#3E464E] text-sm">{sessionTypes.join(", ") || "Not specified"}</div>
               </div>
             </div>
 
@@ -123,72 +193,51 @@ export default function TherapistPage2() {
         </div>
 
         {/* LOWER SECTION */}
-        <section className="mt-10 bg-[#F1F2F1] grid lg:grid-cols-2 lg:gap-8 rounded-2xl">
-          {/* LEFT */}
-          <div className=" p-6 ">
-            <div className="lg:border-r border-black/10">
-            <div className="flex justify-start items-center mb-4 gap-2">
+        <section className="mt-10 bg-[#F1F2F1] rounded-2xl p-6 lg:p-8">
+          <div className="flex justify-start items-center mb-6 gap-2">
             <img src="/ticks/leaf.svg" alt="leaf"/>
             <h2 className="font-playfair text-2xl text-[#0D393E] ">
               Is this right for you?
             </h2>
-</div>
-            <div className="grid md:grid-cols-2 gap-6 text-sm">
-              <div>
-                
-                <h3 className="font-semibold mb-2">I can help you with</h3>
-                <ul className="space-y-3 text-[#3E464E]">
-                  {[
-                    "Anxiety & overthinking",
-                    "Stress & burnout",
-                    "Relationship challenges",
-                    "Life transitions",
-                    "Low self-esteem",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <img src="/ticks/tick.svg" alt="tick" className="mt-1" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold mb-2">
-                  I may not be the best fit if
-                </h3>
-                <ul className="space-y-3 text-[#3E464E]">
-                  {[
-                    "Need medication management",
-                    "In crisis / immediate help",
-                    "Prefer quick fixes only",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <img
-                        src="/ticks/cross.svg" // use a cross icon instead of tick
-                        alt="not suitable"
-                        className="mt-1 shrink-0"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            </div>
           </div>
+          <div className="grid md:grid-cols-2 gap-6 text-sm">
+            <div>
+              
+              <h3 className="font-semibold mb-2">I can help you with</h3>
+              <ul className="space-y-3 text-[#3E464E]">
+                {specialties.slice(0, 5).map((item: string) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <img src="/ticks/tick.svg" alt="tick" className="mt-1" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* RIGHT */}
-          <div className=" p-6 ">
-            <h2 className="font-playfair text-2xl text-[#0D393E] mb-4">
-              Get to know me
-            </h2>
-
-            <div className="rounded-xl overflow-hidden">
-              <img src="/therapist/video.png" alt="video" className="w-full" />
+            <div>
+              <h3 className="font-semibold mb-2">
+                I may not be the best fit if
+              </h3>
+              <ul className="space-y-3 text-[#3E464E]">
+                {[
+                  "Need medication management",
+                  "In crisis / immediate help",
+                  "Prefer quick fixes only",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <img
+                      src="/ticks/cross.svg"
+                      alt="not suitable"
+                      className="mt-1 shrink-0"
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
+
         {/* APPROACH + REVIEWS */}
         <section className="mt-10 bg-[#F5F1ED] rounded-2xl p-6 md:p-8 grid lg:grid-cols-2 gap-8">
           {/* LEFT - APPROACH */}
@@ -204,23 +253,32 @@ export default function TherapistPage2() {
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6">
-              <ApproachItem
-                title="Evidence-based"
-                text="CBT, mindfulness, and trauma-informed care."
-              />
-
-              <ApproachItem
-                title="Holistic & Personalized"
-                text="We address thoughts, emotions, behaviors, and environment."
-              />
-
-              <ApproachItem
-                title="Safe & Supportive"
-                text="A judgment-free space to explore and grow."
-              />
+              {therapyTypes.slice(0, 3).map((approach: string) => (
+                <ApproachItem
+                  key={approach}
+                  title={approach}
+                  text={`Specialized ${approach.toLowerCase()} therapy techniques`}
+                />
+              ))}
+              {therapyTypes.length === 0 && (
+                <>
+                  <ApproachItem
+                    title="Evidence-based"
+                    text="CBT, mindfulness, and trauma-informed care."
+                  />
+                  <ApproachItem
+                    title="Holistic & Personalized"
+                    text="We address thoughts, emotions, behaviors, and environment."
+                  />
+                  <ApproachItem
+                    title="Safe & Supportive"
+                    text="A judgment-free space to explore and grow."
+                  />
+                </>
+              )}
             </div>
 
-            <button className="mt-6 text-[#0D393E] font-medium">
+            <button className="mt-6 text-[#0D393E] font-medium hover:text-[#47898E] transition-colors">
               Learn more about my approach →
             </button>
           </div>
@@ -232,20 +290,22 @@ export default function TherapistPage2() {
                 What clients say
               </h2>
 
-              <button className="text-sm text-[#0D393E]">
+              <button className="text-sm text-[#0D393E] hover:text-[#47898E] transition-colors">
                 View all reviews →
               </button>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
               <ReviewCard
-                text="Ananya is warm, understanding, and an amazing listener. I always leave our sessions feeling lighter and more in control."
-                name="Riya S."
+                text="Amazing therapist who truly listens. I've made so much progress since starting."
+                name="Client A."
+                rating={5}
               />
 
               <ReviewCard
-                text="I was nervous about starting therapy, but Ananya made me feel comfortable from day one. Highly recommend!"
-                name="Karan M."
+                text="Finally found someone who understands. Highly recommend!"
+                name="Client B."
+                rating={5}
               />
             </div>
 
@@ -258,16 +318,33 @@ export default function TherapistPage2() {
             </div>
           </div>
         </section>
+
+        {/* THERAPY APPROACHES */}
+        <section className="mt-10 mb-10">
+          <h2 className="font-playfair text-2xl text-[#0D393E] mb-6 text-center">
+            Therapy Approaches
+          </h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {therapyTypes.map((type: string) => (
+              <span key={type} className="px-4 py-2 bg-[#E6F4F1] text-[#0D393E] rounded-full">
+                {type}
+              </span>
+            ))}
+            {therapyTypes.length === 0 && (
+              <span className="text-[#3E464E]">No specific approaches listed</span>
+            )}
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
   );
 }
+
 function ApproachItem({ title, text }: { title: string; text: string }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="w-12 h-12 rounded-full bg-[#E6F4F1] flex items-center justify-center">
-        {/* replace with icons later */}
         <div className="w-5 h-5 bg-[#0D393E] rounded-full" />
       </div>
       <div className="font-semibold text-[#0D393E]">{title}</div>
@@ -276,11 +353,13 @@ function ApproachItem({ title, text }: { title: string; text: string }) {
   );
 }
 
-function ReviewCard({ text, name }: { text: string; name: string }) {
+function ReviewCard({ text, name, rating }: { text: string; name: string; rating: number }) {
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm">
-      <div className="text-yellow-400 text-sm mb-2">★★★★★ 5.0</div>
-      <p className="text-[#3E464E] text-sm mb-3">“{text}”</p>
+      <div className="text-yellow-400 text-sm mb-2">
+        {"★".repeat(rating)}{"☆".repeat(5 - rating)} 5.0
+      </div>
+      <p className="text-[#3E464E] text-sm mb-3">"{text}"</p>
       <div className="text-sm font-medium text-[#0D393E]">— {name}</div>
     </div>
   );

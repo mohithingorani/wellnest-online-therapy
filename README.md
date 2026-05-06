@@ -50,7 +50,7 @@ WELLNEST/
 ### Frontend Features
 - **Therapist Directory** - Browse and search therapists with filtering options
 - **Therapist Profiles** - View detailed therapist information including specializations
-- **Filter System** - Filter by concern, therapy type, session type, and location/language
+- **Filter System** - Filter by concern, therapy type, session type, and language
 - **User Authentication** - Sign in functionality
 - **Responsive Design** - Mobile-first responsive layouts
 - **Trust Indicators** - Display of confidentiality, verification, and flexibility features

@@ -42,6 +42,7 @@ model Therapist {
   sessionTypes SessionType[] @relation("TherapistSessionTypes")
   specialities Concerns[] @relation("TherapistConcerns")
   therapyTypes TherapyType[] @relation("TherapistTherapyTypes")
+  languages    Language[]   @relation("TherapistLanguages")
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
@@ -82,4 +83,12 @@ model TherapyType {
 
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model Language {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  therapists  Therapist[] @relation("TherapistLanguages")
+
+  createdAt   DateTime  @default(now())
 }

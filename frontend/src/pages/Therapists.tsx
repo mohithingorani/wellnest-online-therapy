@@ -15,6 +15,7 @@ export default function TherapistsPage() {
     concern: "",
     therapyType: "",
     sessionType: "",
+    language: "",
     location: "",
   });
   const [filters, setFilters] = useState<FiltersState>({
@@ -43,6 +44,13 @@ export default function TherapistsPage() {
       if (topFilters.therapyType) {
         const therapistTherapyTypes = t.therapyTypes.map((tt) => tt.name.toLowerCase());
         if (!therapistTherapyTypes.includes(topFilters.therapyType.toLowerCase())) {
+          return false;
+        }
+      }
+
+      if (topFilters.language) {
+        const therapistLanguages = t.languages.map((l) => l.name.toLowerCase());
+        if (!therapistLanguages.includes(topFilters.language.toLowerCase())) {
           return false;
         }
       }
@@ -181,26 +189,36 @@ export default function TherapistsPage() {
               </div>
               <div className="flex flex-col gap-1">
                 <label className="text-xs text-[#6B7280] font-nunito">
-                  Location / Language
+                  Language
                 </label>
                 <select
                   className="h-12 px-4 rounded-lg border border-[#E5E7EB] bg-white text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 cursor-pointer hover:border-[#d1d5db]"
-                  value={topFilters.location}
-                  onChange={(e) => setTopFilters((prev) => ({ ...prev, location: e.target.value }))}
+                  value={topFilters.language}
+                  onChange={(e) => setTopFilters((prev) => ({ ...prev, language: e.target.value }))}
                 >
-                  <option value="">All</option>
+                  <option value="">All languages</option>
+                  <option value="English">English</option>
+                  <option value="Hindi">Hindi</option>
+                  <option value="Spanish">Spanish</option>
+                  <option value="French">French</option>
+                  <option value="German">German</option>
+                  <option value="Mandarin">Mandarin</option>
+                  <option value="Tamil">Tamil</option>
+                  <option value="Telugu">Telugu</option>
+                  <option value="Bengali">Bengali</option>
+                  <option value="Marathi">Marathi</option>
                 </select>
               </div>
               <div className="flex items-end">
                 <button
                   className="w-full h-12 rounded-lg font-nunito bg-[#0D393E] text-white font-medium flex items-center justify-center gap-3 hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300"
                   onClick={() => {
-                    setTopFilters({ concern: "", therapyType: "", sessionType: "", location: "" });
+                    setTopFilters({ concern: "", therapyType: "", sessionType: "", language: "", location: "" });
                     setFilters({ concerns: [], therapyApproaches: [], sessionType: "", gender: "" });
                   }}
                 >
                   <img src="/search.svg" alt="search" />
-                  <div>Clear</div>
+                  <div>Search</div>
                 </button>
               </div>
             </div>
@@ -225,6 +243,7 @@ export default function TherapistsPage() {
                     name={t.name}
                     experience={t.experience}
                     specialities={t.specialities.map((s) => s.name)}
+                    languages={t.languages.map((l) => l.name)}
                   />
                 </div>
               ))}

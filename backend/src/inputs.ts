@@ -68,6 +68,12 @@ export const TherapyTypeSchema = z.object({
   updatedAt: z.date(),
 });
 
+// Language
+export const LanguageSchema = z.object({
+  id,
+  name: z.string().min(1),
+});
+
 export const CreateSpecialtySchema = z.object({
   name: z.string().min(1),
 });
@@ -82,6 +88,7 @@ export const TherapistSchema = z.object({
   specialities: z.array(SpecialtySchema),
   sessionTypes: z.array(SessionTypeSchema),
   therapyTypes: z.array(TherapyTypeSchema),
+  languages: z.array(LanguageSchema),
 
   createdAt: z.date(),
   updatedAt: z.date(),

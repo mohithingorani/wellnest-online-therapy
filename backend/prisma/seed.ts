@@ -13,6 +13,7 @@ async function main() {
   await prisma.therapist.deleteMany();
   await prisma.sessionType.deleteMany();
   await prisma.therapyType.deleteMany();
+  await prisma.language.deleteMany();
   await prisma.concerns.deleteMany();
   await prisma.admin.deleteMany();
 
@@ -86,6 +87,25 @@ async function main() {
     createdTherapyTypes[tt.name] = created.id;
   }
 
+  const languages = [
+    { name: 'English' },
+    { name: 'Hindi' },
+    { name: 'Spanish' },
+    { name: 'French' },
+    { name: 'German' },
+    { name: 'Mandarin' },
+    { name: 'Tamil' },
+    { name: 'Telugu' },
+    { name: 'Bengali' },
+    { name: 'Marathi' },
+  ];
+
+  const createdLanguages: Record<string, number> = {};
+  for (const lang of languages) {
+    const created = await prisma.language.create({ data: lang });
+    createdLanguages[lang.name] = created.id;
+  }
+
   const concerns = [
     'Anxiety', 'Depression', 'Stress Management', 'Trauma', 'Relationship Issues',
     'Burnout', 'Self Esteem', 'Panic Attacks', 'OCD', 'ADHD', 'Grief',
@@ -99,18 +119,18 @@ async function main() {
   }
 
   const therapists = [
-    { name: 'Dr. Sarah Johnson', experience: 8, gender: 'Female', sessionTypes: ['Online', 'Chat'], concerns: ['Anxiety', 'Stress Management', 'Relationship Issues'], therapyTypes: ['CBT', 'Mindfulness'] },
-    { name: 'Dr. Michael Chen', experience: 12, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Trauma'], therapyTypes: ['Psychodynamic', 'CBT'] },
-    { name: 'Dr. Emily Davis', experience: 5, gender: 'Female', sessionTypes: ['Online', 'Offline', 'Chat'], concerns: ['Anxiety', 'Depression', 'Stress Management'], therapyTypes: ['CBT', 'Humanistic'] },
-    { name: 'Dr. Priya Sharma', experience: 10, gender: 'Female', sessionTypes: ['Online', 'Group'], concerns: ['Burnout', 'Self Esteem', 'Loneliness'], therapyTypes: ['Mindfulness', 'Solution-focused'] },
-    { name: 'Dr. James Wilson', experience: 15, gender: 'Male', sessionTypes: ['Offline'], concerns: ['Trauma', 'Family Conflict'], therapyTypes: ['Psychodynamic', 'CBT'] },
-    { name: 'Dr. Kavya Mehta', experience: 7, gender: 'Female', sessionTypes: ['Online', 'Emergency'], concerns: ['Panic Attacks', 'Social Anxiety'], therapyTypes: ['CBT', 'Mindfulness'] },
-    { name: 'Dr. Robert Taylor', experience: 18, gender: 'Male', sessionTypes: ['Offline', 'Group'], concerns: ['Anger Management', 'OCD'], therapyTypes: ['CBT', 'Psychodynamic'] },
-    { name: 'Dr. Aisha Khan', experience: 9, gender: 'Female', sessionTypes: ['Chat', 'Online'], concerns: ['Anxiety', 'ADHD'], therapyTypes: ['CBT', 'Solution-focused'] },
-    { name: 'Dr. Arjun Malhotra', experience: 11, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Grief'], therapyTypes: ['Humanistic', 'Psychodynamic'] },
-    { name: 'Dr. Lisa Anderson', experience: 6, gender: 'Female', sessionTypes: ['Chat'], concerns: ['Self Esteem', 'Relationship Issues'], therapyTypes: ['Humanistic', 'Mindfulness'] },
-    { name: 'Dr. Neha Verma', experience: 4, gender: 'Female', sessionTypes: ['Online'], concerns: ['Loneliness', 'Stress Management'], therapyTypes: ['Solution-focused', 'Humanistic'] },
-    { name: 'Dr. David Miller', experience: 14, gender: 'Male', sessionTypes: ['Offline', 'Emergency'], concerns: ['Trauma', 'Panic Attacks', 'Anger Management'], therapyTypes: ['CBT', 'Psychodynamic'] },
+    { name: 'Dr. Sarah Johnson', experience: 8, gender: 'Female', sessionTypes: ['Online', 'Chat'], concerns: ['Anxiety', 'Stress Management', 'Relationship Issues'], therapyTypes: ['CBT', 'Mindfulness'], languages: ['English', 'Hindi'] },
+    { name: 'Dr. Michael Chen', experience: 12, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Trauma'], therapyTypes: ['Psychodynamic', 'CBT'], languages: ['English', 'Mandarin'] },
+    { name: 'Dr. Emily Davis', experience: 5, gender: 'Female', sessionTypes: ['Online', 'Offline', 'Chat'], concerns: ['Anxiety', 'Depression', 'Stress Management'], therapyTypes: ['CBT', 'Humanistic'], languages: ['English', 'Spanish'] },
+    { name: 'Dr. Priya Sharma', experience: 10, gender: 'Female', sessionTypes: ['Online', 'Group'], concerns: ['Burnout', 'Self Esteem', 'Loneliness'], therapyTypes: ['Mindfulness', 'Solution-focused'], languages: ['English', 'Hindi', 'Tamil'] },
+    { name: 'Dr. James Wilson', experience: 15, gender: 'Male', sessionTypes: ['Offline'], concerns: ['Trauma', 'Family Conflict'], therapyTypes: ['Psychodynamic', 'CBT'], languages: ['English'] },
+    { name: 'Dr. Kavya Mehta', experience: 7, gender: 'Female', sessionTypes: ['Online', 'Emergency'], concerns: ['Panic Attacks', 'Social Anxiety'], therapyTypes: ['CBT', 'Mindfulness'], languages: ['English', 'Hindi', 'Marathi'] },
+    { name: 'Dr. Robert Taylor', experience: 18, gender: 'Male', sessionTypes: ['Offline', 'Group'], concerns: ['Anger Management', 'OCD'], therapyTypes: ['CBT', 'Psychodynamic'], languages: ['English', 'French', 'German'] },
+    { name: 'Dr. Aisha Khan', experience: 9, gender: 'Female', sessionTypes: ['Chat', 'Online'], concerns: ['Anxiety', 'ADHD'], therapyTypes: ['CBT', 'Solution-focused'], languages: ['English', 'Hindi'] },
+    { name: 'Dr. Arjun Malhotra', experience: 11, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Grief'], therapyTypes: ['Humanistic', 'Psychodynamic'], languages: ['English', 'Hindi', 'Telugu'] },
+    { name: 'Dr. Lisa Anderson', experience: 6, gender: 'Female', sessionTypes: ['Chat'], concerns: ['Self Esteem', 'Relationship Issues'], therapyTypes: ['Humanistic', 'Mindfulness'], languages: ['English', 'Spanish'] },
+    { name: 'Dr. Neha Verma', experience: 4, gender: 'Female', sessionTypes: ['Online'], concerns: ['Loneliness', 'Stress Management'], therapyTypes: ['Solution-focused', 'Humanistic'], languages: ['English', 'Hindi', 'Bengali'] },
+    { name: 'Dr. David Miller', experience: 14, gender: 'Male', sessionTypes: ['Offline', 'Emergency'], concerns: ['Trauma', 'Panic Attacks', 'Anger Management'], therapyTypes: ['CBT', 'Psychodynamic'], languages: ['English', 'German'] },
   ];
 
   for (const t of therapists) {
@@ -122,6 +142,7 @@ async function main() {
         sessionTypes: { connect: t.sessionTypes.map(st => ({ id: createdSessionTypes[st] })) },
         specialities: { connect: t.concerns.map(c => ({ id: createdConcerns[c] })) },
         therapyTypes: { connect: t.therapyTypes.map(tt => ({ id: createdTherapyTypes[tt] })) },
+        languages: { connect: t.languages.map(lang => ({ id: createdLanguages[lang] })) },
       },
     });
   }

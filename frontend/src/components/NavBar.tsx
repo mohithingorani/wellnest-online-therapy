@@ -64,14 +64,24 @@ export default function NavBar(){
         </div>
 
         {/* BUTTONS */}
-        <div className="hidden  xl:flex  justify-between gap-4 ">
+        <div className="hidden  xl:flex  justify-between gap-4 items-center">
             {user ? (
-              <button 
-                onClick={handleLogout}
-                className="font-nunito w-40 text-base rounded-xl py-2 border transition-all duration-300 bg-[#D9D9D9]/20 text-[#0D393E] border-[#0D393E] hover:bg-[#D9D9D9]/40 hover:scale-[1.02]"
-              >
-                Log out
-              </button>
+              <div className="relative group flex items-center gap-3">
+                <div className="w-7 h-7 rounded-full bg-[#47898E] text-white flex items-center justify-center text-xs font-bold">
+                  {user.name?.charAt(0).toUpperCase() || "U"}
+                </div>
+                <span className="font-nunito text-[#63676A] font-bold text-lg cursor-pointer hover:text-[#47898E] transition-colors">
+                  {user.name?.split(" ")[0]?.charAt(0).toUpperCase() + user.name?.split(" ")[0]?.slice(1)}
+                </span>
+                <div className="absolute right-0 top-full mt-2 w-28 bg-white rounded-xl shadow-lg border border-[#EFEAE7] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <button 
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-[#0D393E] hover:bg-[#F9F7F5] rounded-xl"
+                  >
+                    Log out
+                  </button>
+                </div>
+              </div>
             ) : (
               <>
                 <LoginButton />

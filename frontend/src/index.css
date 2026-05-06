@@ -79,6 +79,12 @@ body {
   50% { opacity: 0.5; }
 }
 
+@keyframes loading {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
 }

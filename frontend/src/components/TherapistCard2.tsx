@@ -5,9 +5,10 @@ interface TherapistCard2Props {
   name: string;
   experience: number;
   specialities: string[];
+  languages?: string[];
 }
 
-export default function TherapistCard2({ id, name, experience, specialities }: TherapistCard2Props) {
+export default function TherapistCard2({ id, name, experience, specialities, languages = [] }: TherapistCard2Props) {
   const navigate = useNavigate();
   return (
     <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:shadow-lg hover:border-[#d4d0cc] hover:-translate-y-1 transition-all duration-300">
@@ -70,7 +71,7 @@ export default function TherapistCard2({ id, name, experience, specialities }: T
 
         <div className="flex items-center gap-1">
           <img src="/globe.svg" className="w-3 h-3 md:w-4 md:h-4" />
-          English, Hindi
+          {languages.length > 0 ? languages.join(", ") : "English, Hindi"}
         </div>
       </div>
 

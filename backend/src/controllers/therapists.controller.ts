@@ -19,6 +19,7 @@ export async function getTherapists(req: Request, res: Response) {
         specialities: true,
         sessionTypes: true,
         therapyTypes: true,
+        languages: true,
       },
     });
 
@@ -54,6 +55,7 @@ export async function getTherapistById(req: Request, res: Response) {
         specialities: true,
         sessionTypes: true,
         therapyTypes: true,
+        languages: true,
       },
     });
 
@@ -101,7 +103,7 @@ export const createTherapist = async (req: Request, res: Response) => {
 
         const therapistWithSpecialties = await prisma.therapist.findUnique({
             where: { id: therapist.id },
-            include: { specialities: true, sessionTypes: true, therapyTypes: true },
+            include: { specialities: true, sessionTypes: true, therapyTypes: true, languages: true },
         });
 
         const finalParsed = TherapistSchema.parse(therapistWithSpecialties);
@@ -171,7 +173,7 @@ export const updateTherapist = async (req: Request, res: Response) => {
 
     const updatedTherapist = await prisma.therapist.findUnique({
       where: { id: parsedParams.data.id },
-      include: { specialities: true, sessionTypes: true, therapyTypes: true },
+      include: { specialities: true, sessionTypes: true, therapyTypes: true, languages: true },
     });
 
     const finalParsed = TherapistSchema.parse(updatedTherapist);
