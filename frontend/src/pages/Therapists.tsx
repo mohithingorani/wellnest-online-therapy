@@ -1,10 +1,23 @@
+import { useEffect, useState } from "react";
 import FiltersSidebar from "../components/FilterSideBar";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
 import TherapistCard2 from "../components/TherapistCard2";
+import { fetchTherapists } from "../services/api";
+import type { Therapist } from "../services/api";
 
 export default function TherapistsPage() {
+  const [therapists, setTherapists] = useState<Therapist[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetchTherapists()
+      .then(setTherapists)
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="bg-linear-to-b bg-[#FFFDF8]  pt-4">
@@ -17,16 +30,16 @@ export default function TherapistsPage() {
                 <div className=" flex-1 ">
                     {/* HEADING  */}
 
-                <div className="mb-4 animate-fade-in-up">
+                <div className="mb-4">
                     <SecureButton />
                 </div>
-                    <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2 animate-fade-in-up animation-delay-100">
+                    <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2">
                     <div className="text-[#0D393E] font-medium">
                         Find the right
                     </div>
                     <div className="text-[#E77D3C] font-semibold italic">therapist for you.</div>
                     </div>
-                    <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E] animate-fade-in-up animation-delay-200">
+                    <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E]">
                     <div>Browse verified therapists and find the perfect</div>
                     <div>match for your needs.</div>
                     </div>
@@ -40,7 +53,7 @@ export default function TherapistsPage() {
         </section>
         
       <section className="mt-10">
-  <div className="bg-[#F9F7F5] border border-[#EFEAE7] rounded-2xl p-4 md:p-6 shadow-sm animate-fade-in-up animation-delay-300">
+  <div className="bg-[#F9F7F5] border border-[#EFEAE7] rounded-2xl p-4 md:p-6 shadow-sm">
     
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 items-center">
       
@@ -99,18 +112,23 @@ export default function TherapistsPage() {
 <section className="mt-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* LEFT SECTION */}
-         <div className="hidden lg:block lg:col-span-1 animate-fade-in-up animation-delay-400">
+         <div className="hidden lg:block lg:col-span-1">
            <FiltersSidebar />
          </div>
 
          {/* RIGHT SECTION */}
 <div className="col-span-1 lg:col-span-3 flex flex-col gap-4">
-              <TherapistCard2/>
-            <TherapistCard2/>
-            <TherapistCard2/>
-            <TherapistCard2/>
-            <TherapistCard2/>
-            <TherapistCard2/>
+            {loading && <div className="text-center py-8">Loading...</div>}
+            {error && <div className="text-center py-8 text-red-500">{error}</div>}
+            {!loading && !error && therapists.map((t) => (
+              <TherapistCard2
+                key={t.id}
+                id={t.id}
+                name={t.name}
+                experience={t.experience}
+                specialities={t.specialities.map((s) => s.name)}
+              />
+            ))}
         </div>
     </div>
 

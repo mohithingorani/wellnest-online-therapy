@@ -1,9 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
-export default function TherapistCard2() {
+interface TherapistCard2Props {
+  id: number;
+  name: string;
+  experience: number;
+  specialities: string[];
+}
+
+export default function TherapistCard2({ id, name, experience, specialities }: TherapistCard2Props) {
   const navigate = useNavigate();
   return (
-    <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:shadow-lg hover:border-[#d4d0cc] hover:-translate-y-1 transition-all duration-300 animate-fade-in-up">
+    <div className="w-full bg-white border border-[#EFEAE7] rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:shadow-lg hover:border-[#d4d0cc] hover:-translate-y-1 transition-all duration-300">
       {/* TOP: IMAGE + CONTENT */}
       <div className="flex gap-4">
         {/* IMAGE */}
@@ -15,7 +22,7 @@ export default function TherapistCard2() {
           />
 
           <div className="absolute bottom-1 left-1 bg-white/90 text-[#0D393E] text-[10px] px-2 py-0.5 rounded shadow">
-            8+ yrs
+            {experience}+ yrs
           </div>
         </div>
 
@@ -24,7 +31,7 @@ export default function TherapistCard2() {
           {/* Name */}
           <div className="flex items-center gap-1">
             <h3 className="text-sm md:text-lg font-playfair text-[#0D393E] font-semibold leading-tight">
-              Dr. Ananya Sharma
+              {name}
             </h3>
             <img src="/verified.svg" className="w-3 h-3 md:w-4 md:h-4" />
           </div>
@@ -42,7 +49,7 @@ export default function TherapistCard2() {
 
           {/* Tags (limit on mobile) */}
           <div className="flex flex-wrap gap-1 mt-2">
-            {["Anxiety", "Depression", "Stress"].map((tag) => (
+            {specialities.slice(0, 3).map((tag) => (
               <span
                 key={tag}
                 className="text-[10px] md:text-xs px-2 py-0.5 rounded-full bg-[#E6F0F2] text-[#0D393E]"
@@ -70,7 +77,7 @@ export default function TherapistCard2() {
       {/* CTA */}
       <div className="flex gap-2">
         <button onClick={()=>{
-          navigate("/therapists/1");
+          navigate(`/therapists/${id}`);
         }} className="flex-1 h-10 md:h-11 rounded-lg bg-[#0D393E] text-white text-sm font-medium hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300 ">
           View profile
         </button>

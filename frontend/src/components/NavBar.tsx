@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getAuthUser, authService, clearAuthUser } from "../services/auth";
 import { useEffect, useState } from "react";
 
@@ -12,6 +12,7 @@ export default function NavBar(){
   { name: "About", path: "/about" },
 ];
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(getAuthUser());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -56,9 +57,10 @@ export default function NavBar(){
 {/* ROUTES */}
         <div className=" font-nunito text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6 lg:gap-10 xl:gap-12 2xl:gap-15   ">
           {paths.map((path)=>{
+            const isActive = location.pathname === path.path;
             return <button onClick={()=>{
               navigate(path.path);
-            }} className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#47898E] after:transition-all after:duration-300 hover:text-[#47898E] hover:after:w-full">{path.name}</button>
+            }} className={`relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#47898E] after:transition-all after:duration-300 hover:text-[#47898E] hover:after:w-full ${isActive ? 'text-[#47898E] after:w-full' : ''}`}>{path.name}</button>
           })}
         </div>
 
@@ -93,15 +95,17 @@ export default function NavBar(){
               </button>
             </div>
             <div className="flex flex-col items-center gap-8 mt-12">
-              {paths.map((path) => (
+              {paths.map((path) => {
+                const isActive = location.pathname === path.path;
+                return (
                 <button 
                   key={path.path}
                   onClick={() => handleNavClick(path.path)}
-                  className="font-nunito text-xl text-[#0D393E] font-semibold"
+                  className={`font-nunito text-xl font-semibold ${isActive ? 'text-[#47898E]' : 'text-[#0D393E]'}`}
                 >
                   {path.name}
                 </button>
-              ))}
+              )})}
               <div className="flex flex-col gap-4 mt-4">
                 {user ? (
                   <button 

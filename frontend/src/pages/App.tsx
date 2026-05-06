@@ -18,10 +18,10 @@ export default function LandingPage() {
           <div className=" flex-1 ">
             {/* HEADING  */}
 
-            <div className="mb-4 animate-fade-in-up">
+            <div className="mb-4">
               <SecureButton />
             </div>
-            <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2 animate-fade-in-up animation-delay-100">
+            <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2">
               <div className="text-[#0D393E] font-medium">
                 You don't have to
               </div>
@@ -30,16 +30,16 @@ export default function LandingPage() {
             </div>
 
             {/* SUBTEXT */}
-            <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E] animate-fade-in-up animation-delay-200">
+            <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E]">
               <div>Thoughtful, personalised therapy that</div>
               <div>fits your life. Anytime, anywhere.</div>
             </div>
 
-            <div className="flex justify-around w-full md:w-fit md:justify-start mt-6 md:gap-6 lg:gap-12 animate-fade-in-up animation-delay-300">
+            <div className="flex justify-around w-full md:w-fit md:justify-start mt-6 md:gap-6 lg:gap-12">
               <FindTherapistButton />
               <ExploreResourcesButton />
             </div>
-            <div className="mt-8 w-fit lg:h-18 2xl:mt-16 grid sm:grid-cols-3 gap-3 animate-fade-in-up animation-delay-400">
+            <div className="mt-8 w-fit lg:h-18 2xl:mt-16 grid sm:grid-cols-3 gap-3">
               {tagsData.map((tag) => (
                 <Tag
                   color={tag.color}
@@ -51,7 +51,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="hidden xl:inline-block flex-1 relative animate-fade-in animation-delay-300">
+          <div className="hidden xl:inline-block flex-1 relative">
             <img src="/image.png" alt="image" className="w-full" />
             <img
               src="/petal.svg"
@@ -88,7 +88,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <div className="mt-8 w-full rounded-3xl p-4 lg:p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1] animate-fade-in-up animation-delay-500">
+        <div className="mt-8 w-full rounded-3xl p-4 lg:p-8  bg-linear-to-r from-[#DCEAED] to-[#C5E9F1]">
           <SupportBox />
         </div>
         {/* <div className="mt-8">

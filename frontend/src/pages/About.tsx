@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -17,7 +18,7 @@ export default function AboutPage() {
         <div className="absolute bottom-10 right-20 w-40 h-40 rounded-full bg-[#47898E]/5 blur-3xl animate-fade-in animation-delay-500 animate-float" style={{ animationDelay: '1s' }} />
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-14 relative">
           <div className="max-w-3xl">
-            <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-[#0D393E] leading-tight animate-fade-in-up">
+            <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-[#0D393E] leading-tight">
               Making therapy more
               <span className="block text-[#E77D3C] italic">accessible.</span>
             </h1>
@@ -47,18 +48,10 @@ export default function AboutPage() {
       <section className="bg-gradient-to-r from-[#0D393E] via-[#0f4a50] to-[#0D393E] py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="animate-fade-in-up animation-delay-100">
-              <StatItem number="500+" label="Licensed Therapists" />
-            </div>
-            <div className="animate-fade-in-up animation-delay-200">
-              <StatItem number="10k+" label="Sessions Completed" />
-            </div>
-            <div className="animate-fade-in-up animation-delay-300">
-              <StatItem number="98%" label="Satisfaction Rate" />
-            </div>
-            <div className="animate-fade-in-up animation-delay-400">
-              <StatItem number="24h" label="Avg. Booking Time" />
-            </div>
+            <StatItem number="500+" label="Licensed Therapists" />
+            <StatItem number="10k+" label="Sessions Completed" />
+            <StatItem number="98%" label="Satisfaction Rate" />
+            <StatItem number="24h" label="Avg. Booking Time" />
           </div>
         </div>
       </section>
@@ -100,7 +93,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-[#FFFDF8] via-[#EEFFFF] to-[#EEFFFF]">
+      <section className="py-16 md:py-24 ">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] text-center mb-4">
             What We Stand For
@@ -158,7 +151,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-[#EEFFFF] via-[#F5F1ED] to-[#F5F1ED]">
+      <section className="py-16 md:py-24 px-4 md:px-8 ">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] mb-12 text-center">
             Why WellNest
@@ -260,7 +253,7 @@ function StatItem({ number, label }: { number: string; label: string }) {
 
 function ValueCard({ number, title, description }: { number: string; title: string; description: string }) {
   return (
-    <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-in-up">
+    <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
       <div className="font-playfair text-xl text-[#E77D3C] font-semibold mb-4">{number}</div>
       <h3 className="font-playfair text-xl text-[#0D393E] mb-3">{title}</h3>
       <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">{description}</p>
@@ -270,7 +263,7 @@ function ValueCard({ number, title, description }: { number: string; title: stri
 
 function ProcessStep({ number, title, description }: { number: string; title: string; description: string }) {
   return (
-    <div className="text-center animate-fade-in-up">
+    <div className="text-center">
       <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
         <span className="font-playfair text-2xl text-[#E77D3C] font-semibold">{number}</span>
       </div>
@@ -281,7 +274,7 @@ function ProcessStep({ number, title, description }: { number: string; title: st
 }
 
 function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
-  const iconList: Record<string, JSX.Element> = {
+  const iconList: Record<string, React.ReactElement> = {
     verified: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -317,7 +310,7 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   return (
-    <div className="border-b border-[#E5E7EB] last:border-0 animate-fade-in-up">
+    <div className="border-b border-[#E5E7EB] last:border-0">
       <details className="group py-4 cursor-pointer">
         <summary className="flex justify-between items-center font-nunito font-semibold text-[#0D393E] list-none hover:text-[#47898E] transition-colors duration-200">
           <span>{question}</span>
