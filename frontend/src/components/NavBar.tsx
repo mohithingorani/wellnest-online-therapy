@@ -13,6 +13,7 @@ export default function NavBar(){
 ];
   const navigate = useNavigate();
   const [user, setUser] = useState(getAuthUser());
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setUser(getAuthUser());
@@ -27,18 +28,26 @@ export default function NavBar(){
     navigate("/");
   };
 
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
 
-    return <div className="flex justify-between  items-center px-8 py-4 lg:py-6 lg:px-16 ">
+
+    return <div className="flex justify-between items-center px-4 md:px-8 lg:py-6 lg:px-16 py-4">
         
       
-      <div className="md:hidden">
-        <img className="" src="/burger.svg" alt="menu"/>
-      </div> 
+      <button 
+        className="md:hidden p-2"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      >
+        <img className="w-6" src="/burger.svg" alt="menu"/>
+      </button> 
 
   {/* LOGO */}
         <button onClick={()=>{
           navigate("/");
-        }} className="flex  items-center gap-3">
+        }} className="flex items-center gap-3">
             <img className="w-8 md:w-fit" src="/logos/wellnest.svg" alt="wellest logo"/>
             <div className="hidden md:inline-block font-nunito font-bold text-2xl text-[#47898E]">WellNest</div>
         </button>
@@ -69,6 +78,48 @@ export default function NavBar(){
               </>
             )}
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 bg-white z-50 md:hidden">
+            <div className="flex justify-between items-center p-4">
+              <button onClick={()=> navigate("/")}>
+                <img className="w-8" src="/logos/wellnest.svg" alt="logo"/>
+              </button>
+              <button onClick={() => setMobileMenuOpen(false)}>
+                <svg className="w-6 h-6 text-[#0D393E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex flex-col items-center gap-8 mt-12">
+              {paths.map((path) => (
+                <button 
+                  key={path.path}
+                  onClick={() => handleNavClick(path.path)}
+                  className="font-nunito text-xl text-[#0D393E] font-semibold"
+                >
+                  {path.name}
+                </button>
+              ))}
+              <div className="flex flex-col gap-4 mt-4">
+                {user ? (
+                  <button 
+                    onClick={handleLogout}
+                    className="font-nunito w-40 text-base rounded-xl py-2 border bg-[#D9D9D9]/20 text-[#0D393E] border-[#0D393E]"
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <>
+                    <LoginButton />
+                    <SignUpButton />
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
     </div>
 }
