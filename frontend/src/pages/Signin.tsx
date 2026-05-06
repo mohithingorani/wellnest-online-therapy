@@ -29,13 +29,13 @@ export default function Signin() {
 
   return <div className="h-screen  lg:p-4 w-full font-nunito flex justify-center">
         <div className="bg-[#235C61] max-w-7xl w-full h-full md:p-4 lg:p-6 grid lg:grid-cols-2 lg:rounded-4xl">
-            <div className="relative overflow-hidden hidden lg:inline-block rounded-bl-4xl">
+            <div className="relative overflow-hidden hidden lg:inline-block rounded-bl-4xl animate-fade-in">
                 <div className="absolute text-4xl leading-10 font-medium top-20 text-white left-1/2 -translate-x-1/2">
                     Your story matters here.
                 </div>
                 <img width={600} className="absolute -bottom-2 -left-2" src="/signup.png" alt="WellNest"/>
             </div>
-            <div className="bg-white md:rounded-2xl lg:rounded-3xl p-6 flex flex-col justify-between h-full">
+            <div className="bg-white md:rounded-2xl lg:rounded-3xl p-6 flex flex-col justify-between h-full animate-fade-in-up animation-delay-200">
 
 {/* TOP */}
                 <div className="flex justify-between">

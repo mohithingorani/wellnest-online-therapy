@@ -11,12 +11,13 @@ export default function AboutPage() {
         <NavBar />
       </nav>
 
-      {/* Hero */}
+{/* Hero */}
       <section className="relative mt-4 md:mt-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#EEFFFF] to-transparent opacity-50" />
+        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#E77D3C]/5 blur-3xl animate-fade-in animation-delay-300 animate-float" />
+        <div className="absolute bottom-10 right-20 w-40 h-40 rounded-full bg-[#47898E]/5 blur-3xl animate-fade-in animation-delay-500 animate-float" style={{ animationDelay: '1s' }} />
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-14 relative">
           <div className="max-w-3xl">
-            <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-[#0D393E] leading-tight">
+            <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-[#0D393E] leading-tight animate-fade-in-up">
               Making therapy more
               <span className="block text-[#E77D3C] italic">accessible.</span>
             </h1>
@@ -27,13 +28,13 @@ export default function AboutPage() {
             <div className="mt-8 flex flex-wrap gap-4">
               <button
                 onClick={() => navigate("/therapists")}
-                className="px-6 py-3 bg-[#0D393E] text-white font-nunito rounded-full hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300"
+                className="px-6 py-3 bg-[#0D393E] text-white font-nunito rounded-full hover:bg-[#2a5459] hover:shadow-lg hover:scale-105 transition-all duration-300"
               >
                 Find a Therapist
               </button>
               <button
                 onClick={() => navigate("/how-it-works")}
-                className="px-6 py-3 border border-[#0D393E] text-[#0D393E] font-nunito rounded-full hover:bg-[#0D393E]/5 transition-all duration-300"
+                className="px-6 py-3 border border-[#0D393E] text-[#0D393E] font-nunito rounded-full hover:bg-[#0D393E]/5 hover:scale-105 transition-all duration-300"
               >
                 How It Works
               </button>
@@ -43,13 +44,21 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="bg-[#0D393E] py-12 md:py-16">
+      <section className="bg-gradient-to-r from-[#0D393E] via-[#0f4a50] to-[#0D393E] py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <StatItem number="500+" label="Licensed Therapists" />
-            <StatItem number="10k+" label="Sessions Completed" />
-            <StatItem number="98%" label="Satisfaction Rate" />
-            <StatItem number="24h" label="Avg. Booking Time" />
+            <div className="animate-fade-in-up animation-delay-100">
+              <StatItem number="500+" label="Licensed Therapists" />
+            </div>
+            <div className="animate-fade-in-up animation-delay-200">
+              <StatItem number="10k+" label="Sessions Completed" />
+            </div>
+            <div className="animate-fade-in-up animation-delay-300">
+              <StatItem number="98%" label="Satisfaction Rate" />
+            </div>
+            <div className="animate-fade-in-up animation-delay-400">
+              <StatItem number="24h" label="Avg. Booking Time" />
+            </div>
           </div>
         </div>
       </section>
@@ -91,7 +100,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 md:py-24 bg-[#EEFFFF]">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-[#FFFDF8] via-[#EEFFFF] to-[#EEFFFF]">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] text-center mb-4">
             What We Stand For
@@ -149,7 +158,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-[#F5F1ED]">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-[#EEFFFF] via-[#F5F1ED] to-[#F5F1ED]">
         <div className="max-w-6xl mx-auto">
           <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] mb-12 text-center">
             Why WellNest
@@ -180,7 +189,7 @@ export default function AboutPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 md:py-24 px-4 md:px-8">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-gradient-to-b from-[#F5F1ED] to-[#FFFDF8]">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] text-center mb-4">
             Frequently Asked Questions
@@ -228,7 +237,7 @@ export default function AboutPage() {
           </p>
           <button
             onClick={() => navigate("/therapists")}
-            className="px-8 py-4 bg-white text-[#0D393E] font-nunito font-semibold rounded-full hover:bg-[#EEFFFF] hover:shadow-lg transition-all duration-300"
+            className="px-8 py-4 bg-white text-[#0D393E] font-nunito font-semibold rounded-full hover:bg-[#EEFFFF] hover:shadow-lg hover:scale-105 transition-all duration-300"
           >
             Browse Therapists
           </button>
@@ -251,7 +260,7 @@ function StatItem({ number, label }: { number: string; label: string }) {
 
 function ValueCard({ number, title, description }: { number: string; title: string; description: string }) {
   return (
-    <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
+    <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-in-up">
       <div className="font-playfair text-xl text-[#E77D3C] font-semibold mb-4">{number}</div>
       <h3 className="font-playfair text-xl text-[#0D393E] mb-3">{title}</h3>
       <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">{description}</p>
@@ -261,7 +270,7 @@ function ValueCard({ number, title, description }: { number: string; title: stri
 
 function ProcessStep({ number, title, description }: { number: string; title: string; description: string }) {
   return (
-    <div className="text-center">
+    <div className="text-center animate-fade-in-up">
       <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
         <span className="font-playfair text-2xl text-[#E77D3C] font-semibold">{number}</span>
       </div>
@@ -272,7 +281,7 @@ function ProcessStep({ number, title, description }: { number: string; title: st
 }
 
 function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
-  const icons: Record<string, JSX.Element> = {
+  const iconList: Record<string, JSX.Element> = {
     verified: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -296,9 +305,9 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
-      <div className="w-12 h-12 rounded-full bg-[#47898E]/10 flex items-center justify-center text-[#47898E] mb-4">
-        {icons[icon]}
+    <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+      <div className="w-12 h-12 rounded-full bg-[#47898E]/10 flex items-center justify-center text-[#47898E] mb-4 group-hover:scale-110 transition-transform duration-300">
+        {iconList[icon]}
       </div>
       <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">{title}</h3>
       <p className="font-nunito text-sm text-[#3E464E]">{description}</p>
@@ -308,9 +317,9 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   return (
-    <div className="border-b border-[#E5E7EB] last:border-0">
+    <div className="border-b border-[#E5E7EB] last:border-0 animate-fade-in-up">
       <details className="group py-4 cursor-pointer">
-        <summary className="flex justify-between items-center font-nunito font-semibold text-[#0D393E] list-none">
+        <summary className="flex justify-between items-center font-nunito font-semibold text-[#0D393E] list-none hover:text-[#47898E] transition-colors duration-200">
           <span>{question}</span>
           <span className="ml-4 flex-shrink-0 transition-transform duration-300 group-open:rotate-180">
             <svg className="w-5 h-5 text-[#47898E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

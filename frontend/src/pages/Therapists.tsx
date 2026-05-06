@@ -17,16 +17,16 @@ export default function TherapistsPage() {
                 <div className=" flex-1 ">
                     {/* HEADING  */}
 
-                <div className="mb-4">
+                <div className="mb-4 animate-fade-in-up">
                     <SecureButton />
                 </div>
-                    <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2">
+                    <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2 animate-fade-in-up animation-delay-100">
                     <div className="text-[#0D393E] font-medium">
                         Find the right
                     </div>
                     <div className="text-[#E77D3C] font-semibold italic">therapist for you.</div>
                     </div>
-                    <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E]">
+                    <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E] animate-fade-in-up animation-delay-200">
                     <div>Browse verified therapists and find the perfect</div>
                     <div>match for your needs.</div>
                     </div>
@@ -40,7 +40,7 @@ export default function TherapistsPage() {
         </section>
         
       <section className="mt-10">
-  <div className="bg-[#F9F7F5] border border-[#EFEAE7] rounded-2xl p-4 md:p-6 shadow-sm">
+  <div className="bg-[#F9F7F5] border border-[#EFEAE7] rounded-2xl p-4 md:p-6 shadow-sm animate-fade-in-up animation-delay-300">
     
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 items-center">
       
@@ -96,23 +96,23 @@ export default function TherapistsPage() {
   </div>
 </section> 
 
-    <section className="mt-8">
+<section className="mt-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* LEFT SECTION */}
-         <div className="hidden lg:block lg:col-span-1">
-            <FiltersSidebar />
-          </div>
+         <div className="hidden lg:block lg:col-span-1 animate-fade-in-up animation-delay-400">
+           <FiltersSidebar />
+         </div>
 
-          {/* RIGHT SECTION */}
+         {/* RIGHT SECTION */}
 <div className="col-span-1 lg:col-span-3 flex flex-col gap-4">
-                  <TherapistCard2/>
-                <TherapistCard2/>
-                <TherapistCard2/>
-                <TherapistCard2/>
-                <TherapistCard2/>
-                <TherapistCard2/>
-            </div>
+              <TherapistCard2/>
+            <TherapistCard2/>
+            <TherapistCard2/>
+            <TherapistCard2/>
+            <TherapistCard2/>
+            <TherapistCard2/>
         </div>
+    </div>
 
     </section>
         </main> 
