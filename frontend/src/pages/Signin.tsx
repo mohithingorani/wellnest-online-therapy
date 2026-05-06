@@ -68,7 +68,7 @@ export default function Signin() {
                         placeholder="Email ID" 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200" 
+                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 text-base md:text-lg" 
                         required
                       />
 
@@ -77,7 +77,7 @@ export default function Signin() {
                         placeholder="Password" 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200" 
+                        className="px-5 py-4 rounded-2xl border-2 border-black/20 w-full focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all duration-200 text-base md:text-lg" 
                         required
                         minLength={8}
                       />
