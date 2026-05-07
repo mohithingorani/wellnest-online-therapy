@@ -479,35 +479,35 @@ export default function TherapistPage2() {
   );
 }
 
-function ApproachItem({ title, text }: { title: string; text: string }) {
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="w-12 h-12 rounded-full bg-[#E6F4F1] flex items-center justify-center">
-        <div className="w-5 h-5 bg-[#0D393E] rounded-full" />
-      </div>
-      <div className="font-semibold text-[#0D393E]">{title}</div>
-      <div className="text-sm text-[#3E464E]">{text}</div>
-    </div>
-  );
-}
+// function ApproachItem({ title, text }: { title: string; text: string }) {
+//   return (
+//     <div className="flex flex-col gap-2">
+//       <div className="w-12 h-12 rounded-full bg-[#E6F4F1] flex items-center justify-center">
+//         <div className="w-5 h-5 bg-[#0D393E] rounded-full" />
+//       </div>
+//       <div className="font-semibold text-[#0D393E]">{title}</div>
+//       <div className="text-sm text-[#3E464E]">{text}</div>
+//     </div>
+//   );
+// }
 
-function ReviewCard({
-  text,
-  name,
-  rating,
-}: {
-  text: string;
-  name: string;
-  rating: number;
-}) {
-  return (
-    <div className="bg-white p-4 rounded-xl shadow-sm">
-      <div className="text-yellow-400 text-sm mb-2">
-        {"★".repeat(rating)}
-        {"☆".repeat(5 - rating)} 5.0
-      </div>
-      <p className="text-[#3E464E] text-sm mb-3">"{text}"</p>
-      <div className="text-sm font-medium text-[#0D393E]">— {name}</div>
-    </div>
-  );
-}
+// function ReviewCard({
+//   text,
+//   name,
+//   rating,
+// }: {
+//   text: string;
+//   name: string;
+//   rating: number;
+// }) {
+//   return (
+//     <div className="bg-white p-4 rounded-xl shadow-sm">
+//       <div className="text-yellow-400 text-sm mb-2">
+//         {"★".repeat(rating)}
+//         {"☆".repeat(5 - rating)} 5.0
+//       </div>
+//       <p className="text-[#3E464E] text-sm mb-3">"{text}"</p>
+//       <div className="text-sm font-medium text-[#0D393E]">— {name}</div>
+//     </div>
+//   );
+// }
