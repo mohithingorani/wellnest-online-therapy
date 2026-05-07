@@ -3,6 +3,7 @@ const API_URL = "http://localhost:3000/api";
 export interface Therapist {
   id: number;
   name: string;
+  title: string;
   experience: number;
   gender: string;
   specialities: { id: string; name: string }[];

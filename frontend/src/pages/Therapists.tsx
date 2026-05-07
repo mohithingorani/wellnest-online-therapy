@@ -230,7 +230,14 @@ export default function TherapistsPage() {
             <div className="hidden lg:block lg:col-span-1">
               <FiltersSidebar filters={filters} setFilters={setFilters} />
             </div>
-            <div className="col-span-1 lg:col-span-3 flex flex-col gap-4 opacity-0 animate-fade-in-up animation-delay-400">
+            <div className="col-span-1 lg:col-span-3">
+              <div className="mb-6 mt-2">
+                <h2 className="font-playfair text-xl md:text-2xl text-[#0D393E] font-medium">
+                  {filteredTherapists.length} Therapist{filteredTherapists.length !== 1 ? 's' : ''} Available
+                </h2>
+                
+              </div>
+              <div className="flex flex-col gap-4 opacity-0 animate-fade-in-up animation-delay-400">
               {loading && <div className="text-center py-8">Loading...</div>}
               {error && <div className="text-center py-8 text-red-500">{error}</div>}
               {!loading && !error && filteredTherapists.length === 0 && (
@@ -241,12 +248,14 @@ export default function TherapistsPage() {
                   <TherapistCard2
                     id={t.id}
                     name={t.name}
+                    title={t.title}
                     experience={t.experience}
                     specialities={t.specialities.map((s) => s.name)}
                     languages={t.languages.map((l) => l.name)}
                   />
                 </div>
               ))}
+              </div>
             </div>
           </div>
         </section>

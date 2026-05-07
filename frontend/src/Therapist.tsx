@@ -49,7 +49,7 @@ export default function TherapistPage2() {
   const languages = therapist.languages?.map((l: any) => l.name) || [];
 
   return (
-    <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4 text-[#235C61] font-nunito">
+    <div className="bg-[#FFFDF8]  pt-4 text-[#235C61] font-nunito">
       <NavBar />
 
       <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24 mt-8">
@@ -85,27 +85,47 @@ export default function TherapistPage2() {
             </h1>
 
             <p className="text-lg md:text-xl text-[#3E464E] opacity-0 animate-fade-in-up animation-delay-200">
-              Licensed Therapist
+              {therapist.title}
             </p>
 
             {/* STATS */}
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-[#5F6C72] opacity-0 animate-fade-in-up animation-delay-300">
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
                   <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
                 </svg>
                 {therapist.experience}+ years experience
               </div>
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 {Math.floor(therapist.experience * 50)}+ sessions
               </div>
               {languages.length > 0 && (
                 <div className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 8H5a1 1 0 110 2H3V3a1 1 0 011-1zm0 6a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 12H5a1 1 0 110 2H3v-1a1 1 0 011-1z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 8H5a1 1 0 110 2H3V3a1 1 0 011-1zm0 6a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 12H5a1 1 0 110 2H3v-1a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   {languages.join(", ")}
                 </div>
@@ -131,9 +151,10 @@ export default function TherapistPage2() {
 
             {/* DESCRIPTION */}
             <p className="text-[#3E464E] max-w-xl">
-              Hi, I'm {therapist.name?.split(" ")[1] || "there"}. I help adults navigate anxiety, overthinking, and
-              life transitions with compassion and evidence-based care.
-              Together, we'll work toward clarity, healing, and growth.
+              Hi, I'm {therapist.name?.split(" ")[1] || "there"}. I help adults
+              navigate anxiety, overthinking, and life transitions with
+              compassion and evidence-based care. Together, we'll work toward
+              clarity, healing, and growth.
             </p>
 
             {/* BUTTONS */}
@@ -171,7 +192,9 @@ export default function TherapistPage2() {
               </div>
               <div>
                 <div className="font-semibold text-[#0D393E]">Session type</div>
-                <div className="text-[#3E464E] text-sm">{sessionTypes.join(", ") || "Not specified"}</div>
+                <div className="text-[#3E464E] text-sm">
+                  {sessionTypes.join(", ") || "Not specified"}
+                </div>
               </div>
             </div>
 
@@ -195,14 +218,13 @@ export default function TherapistPage2() {
         {/* LOWER SECTION */}
         <section className="mt-10 bg-[#F1F2F1] rounded-2xl p-6 lg:p-8">
           <div className="flex justify-start items-center mb-6 gap-2">
-            <img src="/ticks/leaf.svg" alt="leaf"/>
+            <img src="/ticks/leaf.svg" alt="leaf" />
             <h2 className="font-playfair text-2xl text-[#0D393E] ">
               Is this right for you?
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6 text-sm">
             <div>
-              
               <h3 className="font-semibold mb-2">I can help you with</h3>
               <ul className="space-y-3 text-[#3E464E]">
                 {specialties.slice(0, 5).map((item: string) => (
@@ -239,12 +261,17 @@ export default function TherapistPage2() {
         </section>
 
         {/* APPROACH + REVIEWS */}
-        <section className="mt-10 bg-[#F5F1ED] rounded-2xl p-6 md:p-8 grid lg:grid-cols-2 gap-8">
+        <section className="mt-10 border border-black/10 shadow-sm rounded-2xl p-6 md:p-8 grid lg:grid-cols-2 gap-8">
           {/* LEFT - APPROACH */}
           <div>
-            <h2 className="font-playfair text-2xl text-[#0D393E] mb-4">
-              My approach
-            </h2>
+            <div className="flex gap-2 items-center mb-4">
+              <div className="flex w-8 h-8 p-1 justify-center items-center rounded-full bg-[#FCEDE0] ">
+                <img src="/info/flower.svg" alt="flower" />
+              </div>
+              <h2 className="font-playfair text-2xl text-[#0D393E]">
+                My approach
+              </h2>
+            </div>
 
             <p className="text-[#3E464E] mb-6 max-w-xl">
               My approach is collaborative, compassionate, and tailored to you.
@@ -286,13 +313,14 @@ export default function TherapistPage2() {
           {/* RIGHT - REVIEWS */}
           <div>
             <div className="flex justify-between items-center mb-4">
+               <div className="flex gap-2 items-center mb-4">
+              <div className="flex w-8 h-8 p-1 justify-center items-center rounded-full bg-[#FCEDE0] ">
+                <img src="/info/quotes.svg" alt="quotes" />
+              </div>
               <h2 className="font-playfair text-2xl text-[#0D393E]">
-                What clients say
+                What Clients Say
               </h2>
-
-              <button className="text-sm text-[#0D393E] hover:text-[#47898E] transition-colors">
-                View all reviews →
-              </button>
+            </div> 
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -326,12 +354,17 @@ export default function TherapistPage2() {
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {therapyTypes.map((type: string) => (
-              <span key={type} className="px-4 py-2 bg-[#E6F4F1] text-[#0D393E] rounded-full">
+              <span
+                key={type}
+                className="px-4 py-2 bg-[#E6F4F1] text-[#0D393E] rounded-full"
+              >
                 {type}
               </span>
             ))}
             {therapyTypes.length === 0 && (
-              <span className="text-[#3E464E]">No specific approaches listed</span>
+              <span className="text-[#3E464E]">
+                No specific approaches listed
+              </span>
             )}
           </div>
         </section>
@@ -353,11 +386,20 @@ function ApproachItem({ title, text }: { title: string; text: string }) {
   );
 }
 
-function ReviewCard({ text, name, rating }: { text: string; name: string; rating: number }) {
+function ReviewCard({
+  text,
+  name,
+  rating,
+}: {
+  text: string;
+  name: string;
+  rating: number;
+}) {
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm">
       <div className="text-yellow-400 text-sm mb-2">
-        {"★".repeat(rating)}{"☆".repeat(5 - rating)} 5.0
+        {"★".repeat(rating)}
+        {"☆".repeat(5 - rating)} 5.0
       </div>
       <p className="text-[#3E464E] text-sm mb-3">"{text}"</p>
       <div className="text-sm font-medium text-[#0D393E]">— {name}</div>

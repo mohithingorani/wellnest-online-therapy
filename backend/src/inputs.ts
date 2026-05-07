@@ -84,6 +84,7 @@ export const TherapistSchema = z.object({
   id,
   experience: z.number().int().nonnegative(),
   name: z.string().min(1),
+  title: z.string(),
   gender: z.string(),
   specialities: z.array(SpecialtySchema),
   sessionTypes: z.array(SessionTypeSchema),
@@ -97,6 +98,7 @@ export const TherapistSchema = z.object({
 export const CreateTherapistSchema = z.object({
   experience: z.number().int().nonnegative(),
   name: z.string().min(1),
+  title: z.string().optional(),
   gender: z.string().optional(),
 
 // pass IDs when creating
@@ -105,6 +107,7 @@ export const CreateTherapistSchema = z.object({
 
 export const UpdateTherapistSchema = z.object({
   name: z.string().min(1).optional(),
+  title: z.string().optional(),
   experience: z.number().int().nonnegative().optional(),
   gender: z.string().optional(),
   specialtyIds: z.array(uuid).optional(),

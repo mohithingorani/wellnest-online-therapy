@@ -37,6 +37,7 @@ model Session {
 model Therapist {
   id           Int         @id @default(autoincrement())
   name         String
+  title        String
   experience   Int
   gender       String
   sessionTypes SessionType[] @relation("TherapistSessionTypes")

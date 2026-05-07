@@ -441,15 +441,17 @@ router.post("/therapists", async (req, res) => {
       : undefined;
 
     const gender = (req.body as any).gender || "Prefer not to say";
+    const title = (req.body as any).title || "Therapist";
 
     const therapist = await prisma.therapist.create({
       data: {
         name,
+        title,
         experience: parseInt(experience),
         gender,
         ...(specialties && { specialities: specialties }),
       },
-      include: { specialities: true, sessionTypes: true, therapyTypes: true },
+      include: { specialities: true, sessionTypes: true, therapyTypes: true, languages: true },
     });
 
     res.json({
@@ -457,11 +459,13 @@ router.post("/therapists", async (req, res) => {
       data: {
         id: therapist.id,
         name: therapist.name,
+        title: therapist.title,
         experience: therapist.experience,
         gender: therapist.gender,
         specialities: therapist.specialities,
         sessionTypes: therapist.sessionTypes,
         therapyTypes: therapist.therapyTypes,
+        languages: therapist.languages,
         createdAt: therapist.createdAt,
         updatedAt: therapist.updatedAt,
         status: "active",

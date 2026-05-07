@@ -16,10 +16,13 @@ import UserManagement from "./pages/admin/UserManagement";
 import Analytics from "./pages/admin/Analytics";
 import Settings from "./pages/admin/Settings";
 import AdminLogin from "./pages/admin/Login";
+import CookieConsent from "./components/CookieConsent";
+import NotFound from "./pages/NotFound";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ToastProvider>
+      <CookieConsent />
       <Routes>
         <Route index element={<App />} />
         <Route path="/about" element={<AboutPage />} />
@@ -27,6 +30,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/signup" element={<SignUp />} />
         <Route path="/therapists" element={<TherapistsPage />} />
         <Route path="/therapists/:id" element={<TherapistPage2/>}/>
+        <Route path="*" element={<NotFound />} />
         
         <Route path="/admin/login" element={<AdminAuthProvider><AdminLogin /></AdminAuthProvider>} />
         <Route path="/admin" element={<AdminAuthProvider><AdminLayout /></AdminAuthProvider>}>

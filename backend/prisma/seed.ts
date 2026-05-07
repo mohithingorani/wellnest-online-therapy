@@ -119,24 +119,25 @@ async function main() {
   }
 
   const therapists = [
-    { name: 'Dr. Sarah Johnson', experience: 8, gender: 'Female', sessionTypes: ['Online', 'Chat'], concerns: ['Anxiety', 'Stress Management', 'Relationship Issues'], therapyTypes: ['CBT', 'Mindfulness'], languages: ['English', 'Hindi'] },
-    { name: 'Dr. Michael Chen', experience: 12, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Trauma'], therapyTypes: ['Psychodynamic', 'CBT'], languages: ['English', 'Mandarin'] },
-    { name: 'Dr. Emily Davis', experience: 5, gender: 'Female', sessionTypes: ['Online', 'Offline', 'Chat'], concerns: ['Anxiety', 'Depression', 'Stress Management'], therapyTypes: ['CBT', 'Humanistic'], languages: ['English', 'Spanish'] },
-    { name: 'Dr. Priya Sharma', experience: 10, gender: 'Female', sessionTypes: ['Online', 'Group'], concerns: ['Burnout', 'Self Esteem', 'Loneliness'], therapyTypes: ['Mindfulness', 'Solution-focused'], languages: ['English', 'Hindi', 'Tamil'] },
-    { name: 'Dr. James Wilson', experience: 15, gender: 'Male', sessionTypes: ['Offline'], concerns: ['Trauma', 'Family Conflict'], therapyTypes: ['Psychodynamic', 'CBT'], languages: ['English'] },
-    { name: 'Dr. Kavya Mehta', experience: 7, gender: 'Female', sessionTypes: ['Online', 'Emergency'], concerns: ['Panic Attacks', 'Social Anxiety'], therapyTypes: ['CBT', 'Mindfulness'], languages: ['English', 'Hindi', 'Marathi'] },
-    { name: 'Dr. Robert Taylor', experience: 18, gender: 'Male', sessionTypes: ['Offline', 'Group'], concerns: ['Anger Management', 'OCD'], therapyTypes: ['CBT', 'Psychodynamic'], languages: ['English', 'French', 'German'] },
-    { name: 'Dr. Aisha Khan', experience: 9, gender: 'Female', sessionTypes: ['Chat', 'Online'], concerns: ['Anxiety', 'ADHD'], therapyTypes: ['CBT', 'Solution-focused'], languages: ['English', 'Hindi'] },
-    { name: 'Dr. Arjun Malhotra', experience: 11, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Grief'], therapyTypes: ['Humanistic', 'Psychodynamic'], languages: ['English', 'Hindi', 'Telugu'] },
-    { name: 'Dr. Lisa Anderson', experience: 6, gender: 'Female', sessionTypes: ['Chat'], concerns: ['Self Esteem', 'Relationship Issues'], therapyTypes: ['Humanistic', 'Mindfulness'], languages: ['English', 'Spanish'] },
-    { name: 'Dr. Neha Verma', experience: 4, gender: 'Female', sessionTypes: ['Online'], concerns: ['Loneliness', 'Stress Management'], therapyTypes: ['Solution-focused', 'Humanistic'], languages: ['English', 'Hindi', 'Bengali'] },
-    { name: 'Dr. David Miller', experience: 14, gender: 'Male', sessionTypes: ['Offline', 'Emergency'], concerns: ['Trauma', 'Panic Attacks', 'Anger Management'], therapyTypes: ['CBT', 'Psychodynamic'], languages: ['English', 'German'] },
+    { name: 'Dr. Sarah Johnson', title: 'Clinical Psychologist', experience: 8, gender: 'Female', sessionTypes: ['Online', 'Chat'], concerns: ['Anxiety', 'Stress Management', 'Relationship Issues'], therapyTypes: ['CBT', 'Mindfulness'], languages: ['English', 'Hindi'] },
+    { name: 'Dr. Michael Chen', title: 'Counselor', experience: 12, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Trauma'], therapyTypes: ['Psychodynamic', 'CBT'], languages: ['English', 'Mandarin'] },
+    { name: 'Dr. Emily Davis', title: 'Clinical Psychologist', experience: 5, gender: 'Female', sessionTypes: ['Online', 'Offline', 'Chat'], concerns: ['Anxiety', 'Depression', 'Stress Management'], therapyTypes: ['CBT', 'Humanistic'], languages: ['English', 'Spanish'] },
+    { name: 'Dr. Priya Sharma', title: 'Psychotherapist', experience: 10, gender: 'Female', sessionTypes: ['Online', 'Group'], concerns: ['Burnout', 'Self Esteem', 'Loneliness'], therapyTypes: ['Mindfulness', 'Solution-focused'], languages: ['English', 'Hindi', 'Tamil'] },
+    { name: 'Dr. James Wilson', title: 'Clinical Psychologist', experience: 15, gender: 'Male', sessionTypes: ['Offline'], concerns: ['Trauma', 'Family Conflict'], therapyTypes: ['Psychodynamic', 'CBT'], languages: ['English'] },
+    { name: 'Dr. Kavya Mehta', title: 'Counselor', experience: 7, gender: 'Female', sessionTypes: ['Online', 'Emergency'], concerns: ['Panic Attacks', 'Social Anxiety'], therapyTypes: ['CBT', 'Mindfulness'], languages: ['English', 'Hindi', 'Marathi'] },
+    { name: 'Dr. Robert Taylor', title: 'Psychiatrist', experience: 18, gender: 'Male', sessionTypes: ['Offline', 'Group'], concerns: ['Anger Management', 'OCD'], therapyTypes: ['CBT', 'Psychodynamic'], languages: ['English', 'French', 'German'] },
+    { name: 'Dr. Aisha Khan', title: 'Licensed Counselor', experience: 9, gender: 'Female', sessionTypes: ['Chat', 'Online'], concerns: ['Anxiety', 'ADHD'], therapyTypes: ['CBT', 'Solution-focused'], languages: ['English', 'Hindi'] },
+    { name: 'Dr. Arjun Malhotra', title: 'Clinical Psychologist', experience: 11, gender: 'Male', sessionTypes: ['Online', 'Offline'], concerns: ['Depression', 'Grief'], therapyTypes: ['Humanistic', 'Psychodynamic'], languages: ['English', 'Hindi', 'Telugu'] },
+    { name: 'Dr. Lisa Anderson', title: 'Mental Health Counselor', experience: 6, gender: 'Female', sessionTypes: ['Chat'], concerns: ['Self Esteem', 'Relationship Issues'], therapyTypes: ['Humanistic', 'Mindfulness'], languages: ['English', 'Spanish'] },
+    { name: 'Dr. Neha Verma', title: 'Psychotherapist', experience: 4, gender: 'Female', sessionTypes: ['Online'], concerns: ['Loneliness', 'Stress Management'], therapyTypes: ['Solution-focused', 'Humanistic'], languages: ['English', 'Hindi', 'Bengali'] },
+    { name: 'Dr. David Miller', title: 'Clinical Psychologist', experience: 14, gender: 'Male', sessionTypes: ['Offline', 'Emergency'], concerns: ['Trauma', 'Panic Attacks', 'Anger Management'], therapyTypes: ['CBT', 'Psychodynamic'], languages: ['English', 'German'] },
   ];
 
   for (const t of therapists) {
     await prisma.therapist.create({
       data: {
         name: t.name,
+        title: t.title,
         experience: t.experience,
         gender: t.gender,
         sessionTypes: { connect: t.sessionTypes.map(st => ({ id: createdSessionTypes[st] })) },

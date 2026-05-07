@@ -93,6 +93,7 @@ export const createTherapist = async (req: Request, res: Response) => {
         const therapist = await prisma.therapist.create({
             data: {
                 name: parsed.data.name,
+                title: parsed.data.title || "Therapist",
                 experience: parsed.data.experience,
                 gender: parsed.data.gender || "Prefer not to say",
                 specialities: {
