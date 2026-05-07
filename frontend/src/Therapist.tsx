@@ -159,11 +159,14 @@ export default function TherapistPage2() {
 
             {/* BUTTONS */}
             <div className="flex gap-4 justify-center lg:justify-start mt-2">
-              <button className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl hover:bg-[#2a5459] transition-all duration-300 shadow-lg hover:shadow-xl">
-                Book a session
+              <button className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl hover:bg-[#2a5459] transition-all duration-300 shadow-lg hover:shadow-xl flex justify-center items-center gap-2">
+                <img width="16" src="/book/calender.svg" alt="" />
+                <div>Book a session</div>
               </button>
-              <button className="border border-[#0D393E] w-50 px-6 py-3 rounded-2xl hover:bg-[#E6F4F1] transition-all duration-300">
-                Message first
+              <button className="border border-[#0D393E] flex justify-center items-center gap-2 w-50 px-6 py-3 rounded-2xl hover:bg-[#E6F4F1] transition-all duration-300">
+                <img src="/book/chat.svg" alt="chat" />
+                <div>Message First</div>
+                
               </button>
             </div>
           </div>
@@ -215,134 +218,236 @@ export default function TherapistPage2() {
           </section>
         </div>
 
-        {/* LOWER SECTION */}
-        <section className="mt-10 bg-[#F1F2F1] rounded-2xl p-6 lg:p-8">
-          <div className="flex justify-start items-center mb-6 gap-2">
-            <img src="/ticks/leaf.svg" alt="leaf" />
-            <h2 className="font-playfair text-2xl text-[#0D393E] ">
-              Is this right for you?
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 text-sm">
-            <div>
-              <h3 className="font-semibold mb-2">I can help you with</h3>
-              <ul className="space-y-3 text-[#3E464E]">
-                {specialties.slice(0, 5).map((item: string) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <img src="/ticks/tick.svg" alt="tick" className="mt-1" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        {/* IS THIS RIGHT FOR YOU */}
+        <section className="mt-10 mb-10">
+          <div className="bg-[#F8F5F2] rounded-3xl border border-[#E8E2DD] shadow-sm p-8 md:p-12">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-full bg-[#47898E]/10 flex items-center justify-center">
+                  <img src="/ticks/leaf.svg" alt="leaf" />
+                </div>
+                <h2 className="font-playfair text-2xl md:text-3xl text-[#0D393E]">
+                  Is this right for you?
+                </h2>
+              </div>
 
-            <div>
-              <h3 className="font-semibold mb-2">
-                I may not be the best fit if
-              </h3>
-              <ul className="space-y-3 text-[#3E464E]">
-                {[
-                  "Need medication management",
-                  "In crisis / immediate help",
-                  "Prefer quick fixes only",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <img
-                      src="/ticks/cross.svg"
-                      alt="not suitable"
-                      className="mt-1 shrink-0"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#F0EBE7] hover:shadow-md transition-all duration-300">
+                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-4 flex items-center gap-2">
+                    <span className="w-8 h-8 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
+                      <svg
+                        className="w-4 h-4 text-[#E77D3C]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </span>
+                    I can help you with
+                  </h3>
+                  <ul className="space-y-3">
+                    {specialties.slice(0, 5).map((item: string) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-[#E6F4F1] flex items-center justify-center mt-0.5 shrink-0">
+                          <svg
+                            className="w-3 h-3 text-[#47898E]"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                        <span className="font-nunito text-[#3E464E]">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#F0EBE7] hover:shadow-md transition-all duration-300">
+                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-4 flex items-center gap-2">
+                    <span className="w-8 h-8 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
+                      <svg
+                        className="w-4 h-4 text-[#E77D3C]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                    </span>
+                    I may not be the best fit if
+                  </h3>
+                  <ul className="space-y-3">
+                    {[
+                      "Need medication management",
+                      "In crisis / immediate help",
+                      "Prefer quick fixes only",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-[#FEF3EF] flex items-center justify-center mt-0.5 shrink-0">
+                          <svg
+                            className="w-3 h-3 text-[#E77D3C]"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                        <span className="font-nunito text-[#3E464E]">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* APPROACH + REVIEWS */}
-        <section className="mt-10 border border-black/10 shadow-sm rounded-2xl p-6 md:p-8 grid lg:grid-cols-2 gap-8">
-          {/* LEFT - APPROACH */}
-          <div>
-            <div className="flex gap-2 items-center mb-4">
-              <div className="flex w-8 h-8 p-1 justify-center items-center rounded-full bg-[#FCEDE0] ">
-                <img src="/info/flower.svg" alt="flower" />
+        {/* APPROACH SECTION */}
+        <section className="mt-10 mb-10">
+          <div className="bg-[#F8F5F2] rounded-3xl border border-[#E8E2DD] shadow-sm p-8 md:p-12">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
+                  <svg
+                    className="w-8 h-8 text-[#E77D3C]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                </div>
+                <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] mb-4">
+                  My approach
+                </h2>
+                <p className="font-nunito text-[#3E464E] text-lg max-w-2xl mx-auto leading-relaxed">
+                  My approach is collaborative, compassionate, and tailored to
+                  you. I draw from evidence-based methods to help you understand
+                  patterns, build coping tools, and create meaningful change.
+                </p>
               </div>
-              <h2 className="font-playfair text-2xl text-[#0D393E]">
-                My approach
-              </h2>
-            </div>
 
-            <p className="text-[#3E464E] mb-6 max-w-xl">
-              My approach is collaborative, compassionate, and tailored to you.
-              I draw from evidence-based methods to help you understand
-              patterns, build coping tools, and create meaningful change.
-            </p>
+              <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-10">
+                <div className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-[#F0EBE7]">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
+                    <svg
+                      className="w-7 h-7 text-[#E77D3C]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">
+                    Evidence-based
+                  </h3>
+                  <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">
+                    CBT, mindfulness, and trauma-informed care.
+                  </p>
+                </div>
 
-            <div className="grid sm:grid-cols-3 gap-6">
-              {therapyTypes.slice(0, 3).map((approach: string) => (
-                <ApproachItem
-                  key={approach}
-                  title={approach}
-                  text={`Specialized ${approach.toLowerCase()} therapy techniques`}
-                />
-              ))}
-              {therapyTypes.length === 0 && (
-                <>
-                  <ApproachItem
-                    title="Evidence-based"
-                    text="CBT, mindfulness, and trauma-informed care."
-                  />
-                  <ApproachItem
-                    title="Holistic & Personalized"
-                    text="We address thoughts, emotions, behaviors, and environment."
-                  />
-                  <ApproachItem
-                    title="Safe & Supportive"
-                    text="A judgment-free space to explore and grow."
-                  />
-                </>
-              )}
-            </div>
+                <div className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-[#F0EBE7]">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#47898E]/10 flex items-center justify-center">
+                    <svg
+                      className="w-7 h-7 text-[#47898E]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">
+                    Holistic & Personalized
+                  </h3>
+                  <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">
+                    We address thoughts, emotions, behaviors, and environment.
+                  </p>
+                </div>
 
-            <button className="mt-6 text-[#0D393E] font-medium hover:text-[#47898E] transition-colors">
-              Learn more about my approach →
-            </button>
-          </div>
-
-          {/* RIGHT - REVIEWS */}
-          <div>
-            <div className="flex justify-between items-center mb-4">
-               <div className="flex gap-2 items-center mb-4">
-              <div className="flex w-8 h-8 p-1 justify-center items-center rounded-full bg-[#FCEDE0] ">
-                <img src="/info/quotes.svg" alt="quotes" />
+                <div className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-[#F0EBE7]">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
+                    <svg
+                      className="w-7 h-7 text-[#E77D3C]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">
+                    Safe & Supportive
+                  </h3>
+                  <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">
+                    A judgment-free space to explore and grow.
+                  </p>
+                </div>
               </div>
-              <h2 className="font-playfair text-2xl text-[#0D393E]">
-                What Clients Say
-              </h2>
-            </div> 
-            </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <ReviewCard
-                text="Amazing therapist who truly listens. I've made so much progress since starting."
-                name="Client A."
-                rating={5}
-              />
-
-              <ReviewCard
-                text="Finally found someone who understands. Highly recommend!"
-                name="Client B."
-                rating={5}
-              />
-            </div>
-
-            {/* dots */}
-            <div className="flex gap-2 mt-4 justify-center lg:justify-start">
-              <span className="w-2 h-2 bg-[#0D393E] rounded-full"></span>
-              <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
-              <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
-              <span className="w-2 h-2 bg-gray-300 rounded-full"></span>
+              <div className="text-center mt-10">
+                <button className="font-nunito text-[#47898E] hover:text-[#0D393E] font-medium transition-colors duration-200 inline-flex items-center gap-2 group">
+                  Learn more about my approach
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </section>
