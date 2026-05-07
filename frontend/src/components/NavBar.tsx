@@ -57,7 +57,7 @@ export default function NavBar(){
         <div className=" font-nunito text-[#63676A] font-bold text-base hidden md:flex justify-center md:gap-6 lg:gap-10 xl:gap-12 2xl:gap-15   ">
           {paths.map((path)=>{
             const isActive = location.pathname === path.path;
-            return <button onClick={()=>{
+            return <button key={path.path} onClick={()=>{
               navigate(path.path);
             }} className={`relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#47898E] after:transition-all after:duration-300 hover:text-[#47898E] hover:after:w-full ${isActive ? 'text-[#47898E] after:w-full' : ''}`}>{path.name}</button>
           })}

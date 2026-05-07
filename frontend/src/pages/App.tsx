@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
@@ -72,7 +73,9 @@ export default function LandingPage() {
 const base = "w-38 md:w-45 2xl:w-52 rounded-full border font-nunito h-12 md:h-14 border-[#0D393E] text-sm transition-all duration-300 hover:shadow-lg hover:scale-105";
 
 function FindTherapistButton() {
-  return <button className={`${base} text-white bg-[#0D393E] hover:bg-[#2a5459]`}>Find a therapist</button>;
+  const navigate = useNavigate();
+
+  return <button onClick={()=>navigate("/therapists")} className={`${base} text-white bg-[#0D393E] hover:bg-[#2a5459]`}>Find a therapist</button>;
 }
 
 function ExploreResourcesButton() {
