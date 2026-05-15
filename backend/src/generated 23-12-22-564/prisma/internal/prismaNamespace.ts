@@ -384,9 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User',
-  Therapist: 'Therapist',
-  Specialty: 'Specialty'
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +400,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "therapist" | "specialty"
+    modelProps: "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -480,154 +478,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Therapist: {
-      payload: Prisma.$TherapistPayload<ExtArgs>
-      fields: Prisma.TherapistFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.TherapistFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.TherapistFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>
-        }
-        findFirst: {
-          args: Prisma.TherapistFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.TherapistFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>
-        }
-        findMany: {
-          args: Prisma.TherapistFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>[]
-        }
-        create: {
-          args: Prisma.TherapistCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>
-        }
-        createMany: {
-          args: Prisma.TherapistCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.TherapistCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>[]
-        }
-        delete: {
-          args: Prisma.TherapistDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>
-        }
-        update: {
-          args: Prisma.TherapistUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>
-        }
-        deleteMany: {
-          args: Prisma.TherapistDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.TherapistUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.TherapistUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>[]
-        }
-        upsert: {
-          args: Prisma.TherapistUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TherapistPayload>
-        }
-        aggregate: {
-          args: Prisma.TherapistAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTherapist>
-        }
-        groupBy: {
-          args: Prisma.TherapistGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TherapistGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.TherapistCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TherapistCountAggregateOutputType> | number
-        }
-      }
-    }
-    Specialty: {
-      payload: Prisma.$SpecialtyPayload<ExtArgs>
-      fields: Prisma.SpecialtyFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SpecialtyFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SpecialtyFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>
-        }
-        findFirst: {
-          args: Prisma.SpecialtyFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SpecialtyFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>
-        }
-        findMany: {
-          args: Prisma.SpecialtyFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>[]
-        }
-        create: {
-          args: Prisma.SpecialtyCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>
-        }
-        createMany: {
-          args: Prisma.SpecialtyCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SpecialtyCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>[]
-        }
-        delete: {
-          args: Prisma.SpecialtyDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>
-        }
-        update: {
-          args: Prisma.SpecialtyUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>
-        }
-        deleteMany: {
-          args: Prisma.SpecialtyDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SpecialtyUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SpecialtyUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>[]
-        }
-        upsert: {
-          args: Prisma.SpecialtyUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpecialtyPayload>
-        }
-        aggregate: {
-          args: Prisma.SpecialtyAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSpecialty>
-        }
-        groupBy: {
-          args: Prisma.SpecialtyGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SpecialtyGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SpecialtyCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SpecialtyCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -670,32 +520,10 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  name: 'name'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-export const TherapistScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  experience: 'experience',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type TherapistScalarFieldEnum = (typeof TherapistScalarFieldEnum)[keyof typeof TherapistScalarFieldEnum]
-
-
-export const SpecialtyScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt'
-} as const
-
-export type SpecialtyScalarFieldEnum = (typeof SpecialtyScalarFieldEnum)[keyof typeof SpecialtyScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -745,20 +573,6 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -871,8 +685,6 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
-  therapist?: Prisma.TherapistOmit
-  specialty?: Prisma.SpecialtyOmit
 }
 
 /* Types for Logging */
