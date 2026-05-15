@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
 import { fetchTherapist } from "./services/api";
 
 export default function TherapistPage2() {
@@ -22,11 +20,9 @@ export default function TherapistPage2() {
   if (loading) {
     return (
       <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
-        <NavBar />
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="text-[#0D393E]">Loading...</div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -34,11 +30,9 @@ export default function TherapistPage2() {
   if (error || !therapist) {
     return (
       <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
-        <NavBar />
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="text-red-500">Therapist not found</div>
         </div>
-        <Footer />
       </div>
     );
   }
@@ -50,8 +44,6 @@ export default function TherapistPage2() {
 
   return (
     <div className="bg-[#FFFDF8]  pt-4 text-[#235C61] font-nunito">
-      <NavBar />
-
       <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24 mt-8">
         {/* HERO SECTION */}
         <section className="flex flex-col lg:flex-row gap-10 items-center lg:items-start">
@@ -474,7 +466,6 @@ export default function TherapistPage2() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

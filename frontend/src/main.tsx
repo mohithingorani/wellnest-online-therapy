@@ -18,18 +18,22 @@ import Settings from "./pages/admin/Settings";
 import AdminLogin from "./pages/admin/Login";
 import CookieConsent from "./components/CookieConsent";
 import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ToastProvider>
       <CookieConsent />
       <Routes>
-        <Route index element={<App />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/therapists" element={<TherapistsPage />} />
-        <Route path="/therapists/:id" element={<TherapistPage2/>}/>
+        <Route element={<Layout />}>
+          <Route index element={<App />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="therapists" element={<TherapistsPage />} />
+          <Route path="therapists/:id" element={<TherapistPage2/>}/>
+        </Route>
+        
         <Route path="*" element={<NotFound />} />
         
         <Route path="/admin/login" element={<AdminAuthProvider><AdminLogin /></AdminAuthProvider>} />

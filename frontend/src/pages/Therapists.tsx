@@ -1,7 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import FiltersSidebar, { type FiltersState } from "../components/FilterSideBar";
-import Footer from "../components/Footer";
-import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
 import TherapistCard2 from "../components/TherapistCard2";
 import { fetchTherapists } from "../services/api";
@@ -97,10 +95,6 @@ export default function TherapistsPage() {
 
   return (
     <div className="bg-linear-to-b bg-[#FFFDF8] pt-4">
-      <nav className="opacity-0 animate-fade-in">
-        <NavBar />
-      </nav>
-
       <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24">
         <section className="flex mt-6 justify-between">
           <div className=" flex-1 ">
@@ -259,8 +253,7 @@ export default function TherapistsPage() {
             </div>
           </div>
         </section>
-      </main> 
-      <Footer/>
+      </main>
     </div>
   );
 }

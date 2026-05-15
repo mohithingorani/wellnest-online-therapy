@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
-import NavBar from "../components/NavBar";
 import SecureButton from "../components/SecureButton";
 import SupportBox from "../components/SupportBox";
 import Tag from "../components/Tag";
@@ -9,10 +7,6 @@ import { tagsData } from "../data";
 export default function LandingPage() {
   return (
     <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
-      <nav>
-        <NavBar />
-      </nav>
-
       <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24">
         <section className="flex mt-6 justify-between">
           <div className="flex-1">
@@ -65,7 +59,6 @@ export default function LandingPage() {
           <SupportBox />
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

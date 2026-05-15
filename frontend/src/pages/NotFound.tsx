@@ -7,9 +7,7 @@ export default function NotFound() {
 
   return (
     <div className="bg-[#FFFDF8] min-h-screen flex flex-col">
-      <nav className="px-4 md:px-8 lg:px-16 py-4 opacity-0 animate-fade-in">
         <NavBar />
-      </nav>
 
       <main className="flex-1 flex items-center justify-center px-4 md:px-8 relative overflow-hidden">
         <div className="absolute top-20 left-10 w-48 h-48 rounded-full bg-[#E77D3C]/10 blur-3xl animate-float" />

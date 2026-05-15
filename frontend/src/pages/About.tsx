@@ -1,17 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
 
 export default function AboutPage() {
   const navigate = useNavigate();
 
   return (
     <div className="bg-[#FFFDF8] min-h-screen">
-      <nav className="px-4 md:px-8 lg:px-16 py-4 opacity-0 animate-fade-in">
-        <NavBar />
-      </nav>
-
       {/* Hero */}
       <section className="relative mt-4 md:mt-8 overflow-hidden">
         <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#E77D3C]/5 blur-3xl animate-float" style={{ animationDelay: '0s' }} />
@@ -217,8 +211,6 @@ export default function AboutPage() {
           </button>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
