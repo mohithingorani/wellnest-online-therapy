@@ -20,7 +20,7 @@ export default function LandingPage() {
             </div>
             <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E] opacity-0 animate-fade-in-up animation-delay-200">
               <div>Thoughtful, personalised therapy that</div>
-              <div>fits your life. Anytime, anywhere.</div>
+              <div>fits your life. Anytime, anywhere .</div>
             </div>
             <div className="flex justify-around w-full md:w-fit md:justify-start mt-6 md:gap-6 lg:gap-12 opacity-0 animate-fade-in-up animation-delay-300">
               <FindTherapistButton />
