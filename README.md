@@ -5,12 +5,14 @@ A mental health platform connecting users with licensed therapists. WELLNEST pro
 ## Tech Stack
 
 ### Frontend
+
 - **React 19** with TypeScript
 - **Vite** for build tooling
 - **Tailwind CSS 4** for styling
 - **React Router** for navigation
 
 ### Backend
+
 - **Express 5** with TypeScript
 - **Prisma ORM** with PostgreSQL
 - **Argon2** for password hashing
@@ -48,6 +50,7 @@ WELLNEST/
 ## Features
 
 ### Frontend Features
+
 - **Therapist Directory** - Browse and search therapists with filtering options
 - **Therapist Profiles** - View detailed therapist information including specializations
 - **Filter System** - Filter by concern, therapy type, session type, and language
@@ -56,6 +59,7 @@ WELLNEST/
 - **Trust Indicators** - Display of confidentiality, verification, and flexibility features
 
 ### Backend Features
+
 - **RESTful API** - Complete CRUD operations for therapists
 - **User Management** - Registration, login, logout, and session management
 - **Specialty Management** - Manage therapist specializations
@@ -66,30 +70,34 @@ WELLNEST/
 ## API Endpoints
 
 ### Therapists
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/therapists` | List all therapists |
-| POST | `/api/therapists` | Create a therapist |
-| GET | `/api/therapists/:id` | Get therapist by ID |
-| PATCH | `/api/therapists/:id` | Update therapist |
-| DELETE | `/api/therapists/:id` | Delete therapist |
+
+| Method | Endpoint              | Description         |
+| ------ | --------------------- | ------------------- |
+| GET    | `/api/therapists`     | List all therapists |
+| POST   | `/api/therapists`     | Create a therapist  |
+| GET    | `/api/therapists/:id` | Get therapist by ID |
+| PATCH  | `/api/therapists/:id` | Update therapist    |
+| DELETE | `/api/therapists/:id` | Delete therapist    |
 
 ### Users
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/users/signup` | Register new user |
-| POST | `/api/users/login` | User login |
-| POST | `/api/users/logout` | User logout |
-| GET | `/api/users/me` | Get current user |
+
+| Method | Endpoint            | Description       |
+| ------ | ------------------- | ----------------- |
+| POST   | `/api/users/signup` | Register new user |
+| POST   | `/api/users/login`  | User login        |
+| POST   | `/api/users/logout` | User logout       |
+| GET    | `/api/users/me`     | Get current user  |
 
 ### Specialties
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/specialties` | List all specialties |
+
+| Method | Endpoint           | Description          |
+| ------ | ------------------ | -------------------- |
+| GET    | `/api/specialties` | List all specialties |
 
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - PostgreSQL database
 - npm or yarn
@@ -104,7 +112,7 @@ npm install
 
 # Configure environment variables
 # Create .env file with:
-# DATABASE_URL=postgresql://user:password@localhost:5432/wellnest
+# DATABASE_URL=postgresql://user:password@mohit.systems:5432/wellnest
 # PORT=3000
 # SESSION_SECRET=your-secret-key
 
@@ -118,7 +126,7 @@ npx prisma migrate dev
 npm run dev
 ```
 
-The backend runs at `http://localhost:3000` with Swagger docs at `/api/docs`.
+The backend runs at `http://mohit.systems:3000` with Swagger docs at `/api/docs`.
 
 ### Frontend Setup
 
@@ -132,11 +140,12 @@ npm install
 npm run dev
 ```
 
-The frontend runs at `http://localhost:5173` (default Vite port).
+The frontend runs at `http://mohit.systems:5173` (default Vite port).
 
 ## Database Schema
 
 ### User
+
 - `id` - Primary key
 - `email` - Unique email address
 - `name` - User's full name
@@ -145,12 +154,14 @@ The frontend runs at `http://localhost:5173` (default Vite port).
 - `updatedAt` - Last profile update
 
 ### Session
+
 - `id` - Primary key (UUID)
 - `sessionToken` - Unique session identifier
 - `userId` - Foreign key to User
 - `expiresAt` - Session expiration time
 
 ### Therapist
+
 - `id` - Primary key
 - `name` - Therapist's full name
 - `experience` - Years of experience
@@ -159,6 +170,7 @@ The frontend runs at `http://localhost:5173` (default Vite port).
 - `updatedAt` - Last update timestamp
 
 ### Specialty
+
 - `id` - Primary key (UUID)
 - `name` - Specialty name (unique)
 - `therapists` - Many-to-many relation with Therapist
@@ -166,20 +178,23 @@ The frontend runs at `http://localhost:5173` (default Vite port).
 ## Environment Variables
 
 ### Backend (.env)
+
 ```
-DATABASE_URL=postgresql://user:password@localhost:5432/wellnest
+DATABASE_URL=postgresql://user:password@mohit.systems:5432/wellnest
 PORT=3000
 ```
 
 ## Scripts
 
 ### Frontend
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run lint` - Run ESLint
 - `npm run preview` - Preview production build
 
 ### Backend
+
 - `npm run dev` - Start development server with tsx
 - `npm run build` - Compile TypeScript
 - `npm run start` - Start production server

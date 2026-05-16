@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "http://mohit.systems:3000/api";
 
 interface User {
   id: number;
@@ -14,7 +14,10 @@ interface AuthResponse {
   message?: string;
 }
 
-async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+async function fetchApi<T>(
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<T> {
   try {
     const response = await fetch(`${API_BASE}${endpoint}`, {
       ...options,
@@ -24,17 +27,21 @@ async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise
         ...options.headers,
       },
     });
-    
+
     const data = await response.json();
-    
+
     if (!response.ok) {
-      throw new Error(data.message || `Request failed with status ${response.status}`);
+      throw new Error(
+        data.message || `Request failed with status ${response.status}`,
+      );
     }
-    
+
     return data;
   } catch (error) {
     if (error instanceof TypeError && error.message === "Failed to fetch") {
-      throw new Error("Cannot connect to server. Make sure backend is running on port 3000.");
+      throw new Error(
+        "Cannot connect to server. Make sure backend is running on port 3000.",
+      );
     }
     throw error;
   }

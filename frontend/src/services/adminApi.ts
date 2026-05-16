@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "http://mohit.systems:3000/api";
 
 export interface Admin {
   id: number;
@@ -47,7 +47,10 @@ export interface Specialty {
   name: string;
 }
 
-async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
+async function fetchApi<T>(
+  endpoint: string,
+  options?: RequestInit,
+): Promise<T> {
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     credentials: "include",
@@ -72,11 +75,9 @@ export const adminApi = {
       method: "POST",
     }),
 
-  me: () =>
-    fetchApi<{ success: boolean; data: Admin }>("/admin/me"),
+  me: () => fetchApi<{ success: boolean; data: Admin }>("/admin/me"),
 
-  getStats: () =>
-    fetchApi<{ success: boolean; data: Stats }>("/admin/stats"),
+  getStats: () => fetchApi<{ success: boolean; data: Stats }>("/admin/stats"),
 
   getTherapists: () =>
     fetchApi<{ success: boolean; data: Therapist[] }>("/admin/therapists"),
@@ -93,8 +94,7 @@ export const adminApi = {
       method: "DELETE",
     }),
 
-  getUsers: () =>
-    fetchApi<{ success: boolean; data: User[] }>("/admin/users"),
+  getUsers: () => fetchApi<{ success: boolean; data: User[] }>("/admin/users"),
 
   updateUser: (id: number, data: { name?: string; email?: string }) =>
     fetchApi<{ success: boolean; data: User }>(`/admin/users/${id}`, {
@@ -118,7 +118,11 @@ export const adminApi = {
       body: JSON.stringify(data),
     }),
 
-  createTherapist: (data: { name: string; experience: number; specialtyIds?: string[] }) =>
+  createTherapist: (data: {
+    name: string;
+    experience: number;
+    specialtyIds?: string[];
+  }) =>
     fetchApi<{ success: boolean; data: Therapist }>("/admin/therapists", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
