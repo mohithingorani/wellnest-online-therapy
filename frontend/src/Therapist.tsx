@@ -17,9 +17,9 @@ export default function TherapistPage2() {
     }
   }, [id]);
 
-  if (loading) {
+if (loading) {
     return (
-      <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
+      <div className="bg-[#FFFDF8] pt-4">
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="text-[#0D393E]">Loading...</div>
         </div>
@@ -29,7 +29,7 @@ export default function TherapistPage2() {
 
   if (error || !therapist) {
     return (
-      <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
+      <div className="bg-[#FFFDF8] pt-4">
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="text-red-500">Therapist not found</div>
         </div>

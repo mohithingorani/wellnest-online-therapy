@@ -7,7 +7,7 @@ import { tagsData } from "../data";
 export default function LandingPage() {
   return (
     <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
-      <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24">
+      <main className="px-4 md:px-8 pb-8 lg:px-18 xl:px-16 2xl:px-24">
         <section className="flex mt-6 justify-between">
           <div className="flex-1">
             <div className="mb-4 opacity-0 animate-fade-in-up">

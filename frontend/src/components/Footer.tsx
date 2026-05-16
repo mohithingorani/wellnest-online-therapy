@@ -1,7 +1,7 @@
 // import "../index.css"
 export default function Footer() {
   return (
-    <footer className="bg-[#0D393E] text-white mt-16">
+    <footer className="bg-[#0D393E] text-white ">
       <div className="px-4 md:px-8 lg:px-16 2xl:px-24 py-10">
         
         {/* TOP */}

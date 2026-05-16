@@ -6,8 +6,7 @@ export default function AboutPage() {
 
   return (
     <div className="bg-[#FFFDF8] min-h-screen">
-      {/* Hero */}
-      <section className="relative mt-4 md:mt-8 overflow-hidden">
+      <section className="relative  overflow-hidden">
         <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-[#E77D3C]/5 blur-3xl animate-float" style={{ animationDelay: '0s' }} />
         <div className="absolute bottom-10 right-20 w-40 h-40 rounded-full bg-[#47898E]/5 blur-3xl animate-float" style={{ animationDelay: '1s' }} />
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-14 relative">
