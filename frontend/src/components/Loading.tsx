@@ -69,7 +69,7 @@ export default function LoadingPage({
 
         {/* Hero */}
         <div className="flex flex-1 items-center justify-center">
-          <div className="max-w-4xl font-nunito ">
+          <div className="max-w-4xl  ">
             
             <div className="overflow-hidden">
               <h2 className="animate-[slideUp_1s_cubic-bezier(0.16,1,0.3,1)] text-5xl md:text-7xl lg:text-8xl font-light tracking-[-0.04em] leading-[0.95]">

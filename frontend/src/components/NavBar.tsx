@@ -3,9 +3,7 @@ import { getAuthUser, authService, clearAuthUser } from "../services/auth";
 import { useEffect, useState } from "react";
 
 const paths = [
-  { name: "Therapy", path: "/therapy" },
   { name: "Therapists", path: "/therapists" },
-  { name: "Resources", path: "/resources" },
   { name: "About", path: "/about" },
 ];
 

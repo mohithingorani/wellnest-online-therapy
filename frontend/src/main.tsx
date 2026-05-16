@@ -13,31 +13,27 @@ import LoadingPage from "./components/Loading";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const lazyWithDelay = (
-  importFn: () => Promise<any>,
-  delayMs = 3600000
-) =>
-  lazy(async () => {
-    await delay(delayMs);
-    return importFn();
-  });
+// Only add delay to landing page
+const LandingPage = lazy(async () => {
+  await delay(2000);
+  return import("./pages/App");
+});
 
-// Lazy pages with artificial delay
-const HomePage = lazyWithDelay(() => import("./pages/App"));
-const AboutPage = lazyWithDelay(() => import("./pages/About"));
-const Signin = lazyWithDelay(() => import("./pages/Signin"));
-const SignUp = lazyWithDelay(() => import("./pages/SignUp"));
-const TherapistsPage = lazyWithDelay(() => import("./pages/Therapists"));
-const TherapistPage = lazyWithDelay(() => import("./Therapist"));
-const NotFound = lazyWithDelay(() => import("./pages/NotFound"));
+// All other pages - no delay
+const AboutPage = lazy(() => import("./pages/About"));
+const Signin = lazy(() => import("./pages/Signin"));
+const SignUp = lazy(() => import("./pages/SignUp"));
+const TherapistsPage = lazy(() => import("./pages/Therapists"));
+const TherapistPage = lazy(() => import("./Therapist"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Admin
-const AdminLogin = lazyWithDelay(() => import("./pages/admin/Login"));
-const AdminDashboard = lazyWithDelay(() => import("./pages/admin/Dashboard"));
-const TherapistManagement = lazyWithDelay(() => import("./pages/admin/TherapistManagement"));
-const UserManagement = lazyWithDelay(() => import("./pages/admin/UserManagement"));
-const Analytics = lazyWithDelay(() => import("./pages/admin/Analytics"));
-const Settings = lazyWithDelay(() => import("./pages/admin/Settings"));
+// Admin - no delay
+const AdminLogin = lazy(() => import("./pages/admin/Login"));
+const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const TherapistManagement = lazy(() => import("./pages/admin/TherapistManagement"));
+const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
+const Analytics = lazy(() => import("./pages/admin/Analytics"));
+const Settings = lazy(() => import("./pages/admin/Settings"));
 
 function SuspenseFallback() {
   const [show, setShow] = useState(false);
@@ -60,7 +56,7 @@ createRoot(document.getElementById("root")!).render(
         <Routes>
           {/* Public Routes */}
           <Route element={<Layout />}>
-            <Route index element={<HomePage />} />
+            <Route index element={<LandingPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<SignUp />} />
