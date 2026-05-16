@@ -112,7 +112,7 @@ npm install
 
 # Configure environment variables
 # Create .env file with:
-# DATABASE_URL=postgresql://user:password@mohit.systems:5432/wellnest
+# DATABASE_URL=postgresql://user:password@localhost:5432/wellnest
 # PORT=3000
 # SESSION_SECRET=your-secret-key
 
@@ -126,7 +126,7 @@ npx prisma migrate dev
 npm run dev
 ```
 
-The backend runs at `http://mohit.systems:3000` with Swagger docs at `/api/docs`.
+The backend runs at `http://localhost:3000` with Swagger docs at `/api/docs`.
 
 ### Frontend Setup
 
@@ -140,7 +140,7 @@ npm install
 npm run dev
 ```
 
-The frontend runs at `http://mohit.systems:5173` (default Vite port).
+The frontend runs at `http://localhost:5173` (default Vite port).
 
 ## Database Schema
 
@@ -180,7 +180,7 @@ The frontend runs at `http://mohit.systems:5173` (default Vite port).
 ### Backend (.env)
 
 ```
-DATABASE_URL=postgresql://user:password@mohit.systems:5432/wellnest
+DATABASE_URL=postgresql://user:password@localhost:5432/wellnest
 PORT=3000
 ```
 
