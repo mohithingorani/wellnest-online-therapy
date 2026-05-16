@@ -27,11 +27,6 @@ export default function NavBar() {
     navigate("/");
   };
 
-  const handleNavClick = (path: string) => {
-    navigate(path);
-    setMobileMenuOpen(false);
-  };
-
   return (
     <div className="flex justify-between items-center bg-transparent px-4 md:px-8 lg:py-6 lg:px-16 py-4">
       <button 
