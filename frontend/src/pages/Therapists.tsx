@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import FiltersSidebar, { type FiltersState } from "../components/FilterSideBar";
 import SecureButton from "../components/SecureButton";
 import TherapistCard2 from "../components/TherapistCard2";
+import TherapistCardSkeleton from "../components/TherapistCardSkeleton";
 import { fetchTherapists } from "../services/api";
 import type { Therapist } from "../services/api";
 
@@ -231,8 +232,8 @@ export default function TherapistsPage() {
                 </h2>
                 
               </div>
-              <div className="flex flex-col gap-4 opacity-0 animate-fade-in-up animation-delay-400">
-              {loading && <div className="text-center py-8">Loading...</div>}
+              <div className={`flex flex-col gap-4 ${loading ? '' : 'opacity-0 animate-fade-in-up animation-delay-400'}`}>
+              {loading && <TherapistCardSkeleton />}
               {error && <div className="text-center py-8 text-red-500">{error}</div>}
               {!loading && !error && filteredTherapists.length === 0 && (
                 <div className="text-center py-8 text-gray-500">No therapists match your filters</div>

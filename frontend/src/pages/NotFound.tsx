@@ -6,10 +6,11 @@ export default function NotFound() {
   const navigate = useNavigate();
 
   return (
+    <>
     <div className="bg-[#FFFDF8] min-h-screen flex flex-col">
         <NavBar />
 
-      <main className="flex-1 flex items-center justify-center px-4 md:px-8 relative overflow-hidden">
+      <main className="flex-1 flex items-center justify-center px-4 md:px-8">
         <div className="absolute top-20 left-10 w-48 h-48 rounded-full bg-[#E77D3C]/10 blur-3xl animate-float" />
         <div className="absolute bottom-20 right-10 w-64 h-64 rounded-full bg-[#47898E]/10 blur-3xl animate-float" style={{ animationDelay: "1s" }} />
         <div className="absolute top-1/3 right-1/4 w-32 h-32 rounded-full bg-[#0D393E]/5 blur-2xl animate-float" style={{ animationDelay: "0.5s" }} />
@@ -62,8 +63,9 @@ export default function NotFound() {
       </main>
 
       <div className="opacity-0 animate-fade-in animation-delay-600">
-        <Footer />
       </div>
     </div>
+      <Footer />
+    </>
   );
 }

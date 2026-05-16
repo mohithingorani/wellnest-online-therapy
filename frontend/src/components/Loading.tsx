@@ -1,57 +1,150 @@
-export default function LoadingPage() {
+"use client";
+
+import { useEffect, useState } from "react";
+
+interface LoadingPageProps {
+  minDisplayTime?: number;
+}
+
+export default function LoadingPage({
+  minDisplayTime = 1800,
+}: LoadingPageProps) {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const start = Date.now();
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start;
+
+      /**
+       * Much more natural easing curve
+       * Fast at start, slower near end
+       */
+      const easedProgress = Math.min(
+        100,
+        100 * (1 - Math.exp(-elapsed / 600))
+      );
+
+      setProgress(Math.floor(easedProgress));
+
+      if (elapsed >= minDisplayTime) {
+        setProgress(100);
+        clearInterval(interval);
+      }
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, [minDisplayTime]);
+
   return (
-    <div className="min-h-screen bg-[#FFFDF8] flex flex-col items-center justify-center p-4">
-      <div className="relative mb-8">
-        <div className="w-24 h-24 rounded-full bg-[#E6F4F1] flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-[#0D393E]/10 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full bg-[#0D393E] animate-pulse"></div>
+    <div className="relative min-h-screen overflow-hidden bg-[#f8f6f1] text-[#0D393E]">
+      
+      {/* Background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-[-15%] left-[-10%] h-[500px] w-[500px] rounded-full bg-[#47898E]/10 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-[#E77D3C]/10 blur-3xl animate-pulse" />
+      </div>
+
+      {/* Noise */}
+      <div className="absolute inset-0 opacity-[0.025] bg-[url('/noise.png')]" />
+
+      {/* Main */}
+      <div className="relative z-10 flex min-h-screen flex-col justify-between p-8 md:p-12">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between animate-[fadeIn_0.8s_ease]">
+          <div className="flex items-center gap-3">
+            <div className="h-2 w-2 rounded-full bg-[#0D393E] animate-pulse" />
+
+            <h1 className="text-xs uppercase tracking-[0.35em] font-medium">
+              WellNest
+            </h1>
+          </div>
+
+          <span className="text-xs uppercase tracking-[0.25em] text-[#0D393E]/40">
+            Loading
+          </span>
+        </div>
+
+        {/* Hero */}
+        <div className="flex flex-1 items-center justify-center">
+          <div className="max-w-4xl font-nunito ">
+            
+            <div className="overflow-hidden">
+              <h2 className="animate-[slideUp_1s_cubic-bezier(0.16,1,0.3,1)] text-5xl md:text-7xl lg:text-8xl font-light tracking-[-0.04em] leading-[0.95]">
+                Mental wellness,
+              </h2>
+            </div>
+
+            <div className=" mt-2">
+              <h2 className="animate-[slideUp_1s_cubic-bezier(0.16,1,0.3,1)] text-5xl md:text-7xl lg:text-8xl font-light tracking-[-0.04em] leading-[0.95] text-[#0D393E]/55">
+                reimagined digitally.
+              </h2>
+            </div>
+
+            <p className="mt-8 max-w-md text-sm md:text-base leading-relaxed text-[#0D393E]/50 animate-[fadeIn_1.4s_ease]">
+              Preparing a thoughtful experience designed to support clarity,
+              balance, and emotional wellbeing.
+            </p>
           </div>
         </div>
-        <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-[#E77D3C] flex items-center justify-center">
-          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-          </svg>
+
+        {/* Footer */}
+        <div className="flex items-end justify-between">
+          
+          {/* Percentage */}
+          <div className="flex items-end gap-2">
+            <span className="text-7xl md:text-9xl font-light tracking-[-0.06em] leading-none">
+              {String(progress).padStart(2, "0")}
+            </span>
+
+            <span className="mb-3 text-sm text-[#0D393E]/40">
+              %
+            </span>
+          </div>
+
+          {/* Progress Line */}
+          <div className="w-[42%]">
+            <div className="mb-3 flex justify-between text-[10px] uppercase tracking-[0.25em] text-[#0D393E]/35">
+              <span>Initializing</span>
+              <span>{progress}/100</span>
+            </div>
+
+            <div className="relative h-[1px] overflow-hidden bg-[#0D393E]/10">
+              <div
+                className="absolute left-0 top-0 h-full bg-[#0D393E] transition-all duration-200 ease-out"
+                style={{
+                  width: `${progress}%`,
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
-      
-      <h1 className="font-playfair text-3xl text-[#0D393E] mb-2">WellNest</h1>
-      <p className="text-[#6B7280] font-nunito mb-8">Loading your wellness journey...</p>
-      
-      <div className="flex gap-2">
-        <div className="w-2 h-2 rounded-full bg-[#E77D3C] animate-bounce" style={{ animationDelay: '0ms' }}></div>
-        <div className="w-2 h-2 rounded-full bg-[#0D393E] animate-bounce" style={{ animationDelay: '150ms' }}></div>
-        <div className="w-2 h-2 rounded-full bg-[#47898E] animate-bounce" style={{ animationDelay: '300ms' }}></div>
-      </div>
-      
-      <div className="mt-12 w-64 h-2 bg-[#E5E7EB] rounded-full overflow-hidden">
-        <div className="h-full bg-gradient-to-r from-[#0D393E] via-[#47898E] to-[#E77D3C] rounded-full animate-[loading_1.5s_ease-in-out_infinite]"></div>
-      </div>
-    </div>
-  );
-}
 
-export function LoadingSpinner({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const sizes = {
-    sm: "w-4 h-4",
-    md: "w-8 h-8",
-    lg: "w-12 h-12"
-  };
-  
-  return (
-    <div className={`${sizes[size]} relative`}>
-      <div className="absolute inset-0 rounded-full border-2 border-[#E6F4F1]"></div>
-      <div className="absolute inset-0 rounded-full border-2 border-[#0D393E] border-t-transparent animate-spin"></div>
-    </div>
-  );
-}
+      {/* Animations */}
+        <style>{`
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(120%);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0%);
+          }
+        }
 
-export function PageLoading() {
-  return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <LoadingSpinner size="lg" />
-        <p className="text-[#6B7280] font-nunito text-sm">Loading...</p>
-      </div>
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }
