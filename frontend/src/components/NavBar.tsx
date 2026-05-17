@@ -28,7 +28,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="w-full bg-transparent md:bg-white">
+      <div className="w-full bg-[#FFFDF8] md:bg-white">
         <div className="flex justify-between items-center min-h-[72px] px-4 py-4 md:px-8 lg:px-16 lg:py-6 bg-white">
           
           {/* Mobile Menu Button */}
