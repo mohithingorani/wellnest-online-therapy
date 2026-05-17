@@ -155,8 +155,8 @@ export default function NavBar() {
                 </button>
               ) : (
                 <>
-                  <LoginButton />
-                  <SignUpButton />
+                  <LoginButton onClick={() => setMobileMenuOpen(false)} />
+                  <SignUpButton onClick={() => setMobileMenuOpen(false)} />
                 </>
               )}
             </div>
@@ -170,12 +170,15 @@ export default function NavBar() {
 const base =
   "font-nunito w-40 text-base rounded-xl py-2 border transition-all duration-300 hover:shadow-lg";
 
-export function LoginButton() {
+export function LoginButton({ onClick }: { onClick?: () => void }) {
   const navigate = useNavigate();
 
   return (
     <button
-      onClick={() => navigate("/signin")}
+      onClick={() => {
+        onClick?.();
+        navigate("/signin");
+      }}
       className={`${base} bg-[#D9D9D9]/20 text-[#0D393E] border-[#0D393E] hover:bg-[#D9D9D9]/40 hover:scale-[1.02]`}
     >
       Log in
@@ -183,12 +186,15 @@ export function LoginButton() {
   );
 }
 
-function SignUpButton() {
+function SignUpButton({ onClick }: { onClick?: () => void }) {
   const navigate = useNavigate();
 
   return (
     <button
-      onClick={() => navigate("/signup")}
+      onClick={() => {
+        onClick?.();
+        navigate("/signup");
+      }}
       className={`${base} bg-[#0D393E] text-white border-[#0D393E] hover:bg-[#2a5459] hover:scale-[1.02] hover:shadow-lg`}
     >
       Get Started
