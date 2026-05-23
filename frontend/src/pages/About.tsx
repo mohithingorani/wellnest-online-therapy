@@ -5,7 +5,7 @@ export default function AboutPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white font-nunito text-neutral-900">
+    <div className="min-h-screen bg-[#FFFDF8] font-nunito text-neutral-900">
       
       {/* HERO */}
       <section className="border-b border-neutral-200">
