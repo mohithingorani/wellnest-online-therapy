@@ -74,7 +74,8 @@ router.post("/login", async (req, res) => {
 
     await prisma.admin.update({
       where: { id: admin.id },
-      data: { 
+      data: {
+        sessionToken: hashedToken,
         updatedAt: new Date(),
       },
     });
@@ -101,6 +102,14 @@ router.post("/login", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
   try {
+    const token = req.cookies?.[ADMIN_COOKIE_NAME];
+    if (token && typeof token === "string") {
+      const hashedToken = hashToken(token);
+      await prisma.admin.updateMany({
+        where: { sessionToken: hashedToken },
+        data: { sessionToken: null },
+      });
+    }
     clearAdminCookie(res);
     res.json({ success: true, message: "Logged out" });
   } catch (error) {
@@ -123,16 +132,14 @@ router.get("/me", async (req, res) => {
     }
 
     const hashedToken = hashToken(token);
-    const admin = await prisma.admin.findFirst({
-      where: { 
-        id: { gt: 0 }
-      },
+    const admin = await prisma.admin.findUnique({
+      where: { sessionToken: hashedToken },
     });
 
     if (!admin) {
       return res.status(401).json({
         success: false,
-        message: "Admin not found",
+        message: "Not authenticated",
       });
     }
 

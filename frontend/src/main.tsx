@@ -6,6 +6,7 @@ import "./index.css";
 
 import { ToastProvider } from "./components/admin/Toast";
 import { AdminAuthProvider } from "./contexts/AdminAuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { AdminLayout } from "./components/admin/AdminLayout";
 
 import Layout from "./components/Layout";
@@ -53,6 +54,7 @@ createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ToastProvider>
       <Suspense fallback={<SuspenseFallback />}>
+        <AuthProvider>
         <Routes>
           {/* Public Routes */}
           <Route element={<Layout />}>
@@ -89,6 +91,7 @@ createRoot(document.getElementById("root")!).render(
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </AuthProvider>
       </Suspense>
     </ToastProvider>
   </BrowserRouter>

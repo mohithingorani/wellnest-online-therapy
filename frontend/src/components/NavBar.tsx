@@ -1,6 +1,6 @@
 import { useNavigate, NavLink } from "react-router-dom";
-import { getAuthUser, authService, clearAuthUser } from "../services/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 const paths = [
   { name: "Therapists", path: "/therapists" },
@@ -9,20 +9,11 @@ const paths = [
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(getAuthUser());
+  const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    setUser(getAuthUser());
-  }, []);
-
   const handleLogout = async () => {
-    try {
-      await authService.logout();
-    } catch (e) {}
-
-    clearAuthUser();
-    setUser(null);
+    await logout();
     navigate("/");
   };
 

@@ -21,7 +21,7 @@ export async function signup(req: Request, res: Response) {
       return res.status(400).json({
         success: false,
         message: "Invalid input",
-        errors: z.flattenError(parsed.error),
+        errors: parsed.error.flatten(),
       });
     }
 
@@ -71,7 +71,7 @@ export async function login(req: Request, res: Response) {
       return res.status(400).json({
         success: false,
         message: "Invalid input",
-        errors: z.flattenError(parsed.error),
+        errors: parsed.error.flatten(),
       });
     }
 

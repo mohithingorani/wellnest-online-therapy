@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authService, setAuthUser } from "../services/auth";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { signup } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,11 +17,8 @@ export default function SignUp() {
     setError("");
 
     try {
-      const response = await authService.signup({ name, email, password });
-      if (response.success && response.data) {
-        setAuthUser(response.data);
-        navigate("/");
-      }
+      await signup(name, email, password);
+      navigate("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
