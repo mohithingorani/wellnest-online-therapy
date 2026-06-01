@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(getAuthUser());
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(!!getAuthUser());
 
   useEffect(() => {
     const stored = getAuthUser();
@@ -40,7 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .catch(() => {
           clearAuthUser();
           setUser(null);
-        });
+        })
+        .finally(() => setLoading(false));
     }
   }, []);
 
