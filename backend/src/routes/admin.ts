@@ -3,23 +3,34 @@ import { z } from "zod";
 import crypto from "crypto";
 import argon2 from "argon2";
 import { prisma } from "../db/prisma";
+import {
+  ADMIN_COOKIE_NAME,
+  hashAdminToken,
+  requireAdmin,
+} from "../middleware/adminAuth";
 
 const router = Router();
-
-const ADMIN_COOKIE_NAME = "wellnest_admin";
 
 const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
 });
 
+const UpdateProfileSchema = z.object({
+  name: z.string().min(1).optional(),
+  email: z.string().email().optional(),
+});
+
+const ChangePasswordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z.string().min(8),
+});
+
 function generateAdminToken() {
   return crypto.randomBytes(32).toString("hex");
 }
 
-function hashToken(token: string) {
-  return crypto.createHash("sha256").update(token).digest("hex");
-}
+const hashToken = hashAdminToken;
 
 function setAdminCookie(res: Response, token: string) {
   const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
@@ -499,6 +510,164 @@ router.get("/specialties", async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to fetch specialties",
+    });
+  }
+});
+
+router.get("/analytics", requireAdmin, async (_req, res) => {
+  try {
+    const [userTotal, therapistTotal, activeSessions, users, topConcerns] =
+      await Promise.all([
+        prisma.user.count(),
+        prisma.therapist.count(),
+        prisma.session.count({ where: { expiresAt: { gt: new Date() } } }),
+        prisma.user.findMany({ select: { createdAt: true } }),
+        prisma.concerns.findMany({
+          select: {
+            id: true,
+            name: true,
+            _count: { select: { therapists: true } },
+          },
+        }),
+      ]);
+
+    // Build last-12-months user growth buckets (oldest -> newest).
+    const months: { label: string; count: number }[] = [];
+    const now = new Date();
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push({
+        label: d.toLocaleString("en-US", { month: "short" }),
+        count: 0,
+      });
+    }
+    const monthIndex = (date: Date) => {
+      const diff =
+        (now.getFullYear() - date.getFullYear()) * 12 +
+        (now.getMonth() - date.getMonth());
+      return 11 - diff;
+    };
+    for (const u of users) {
+      const idx = monthIndex(new Date(u.createdAt));
+      if (idx >= 0 && idx < 12) months[idx].count += 1;
+    }
+
+    const topSpecialties = topConcerns
+      .map((c) => ({ name: c.name, count: c._count.therapists }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    res.json({
+      success: true,
+      data: {
+        userTotal,
+        therapistTotal,
+        activeSessions,
+        userGrowth: months,
+        topSpecialties,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch analytics",
+    });
+  }
+});
+
+router.patch("/me", requireAdmin, async (req, res) => {
+  try {
+    const parsed = UpdateProfileSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid input",
+      });
+    }
+
+    if (parsed.data.email) {
+      const existing = await prisma.admin.findUnique({
+        where: { email: parsed.data.email },
+      });
+      if (existing && existing.id !== req.adminId) {
+        return res.status(409).json({
+          success: false,
+          message: "Email already in use",
+        });
+      }
+    }
+
+    const admin = await prisma.admin.update({
+      where: { id: req.adminId },
+      data: {
+        ...(parsed.data.name !== undefined ? { name: parsed.data.name } : {}),
+        ...(parsed.data.email !== undefined ? { email: parsed.data.email } : {}),
+        updatedAt: new Date(),
+      },
+    });
+
+    res.json({
+      success: true,
+      data: {
+        id: admin.id,
+        email: admin.email,
+        name: admin.name,
+        role: admin.role,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update profile",
+    });
+  }
+});
+
+router.post("/change-password", requireAdmin, async (req, res) => {
+  try {
+    const parsed = ChangePasswordSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must be at least 8 characters",
+      });
+    }
+
+    const admin = await prisma.admin.findUnique({
+      where: { id: req.adminId },
+    });
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
+    }
+
+    const valid = await argon2.verify(
+      admin.password,
+      parsed.data.currentPassword,
+    );
+    if (!valid) {
+      return res.status(401).json({
+        success: false,
+        message: "Current password is incorrect",
+      });
+    }
+
+    const newHash = await argon2.hash(parsed.data.newPassword);
+    await prisma.admin.update({
+      where: { id: admin.id },
+      data: { password: newHash, updatedAt: new Date() },
+    });
+
+    res.json({ success: true, message: "Password updated" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update password",
     });
   }
 });
