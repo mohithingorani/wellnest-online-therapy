@@ -10,6 +10,7 @@ export default function TherapistsPage() {
   const [therapists, setTherapists] = useState<Therapist[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [topFilters, setTopFilters] = useState({
     concern: "",
     therapyType: "",
@@ -94,10 +95,17 @@ export default function TherapistsPage() {
     });
   }, [therapists, filters, topFilters]);
 
+  const hasActiveFilters =
+    Object.values(topFilters).some(Boolean) ||
+    filters.concerns.length > 0 ||
+    filters.therapyApproaches.length > 0 ||
+    !!filters.sessionType ||
+    !!filters.gender;
+
   return (
     <div className="bg-[#FFFDF8] min-h-screen pt-4">
-      <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24">
-        <section className="flex mt-6 justify-between">
+      <main className="px-4 md:px-8 lg:px-16 2xl:px-24">
+        <section className="flex mt-6 justify-between gap-8">
           <div className=" flex-1 ">
             <div className="mb-4 opacity-0 animate-fade-in-up">
               <SecureButton />
@@ -206,14 +214,17 @@ export default function TherapistsPage() {
               </div>
               <div className="flex items-end">
                 <button
-                  className="w-full h-12 rounded-lg font-nunito bg-[#0D393E] text-white font-medium flex items-center justify-center gap-3 hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300"
+                  disabled={!hasActiveFilters}
+                  className="w-full h-12 rounded-lg font-nunito border border-[#0D393E] text-[#0D393E] font-medium flex items-center justify-center gap-2 hover:bg-[#0D393E]/5 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
                   onClick={() => {
                     setTopFilters({ concern: "", therapyType: "", sessionType: "", language: "", location: "" });
                     setFilters({ concerns: [], therapyApproaches: [], sessionType: "", gender: "" });
                   }}
                 >
-                  <img src="/search.svg" alt="search" />
-                  <div>Search</div>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  <div>Clear filters</div>
                 </button>
               </div>
             </div>
@@ -226,12 +237,25 @@ export default function TherapistsPage() {
               <FiltersSidebar filters={filters} setFilters={setFilters} />
             </div>
             <div className="col-span-1 lg:col-span-3">
-              <div className="mb-6 mt-2">
+              <div className="mb-6 mt-2 flex items-center justify-between gap-4">
                 <h2 className="font-playfair text-xl md:text-2xl text-[#0D393E] font-medium">
                   {filteredTherapists.length} Therapist{filteredTherapists.length !== 1 ? 's' : ''} Available
                 </h2>
-                
+                <button
+                  onClick={() => setShowMobileFilters((v) => !v)}
+                  className="lg:hidden flex items-center gap-2 text-sm font-medium text-[#0D393E] border border-[#EFEAE7] bg-[#F9F7F5]/60 rounded-lg px-3 py-2 hover:border-[#47898E] transition-colors"
+                >
+                  <img src="/filter.svg" alt="" className="w-4 h-4" />
+                  Filters
+                </button>
               </div>
+
+              {/* Mobile filters (collapsible) */}
+              {showMobileFilters && (
+                <div className="lg:hidden mb-6">
+                  <FiltersSidebar filters={filters} setFilters={setFilters} />
+                </div>
+              )}
               <div className={`flex flex-col gap-4 ${loading ? '' : 'opacity-0 animate-fade-in-up animation-delay-400'}`}>
               {loading && <TherapistCardSkeleton />}
               {error && <div className="text-center py-8 text-red-500">{error}</div>}
