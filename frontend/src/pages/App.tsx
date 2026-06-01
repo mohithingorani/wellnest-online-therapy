@@ -7,10 +7,10 @@ import { tagsData } from "../data";
 export default function LandingPage() {
   return (
     <div className="bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] pt-4">
-      <main className="px-4 md:px-8 pb-8 lg:px-18 xl:px-16 2xl:px-24">
-        <section className="flex mt-6 justify-between">
+      <main className="px-4 md:px-8 pb-8 lg:px-16 2xl:px-24">
+        <section className="flex mt-6 justify-between gap-8">
           <div className="flex-1">
-            <div className="mb-4 opacity-0 animate-fade-in-up">
+            <div className="flex justify-center md:justify-start mb-4 opacity-0 animate-fade-in-up">
               <SecureButton />
             </div>
             <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2 opacity-0 animate-fade-in-up animation-delay-100">
@@ -20,7 +20,7 @@ export default function LandingPage() {
             </div>
             <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-[#3E464E] opacity-0 animate-fade-in-up animation-delay-200">
               <div>Thoughtful, personalised therapy that</div>
-              <div>fits your life. Anytime, anywhere .</div>
+              <div>fits your life. Anytime, anywhere.</div>
             </div>
             <div className="flex justify-around w-full md:w-fit md:justify-start mt-6 md:gap-6 lg:gap-12 opacity-0 animate-fade-in-up animation-delay-300">
               <FindTherapistButton />
@@ -72,5 +72,7 @@ function FindTherapistButton() {
 }
 
 function ExploreResourcesButton() {
-  return <button className={`${base} hover:shadow-lg hover:scale-105`}>Explore Resources</button>;
+  const navigate = useNavigate();
+
+  return <button onClick={()=>navigate("/about")} className={`${base} hover:shadow-lg hover:scale-105`}>Explore Resources</button>;
 }
