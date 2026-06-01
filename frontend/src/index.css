@@ -7,6 +7,17 @@ body {
 @theme {
   --font-nunito: "Nunito", sans-serif;
   --font-playfair: "Playfair Display", serif;
+
+  /* Brand palette — public site */
+  --color-brand-deep: #0d393e;
+  --color-brand-teal: #47898e;
+  --color-brand-accent: #e77d3c;
+  --color-brand-surface: #fffdf8;
+
+  /* Admin (dark) surfaces */
+  --color-admin-bg: #0a0a0a;
+  --color-admin-card: #111111;
+  --color-admin-border: #1f1f1f;
 }
 
 @keyframes fadeIn {
