@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 export interface Admin {
   id: number;
@@ -45,6 +45,14 @@ export interface Activity {
 export interface Specialty {
   id: string;
   name: string;
+}
+
+export interface Analytics {
+  userTotal: number;
+  therapistTotal: number;
+  activeSessions: number;
+  userGrowth: { label: string; count: number }[];
+  topSpecialties: { name: string; count: number }[];
 }
 
 async function fetchApi<T>(
@@ -131,4 +139,21 @@ export const adminApi = {
 
   getSpecialties: () =>
     fetchApi<{ success: boolean; data: Specialty[] }>("/admin/specialties"),
+
+  getAnalytics: () =>
+    fetchApi<{ success: boolean; data: Analytics }>("/admin/analytics"),
+
+  updateProfile: (data: { name?: string; email?: string }) =>
+    fetchApi<{ success: boolean; data: Admin }>("/admin/me", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }),
+
+  changePassword: (data: { currentPassword: string; newPassword: string }) =>
+    fetchApi<{ success: boolean; message: string }>("/admin/change-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }),
 };
