@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchTherapist } from "./services/api";
+import type { Therapist } from "./services/api";
 
 export default function TherapistPage2() {
   const { id } = useParams<{ id: string }>();
-  const [therapist, setTherapist] = useState<any>(null);
+  const navigate = useNavigate();
+  const [therapist, setTherapist] = useState<Therapist | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,34 +19,40 @@ export default function TherapistPage2() {
     }
   }, [id]);
 
-if (loading) {
+  if (loading) {
     return (
-      <div className="bg-[#FFFDF8] pt-4">
-        <div className="flex justify-center items-center min-h-[60vh]">
-          <div className="text-[#0D393E]">Loading...</div>
-        </div>
+      <div className="bg-[#FFFDF8] min-h-[70vh] flex flex-col items-center justify-center gap-4">
+        <div className="w-10 h-10 rounded-full border-2 border-[#47898E]/30 border-t-[#47898E] animate-spin" />
+        <div className="text-[#3E464E] font-nunito text-sm">Loading profile…</div>
       </div>
     );
   }
 
   if (error || !therapist) {
     return (
-      <div className="bg-[#FFFDF8] pt-4">
-        <div className="flex justify-center items-center min-h-[60vh]">
-          <div className="text-red-500">Therapist not found</div>
-        </div>
+      <div className="bg-[#FFFDF8] min-h-[70vh] flex flex-col items-center justify-center gap-4 text-center px-4">
+        <h1 className="font-playfair text-2xl text-[#0D393E]">Therapist not found</h1>
+        <p className="font-nunito text-sm text-[#3E464E]">
+          This profile may have been removed or the link is incorrect.
+        </p>
+        <button
+          onClick={() => navigate("/therapists")}
+          className="mt-2 px-6 py-2.5 rounded-full bg-[#0D393E] text-white font-nunito text-sm hover:bg-[#2a5459] transition-colors"
+        >
+          Browse therapists
+        </button>
       </div>
     );
   }
 
-  const specialties = therapist.specialities?.map((s: any) => s.name) || [];
-  const sessionTypes = therapist.sessionTypes?.map((s: any) => s.name) || [];
-  const therapyTypes = therapist.therapyTypes?.map((t: any) => t.name) || [];
-  const languages = therapist.languages?.map((l: any) => l.name) || [];
+  const specialties = therapist.specialities?.map((s) => s.name) || [];
+  const sessionTypes = therapist.sessionTypes?.map((s) => s.name) || [];
+  const therapyTypes = therapist.therapyTypes?.map((t) => t.name) || [];
+  const languages = therapist.languages?.map((l) => l.name) || [];
 
   return (
-    <div className="bg-[#FFFDF8]  pt-4 text-[#235C61] font-nunito">
-      <main className="px-4 md:px-8 lg:px-18 xl:px-16 2xl:px-24 mt-8">
+    <div className="bg-[#FFFDF8] pt-4 text-[#3E464E] font-nunito">
+      <main className="px-4 md:px-8 lg:px-16 2xl:px-24 mt-8">
         {/* HERO SECTION */}
         <section className="flex flex-col lg:flex-row gap-10 items-center lg:items-start">
           {/* IMAGE */}
@@ -150,33 +158,45 @@ if (loading) {
             </p>
 
             {/* BUTTONS */}
-            <div className="flex gap-4 justify-center lg:justify-start mt-2">
-              <button className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl hover:bg-[#2a5459] transition-all duration-300 shadow-lg hover:shadow-xl flex justify-center items-center gap-2">
-                <img width="16" src="/book/calender.svg" alt="" />
-                <div>Book a session</div>
-              </button>
-              <button className="border border-[#0D393E] flex justify-center items-center gap-2 w-50 px-6 py-3 rounded-2xl hover:bg-[#E6F4F1] transition-all duration-300">
-                <img src="/book/chat.svg" alt="chat" />
-                <div>Message First</div>
-                
-              </button>
+            <div className="flex flex-col items-center lg:items-start gap-2 mt-2">
+              <div className="flex gap-4 justify-center lg:justify-start">
+                <button
+                  disabled
+                  title="Booking is coming soon"
+                  className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl shadow-lg flex justify-center items-center gap-2 opacity-60 cursor-not-allowed"
+                >
+                  <img width="16" src="/book/calender.svg" alt="" />
+                  <div>Book a session</div>
+                </button>
+                <button
+                  disabled
+                  title="Messaging is coming soon"
+                  className="border border-[#0D393E] flex justify-center items-center gap-2 w-50 px-6 py-3 rounded-2xl opacity-60 cursor-not-allowed"
+                >
+                  <img src="/book/chat.svg" alt="chat" />
+                  <div>Message First</div>
+                </button>
+              </div>
+              <span className="text-xs text-[#6B7280] font-nunito">
+                Booking &amp; messaging are launching soon.
+              </span>
             </div>
           </div>
         </section>
 
         {/* INFO STRIP */}
-        <div className="div flex justify-center w-full">
+        <div className="flex justify-center w-full">
           <section className="mt-10 grid md:grid-cols-3 w-full md:w-fit gap-4 bg-[#E6F4F6] lg:px-12 p-6 lg:py-6 rounded-2xl">
             {/* ITEM 1 */}
             <div className="flex items-center gap-4">
-              <div className="bg-[#c5e1ea] w-12 h-12 rounded-full flex justify-center items-center">
-                <img src="/info/calender.svg" alt="calendar" />
+              <div className="bg-[#c5e1ea] w-12 h-12 rounded-full flex justify-center items-center shrink-0">
+                <img src="/info/calender.svg" alt="" />
               </div>
               <div>
                 <div className="font-semibold text-[#0D393E]">
-                  Next available
+                  Booking
                 </div>
-                <div className="text-[#3E464E] text-sm">Today, 6:30 PM</div>
+                <div className="text-[#3E464E] text-sm">Coming soon</div>
               </div>
             </div>
 
@@ -422,24 +442,6 @@ if (loading) {
                 </div>
               </div>
 
-              <div className="text-center mt-10">
-                <button className="font-nunito text-[#47898E] hover:text-[#0D393E] font-medium transition-colors duration-200 inline-flex items-center gap-2 group">
-                  Learn more about my approach
-                  <svg
-                    className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </button>
-              </div>
             </div>
           </div>
         </section>
