@@ -8,6 +8,7 @@ interface AdminAuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  updateAdmin: (admin: Admin) => void;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefined);
@@ -41,8 +42,14 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     setAdmin(null);
   };
 
+  const updateAdmin = (next: Admin) => {
+    setAdmin(next);
+  };
+
   return (
-    <AdminAuthContext.Provider value={{ admin, loading, login, logout }}>
+    <AdminAuthContext.Provider
+      value={{ admin, loading, login, logout, updateAdmin }}
+    >
       {children}
     </AdminAuthContext.Provider>
   );
