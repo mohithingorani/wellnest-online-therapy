@@ -3,7 +3,7 @@ export const tagsData = [
     color: "F9CBB2",
     logo: "lock",
     heading: "100% Confidential",
-    text: "Yours privacy is ours top priority.",
+    text: "Your privacy is our top priority.",
   },
   {
     color: "C3E0DC",
