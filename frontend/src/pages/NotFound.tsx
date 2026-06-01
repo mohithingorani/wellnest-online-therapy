@@ -10,10 +10,10 @@ export default function NotFound() {
     <div className="bg-[#FFFDF8] min-h-screen flex flex-col">
         <NavBar />
 
-      <main className="flex-1 flex items-center justify-center px-4 md:px-8">
-        <div className="absolute top-20 left-10 w-48 h-48 rounded-full bg-[#E77D3C]/10 blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-64 h-64 rounded-full bg-[#47898E]/10 blur-3xl animate-float" style={{ animationDelay: "1s" }} />
-        <div className="absolute top-1/3 right-1/4 w-32 h-32 rounded-full bg-[#0D393E]/5 blur-2xl animate-float" style={{ animationDelay: "0.5s" }} />
+      <main className="relative flex-1 flex items-center justify-center px-4 md:px-8 overflow-hidden">
+        <div className="absolute top-20 left-10 w-48 h-48 rounded-full bg-[#E77D3C]/10 blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-20 right-10 w-64 h-64 rounded-full bg-[#47898E]/10 blur-3xl animate-float pointer-events-none" style={{ animationDelay: "1s" }} />
+        <div className="absolute top-1/3 right-1/4 w-32 h-32 rounded-full bg-[#0D393E]/5 blur-2xl animate-float pointer-events-none" style={{ animationDelay: "0.5s" }} />
 
         <div className="max-w-2xl mx-auto text-center relative z-10">
           <div className="mb-8 opacity-0 animate-fade-in-up">
