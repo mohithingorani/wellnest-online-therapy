@@ -83,10 +83,6 @@ export default function TherapistCard2({ id, name, title, experience, specialiti
         }} className="flex-1 h-10 md:h-11 rounded-lg bg-[#0D393E] text-white text-sm font-medium hover:bg-[#2a5459] hover:shadow-lg transition-all duration-300 ">
           View profile
         </button>
-
-        <button className="w-10 h-10 md:w-11 md:h-11 rounded-full shadow flex items-center justify-center hover:bg-[#E6F0F2] hover:scale-110 transition-all duration-300">
-          <img src="/heart2.svg" className="w-4 h-4" />
-        </button>
       </div>
     </div>
   );
