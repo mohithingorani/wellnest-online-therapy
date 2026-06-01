@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "/api";
 
 interface User {
   id: number;
@@ -40,7 +40,7 @@ async function fetchApi<T>(
   } catch (error) {
     if (error instanceof TypeError && error.message === "Failed to fetch") {
       throw new Error(
-        "Cannot connect to server. Make sure backend is running on port 3000.",
+        `Cannot connect to server at ${API_BASE}. Make sure the backend is running.`,
       );
     }
     throw error;
