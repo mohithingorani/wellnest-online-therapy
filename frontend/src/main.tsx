@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
@@ -10,11 +10,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { AdminLayout } from "./components/admin/AdminLayout";
 
 import Layout from "./components/Layout";
-import LoadingPage from "./components/Loading";
+import LandingPage from "./pages/App";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
-
-const LandingPage = lazy(() => import("./pages/App"));
 const AboutPage = lazy(() => import("./pages/About"));
 const Signin = lazy(() => import("./pages/Signin"));
 const SignUp = lazy(() => import("./pages/SignUp"));
@@ -37,25 +35,11 @@ const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
 const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const Settings = lazy(() => import("./pages/admin/Settings"));
 
-function SuspenseFallback() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(true);
-    }, 250);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return show ? <LoadingPage /> : null;
-}
-
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ScrollToTop />
     <ToastProvider>
-      <Suspense fallback={<SuspenseFallback />}>
+      <Suspense fallback={null}>
         <AuthProvider>
         <Routes>
           {/* Public Routes */}
