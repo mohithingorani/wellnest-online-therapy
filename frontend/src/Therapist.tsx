@@ -64,7 +64,7 @@ export default function TherapistPage() {
   };
 
   return (
-    <div className="bg-bg">
+    <div className="journal-canvas">
       {/* ATMOSPHERIC HERO */}
       <section className="relative overflow-hidden bg-night text-night-fg">
         <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -104,7 +104,7 @@ export default function TherapistPage() {
                 {languages.length > 0 && <Meta icon="globe" label={languages.join(", ")} />}
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                <button onClick={book} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">Book a session</button>
+                <button onClick={book} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-lift">Book a session</button>
                 <button onClick={messageTherapist} className="h-12 px-6 rounded-full ring-1 ring-night-border text-night-fg font-semibold text-sm hover:bg-night-2 transition-colors">Message first</button>
               </div>
             </div>
@@ -115,10 +115,10 @@ export default function TherapistPage() {
       {/* OVERLAPPING STAT STRIP */}
       <div className="relative z-10 mx-auto max-w-[1080px] px-5 md:px-8 -mt-16 md:-mt-20">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          <StatCard value={`${therapist.experience}+`} label="Years experience" icon="clock" />
-          <StatCard value={`${sessions.toLocaleString()}+`} label="Sessions held" icon="chat" />
-          <StatCard value="4.9" label="Average rating" icon="star" />
-          <StatCard value="< 24h" label="Avg. response" icon="bolt" />
+          <StatCard value={`${therapist.experience}+`} label="Years experience" icon="clock" tone="clay" />
+          <StatCard value={`${sessions.toLocaleString()}+`} label="Sessions held" icon="chat" tone="sage" />
+          <StatCard value="4.9" label="Average rating" icon="star" tone="ochre" />
+          <StatCard value="< 24h" label="Avg. response" icon="bolt" tone="accent" />
         </div>
       </div>
 
@@ -151,8 +151,8 @@ export default function TherapistPage() {
                 { n: "03", t: "Grow together", d: "Practical tools and steady, real progress." },
               ].map((s) => (
                 <div key={s.n} className="rounded-2xl surface-inset p-4">
-                  <div className="font-display text-accent text-sm font-semibold">{s.n}</div>
-                  <div className="mt-1 font-semibold text-fg-strong">{s.t}</div>
+                  <div className="w-8 h-8 rounded-xl bg-clay-100 text-clay-700 grid place-items-center font-display text-sm font-semibold">{s.n}</div>
+                  <div className="mt-3 font-semibold text-fg-strong">{s.t}</div>
                   <div className="mt-1 text-sm text-fg-muted leading-relaxed">{s.d}</div>
                 </div>
               ))}
@@ -213,7 +213,7 @@ export default function TherapistPage() {
               ))}
             </div>
 
-            <button onClick={book} className="mt-5 w-full h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">Book a session</button>
+            <button onClick={book} className="mt-5 w-full h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-lift">Book a session</button>
             <button onClick={messageTherapist} className="mt-2.5 w-full h-12 rounded-full ring-1 ring-border text-fg-strong font-semibold text-sm hover:bg-surface-2 transition-colors">Message first</button>
 
             <ul className="mt-5 space-y-2.5">
@@ -233,9 +233,12 @@ export default function TherapistPage() {
 
 function Card({ title, right, children }: { title: string; right?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <section className="surface-raised rounded-2xl p-6 md:p-7">
+    <section className="surface-raised rounded-[1.4rem] p-6 md:p-7">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-display text-xl text-fg-strong">{title}</h2>
+        <div className="flex items-center gap-2.5">
+          <span className="h-4 w-1 rounded-full bg-accent/70" />
+          <h2 className="font-display text-lg md:text-xl text-fg-strong tracking-[-0.01em]">{title}</h2>
+        </div>
         {right}
       </div>
       {children}
@@ -243,7 +246,7 @@ function Card({ title, right, children }: { title: string; right?: React.ReactNo
   );
 }
 function Chip({ children }: { children: React.ReactNode }) {
-  return <span className="text-sm px-3.5 py-1.5 rounded-full bg-clay-50 text-clay-700 border border-clay-100">{children}</span>;
+  return <span className="text-sm font-medium px-3.5 py-1.5 rounded-full bg-clay-50 text-clay-700 border border-clay-100">{children}</span>;
 }
 function StarValue() {
   return <svg className="w-4 h-4 text-ochre-300 inline" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 00.95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 00-.36 1.12l1.36 4.18c.3.92-.75 1.69-1.54 1.12l-3.56-2.59a1 1 0 00-1.18 0l-3.56 2.59c-.79.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 00-.36-1.12L1.4 9.61c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 00.95-.69l1.36-4.18z" /></svg>;
@@ -255,19 +258,25 @@ function Meta({ icon, label }: { icon: "user" | "globe"; label: string }) {
   };
   return <span className="inline-flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={paths[icon]} /></svg>{label}</span>;
 }
-function StatCard({ value, label, icon }: { value: string; label: string; icon: "clock" | "chat" | "star" | "bolt" }) {
+function StatCard({ value, label, icon, tone }: { value: string; label: string; icon: "clock" | "chat" | "star" | "bolt"; tone: "clay" | "ochre" | "sage" | "accent" }) {
   const paths = {
     clock: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
     chat: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z",
     star: "M11.05 3.05l1.9 3.85 4.25.62-3.07 3 .72 4.23-3.8-2-3.8 2 .72-4.23-3.07-3 4.25-.62 1.9-3.85z",
     bolt: "M13 10V3L4 14h7v7l9-11h-7z",
   };
+  const tints = {
+    clay: "bg-clay-100 text-clay-700",
+    ochre: "bg-ochre-100 text-ochre-600",
+    sage: "bg-sage-100 text-sage-600",
+    accent: "bg-clay-100 text-accent",
+  };
   return (
-    <div className="surface-raised rounded-2xl p-4 md:p-5">
-      <span className="w-9 h-9 rounded-xl surface-inset grid place-items-center text-accent">
+    <div className="surface-raised rounded-[1.4rem] p-4 md:p-5">
+      <span className={`w-10 h-10 rounded-xl grid place-items-center ${tints[tone]}`}>
         <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={paths[icon]} /></svg>
       </span>
-      <div className="mt-3 font-display text-2xl md:text-[1.7rem] font-semibold text-fg-strong leading-none">{value}</div>
+      <div className="mt-3 font-display text-2xl md:text-[1.7rem] font-semibold text-fg-strong leading-none tracking-[-0.02em]">{value}</div>
       <div className="mt-1.5 text-xs md:text-sm text-fg-muted">{label}</div>
     </div>
   );
@@ -275,7 +284,7 @@ function StatCard({ value, label, icon }: { value: string; label: string; icon: 
 
 function DetailSkeleton() {
   return (
-    <div className="bg-bg">
+    <div className="journal-canvas">
       <section className="bg-night pt-8 pb-28 md:pb-32">
         <div className="mx-auto max-w-[1080px] px-5 md:px-8 animate-pulse">
           <div className="h-4 w-28 bg-night-2 rounded mb-8" />
@@ -290,11 +299,11 @@ function DetailSkeleton() {
         </div>
       </section>
       <div className="mx-auto max-w-[1080px] px-5 md:px-8 -mt-16 md:-mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 animate-pulse">
-        {[0, 1, 2, 3].map((i) => <div key={i} className="surface-raised rounded-2xl h-28" />)}
+        {[0, 1, 2, 3].map((i) => <div key={i} className="surface-raised rounded-[1.4rem] h-28" />)}
       </div>
       <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-12 grid lg:grid-cols-[1fr_340px] gap-8 animate-pulse">
-        <div className="space-y-6">{[0, 1, 2].map((i) => <div key={i} className="surface-raised rounded-2xl h-40" />)}</div>
-        <div className="surface-raised rounded-2xl h-80" />
+        <div className="space-y-6">{[0, 1, 2].map((i) => <div key={i} className="surface-raised rounded-[1.4rem] h-40" />)}</div>
+        <div className="surface-raised rounded-[1.4rem] h-80" />
       </div>
     </div>
   );
