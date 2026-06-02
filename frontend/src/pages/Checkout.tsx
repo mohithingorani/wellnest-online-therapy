@@ -92,7 +92,7 @@ export default function Checkout() {
               <span className="text-fg-muted text-sm">Total</span>
               <span className="font-display text-2xl font-semibold text-fg-strong">{draft.price}</span>
             </div>
-            <button onClick={pay} disabled={processing} className="mt-5 w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift disabled:opacity-50 disabled:hover:translate-y-0">
+            <button onClick={pay} disabled={processing} className="mt-5 w-full inline-flex items-center justify-center gap-2 h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-lift disabled:opacity-50 disabled:hover:translate-y-0">
               {processing && <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />}
               {processing ? "Processing…" : "Confirm booking"}
             </button>
