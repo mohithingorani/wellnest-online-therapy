@@ -46,13 +46,19 @@ export default function JournalFeed({ entries, onSelect }: JournalFeedProps) {
   const grouped = groupEntries(entries);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-9">
       {grouped.map(([label, groupEntries]) => (
         <div key={label}>
-          <h2 className="text-[11px] font-semibold text-fg-muted uppercase tracking-wider mb-3">
-            {label}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-[11px] font-semibold text-fg-strong uppercase tracking-[0.18em]">
+              {label}
+            </h2>
+            <span className="text-[11px] font-semibold text-fg-muted bg-surface-2 rounded-full px-2 py-0.5">
+              {groupEntries.length}
+            </span>
+            <span className="flex-1 h-px bg-border/70" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-4">
             {groupEntries.map((entry) => (
               <JournalCard
                 key={entry.id}
