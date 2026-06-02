@@ -29,14 +29,15 @@ export default function MyBookings() {
   const total = all.filter((b) => !b.cancelled).length;
 
   return (
-    <div className="flex-1 bg-bg">
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div className="journal-canvas min-h-[calc(100vh-68px)]">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 animate-page">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h1 className="font-display text-[1.9rem] md:text-[2.1rem] font-medium text-fg-strong tracking-[-0.02em] leading-tight">Your sessions</h1>
-            <p className="text-sm text-fg-muted mt-0.5">{total > 0 ? `${total} session${total > 1 ? "s" : ""} booked` : "Book a session to get started."}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-clay-600">Your care, scheduled</p>
+            <h1 className="mt-2 font-display text-[2rem] md:text-[2.5rem] font-medium text-fg-strong tracking-[-0.03em] leading-[1.02]">Sessions</h1>
+            <p className="mt-2 text-sm text-fg-muted">{total > 0 ? `${total} session${total > 1 ? "s" : ""} booked` : "Book a session to get started."}</p>
           </div>
-          <button onClick={() => navigate("/therapists")} className="self-start h-10 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors shadow-soft">Book a session</button>
+          <button onClick={() => navigate("/therapists")} className="self-start h-11 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-[0_4px_12px_-6px_rgba(120,58,40,0.35)]">Book a session</button>
         </div>
 
         <div className="mt-6 inline-flex rounded-full bg-surface-2 p-1">
