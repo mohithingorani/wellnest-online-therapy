@@ -148,7 +148,7 @@ export default function Booking() {
             <button
               onClick={proceed}
               disabled={!canNext}
-              className="mt-5 w-full h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift disabled:opacity-40 disabled:hover:translate-y-0"
+              className="mt-5 w-full h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-lift disabled:opacity-40 disabled:hover:translate-y-0"
             >
               {step < 4 ? "Continue" : "Confirm & pay"}
             </button>
