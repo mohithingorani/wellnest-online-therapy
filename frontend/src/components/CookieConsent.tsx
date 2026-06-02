@@ -23,21 +23,21 @@ export default function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-[#0D393E] text-white p-4 z-50 animate-fade-in-up">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm font-nunito text-center md:text-left">
-          We use cookies to improve your experience. By continuing to use WellNest, you agree to our use of cookies.
+    <div className="fixed bottom-4 inset-x-4 md:inset-x-auto md:right-6 md:max-w-md z-50 animate-fade-in-up">
+      <div className="surface-raised rounded-2xl p-5">
+        <p className="text-sm text-fg leading-relaxed">
+          We use cookies to improve your experience. By continuing, you agree to our use of cookies.
         </p>
-        <div className="flex gap-3 shrink-0">
+        <div className="mt-4 flex gap-3 justify-end">
           <button
             onClick={handleDecline}
-            className="px-4 py-2 text-sm font-nunito border border-white/30 rounded-lg hover:bg-white/10 transition-colors"
+            className="px-4 h-10 text-sm font-semibold rounded-full text-fg-strong hover:bg-surface-2 transition-colors"
           >
             Decline
           </button>
           <button
             onClick={handleAccept}
-            className="px-4 py-2 text-sm font-nunito bg-[#E77D3C] text-white rounded-lg hover:bg-[#d06d2f] transition-colors"
+            className="px-5 h-10 text-sm font-semibold rounded-full btn-material text-primary-fg"
           >
             Accept
           </button>
