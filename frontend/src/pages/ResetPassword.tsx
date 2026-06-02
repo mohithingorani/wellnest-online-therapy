@@ -128,7 +128,7 @@ function Field({ id, label, type, value, onChange, placeholder, minLength }: { i
 }
 function Submit({ loading, label }: { loading: boolean; label: string }) {
   return (
-    <button type="submit" disabled={loading} className="group relative w-full inline-flex items-center justify-center gap-2 h-12 rounded-full font-semibold text-sm bg-accent text-primary-fg shadow-lift hover:bg-accent-hover hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0">
+    <button type="submit" disabled={loading} className="group relative w-full inline-flex items-center justify-center gap-2 h-12 rounded-full font-semibold text-sm bg-accent text-primary-fg shadow-lift hover:bg-accent-hover transition-all duration-300 disabled:opacity-50 disabled:hover:translate-y-0">
       {loading && <span className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />}
       {loading ? "Please wait…" : label}
     </button>
