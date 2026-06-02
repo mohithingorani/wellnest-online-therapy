@@ -169,7 +169,7 @@ export default function TherapistsPage() {
         
         <section className="mt-10 opacity-0 animate-fade-in-up animation-delay-300">
           <div className="bg-surface-2 border border-border rounded-2xl p-4 md:p-6 shadow-sm">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 items-end">
               <div className="flex flex-col gap-1">
                 <label className="text-xs text-fg-muted font-nunito">
                   What can we help you with?
