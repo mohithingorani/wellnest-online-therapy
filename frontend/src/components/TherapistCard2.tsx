@@ -26,7 +26,7 @@ function TherapistCard2({ id, name, title, experience, specialities, languages =
   const navigate = useNavigate();
   const tint = AVATAR_TINTS[name.length % AVATAR_TINTS.length];
   return (
-    <div className="group w-full surface-raised rounded-2xl p-4 md:p-6 flex flex-col gap-4 hover:-translate-y-1 transition-transform duration-300">
+    <div className="group w-full surface-raised rounded-2xl p-4 md:p-6 flex flex-col gap-4 transition-transform duration-300">
       <div className="flex gap-4">
         {/* avatar */}
         <div className="relative shrink-0">

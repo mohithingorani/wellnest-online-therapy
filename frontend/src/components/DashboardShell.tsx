@@ -33,16 +33,16 @@ export default function DashboardShell() {
   const handleLogout = async () => { await logout(); navigate("/"); };
 
   const Sidebar = (
-    <div className="flex flex-col bg-surface h-full">
+    <div className="flex flex-col h-full bg-[#f4ecdd] border-r border-[#e3d6bf]">
       <nav className="flex-1 px-3 py-5 space-y-1">
-        <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-fg-muted">Menu</p>
+        <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-fg-muted">Menu</p>
         {NAV.map((n) => (
           <NavLink
             key={n.to}
             to={n.to}
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${isActive ? "bg-accent/12 text-accent" : "text-fg hover:bg-surface-2"}`
+              `group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive ? "bg-surface text-accent font-semibold shadow-[0_1px_2px_rgba(42,36,32,0.04),0_4px_10px_-8px_rgba(42,36,32,0.14)] ring-1 ring-border/70" : "text-fg hover:bg-white/50"}`
             }
           >
             <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={n.icon} /></svg>
@@ -57,26 +57,26 @@ export default function DashboardShell() {
           </span>
         ))}
 
-        <div className="pt-4 mt-4 border-t border-border">
-          <Link to="/therapists" onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-fg hover:bg-surface-2 transition-colors">
+        <div className="pt-4 mt-4 border-t border-[#e3d6bf]">
+          <Link to="/therapists" onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-fg hover:bg-white/50 transition-colors">
             <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" /></svg>
             Find a therapist
           </Link>
-          <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-fg-muted hover:bg-surface-2 transition-colors">
+          <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-fg-muted hover:bg-white/50 transition-colors">
             <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Back to site
           </Link>
         </div>
       </nav>
 
-      <div className="p-3 border-t border-border">
-        <div className="flex items-center gap-3 px-2 py-2">
+      <div className="p-3 border-t border-[#e3d6bf]">
+        <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-white/40 ring-1 ring-border/50">
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-clay-400 to-clay-600 text-white grid place-items-center font-display text-sm font-semibold shrink-0">{firstName(user?.name)[0]}</div>
           <div className="min-w-0 flex-1">
             <div className="text-sm font-semibold text-fg-strong truncate">{firstName(user?.name)}</div>
             <div className="text-xs text-fg-muted truncate">{user?.email}</div>
           </div>
-          <button onClick={handleLogout} aria-label="Log out" className="text-fg-muted hover:text-error transition-colors p-1.5 rounded-lg hover:bg-surface-2">
+          <button onClick={handleLogout} aria-label="Log out" className="text-fg-muted hover:text-error transition-colors p-1.5 rounded-lg hover:bg-white/60">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
           </button>
         </div>
@@ -87,13 +87,13 @@ export default function DashboardShell() {
   return (
     <div className="flex-1 flex min-h-[calc(100vh-68px)]">
       {/* desktop sidebar */}
-      <aside className="hidden lg:block w-[248px] shrink-0 border-r border-border sticky top-[68px] h-[calc(100vh-68px)]">{Sidebar}</aside>
+      <aside className="hidden lg:block w-[248px] shrink-0 sticky top-[68px] h-[calc(100vh-68px)]">{Sidebar}</aside>
 
       {/* mobile drawer */}
       {open && (
         <div className="lg:hidden fixed inset-0 z-50">
           <div className="absolute inset-0 bg-night/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <div className="absolute left-0 top-0 h-full w-[260px] border-r border-border shadow-lift animate-slide-in-left">{Sidebar}</div>
+          <div className="absolute left-0 top-0 h-full w-[260px] shadow-lift animate-slide-in-left">{Sidebar}</div>
         </div>
       )}
 
