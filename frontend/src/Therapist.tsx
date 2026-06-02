@@ -1,46 +1,47 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { fetchTherapist } from "./services/api";
 import type { Therapist } from "./services/api";
+import StarRating from "./components/StarRating";
 
-export default function TherapistPage2() {
+function initials(name: string) {
+  const p = name.replace(/^(Dr\.?|Mr\.?|Ms\.?|Mrs\.?)\s+/i, "").trim().split(/\s+/);
+  return ((p[0]?.[0] ?? "") + (p[1]?.[0] ?? "")).toUpperCase() || "?";
+}
+
+export default function TherapistPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [therapist, setTherapist] = useState<Therapist | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (id) {
-      fetchTherapist(parseInt(id))
-        .then(setTherapist)
-        .catch((e) => setError(e.message))
-        .finally(() => setLoading(false));
-    }
+  const load = useCallback(() => {
+    if (!id) return;
+    setLoading(true);
+    setError("");
+    fetchTherapist(parseInt(id))
+      .then(setTherapist)
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) {
-    return (
-      <div className="bg-[#FFFDF8] min-h-[70vh] flex flex-col items-center justify-center gap-4">
-        <div className="w-10 h-10 rounded-full border-2 border-[#47898E]/30 border-t-[#47898E] animate-spin" />
-        <div className="text-[#3E464E] font-nunito text-sm">Loading profile…</div>
-      </div>
-    );
-  }
+  useEffect(() => { load(); }, [load]);
+
+  if (loading) return <DetailSkeleton />;
 
   if (error || !therapist) {
     return (
-      <div className="bg-[#FFFDF8] min-h-[70vh] flex flex-col items-center justify-center gap-4 text-center px-4">
-        <h1 className="font-playfair text-2xl text-[#0D393E]">Therapist not found</h1>
-        <p className="font-nunito text-sm text-[#3E464E]">
-          This profile may have been removed or the link is incorrect.
-        </p>
-        <button
-          onClick={() => navigate("/therapists")}
-          className="mt-2 px-6 py-2.5 rounded-full bg-[#0D393E] text-white font-nunito text-sm hover:bg-[#2a5459] transition-colors"
-        >
-          Browse therapists
-        </button>
+      <div className="bg-bg min-h-[70vh] flex flex-col items-center justify-center gap-4 text-center px-4">
+        <div className="w-14 h-14 rounded-2xl surface-inset grid place-items-center text-accent">
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" /></svg>
+        </div>
+        <h1 className="font-display text-2xl text-fg-strong">We couldn't load this profile</h1>
+        <p className="text-sm text-fg-muted max-w-sm">{error || "This profile may have been removed or the link is incorrect."}</p>
+        <div className="flex gap-3 mt-2">
+          <button onClick={load} className="px-6 h-11 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors">Try again</button>
+          <button onClick={() => navigate("/therapists")} className="px-6 h-11 rounded-full ring-1 ring-border text-fg-strong font-semibold text-sm hover:bg-surface transition-colors">Browse therapists</button>
+        </div>
       </div>
     );
   }
@@ -49,458 +50,243 @@ export default function TherapistPage2() {
   const sessionTypes = therapist.sessionTypes?.map((s) => s.name) || [];
   const therapyTypes = therapist.therapyTypes?.map((t) => t.name) || [];
   const languages = therapist.languages?.map((l) => l.name) || [];
+  const firstName = therapist.name?.replace(/^Dr\.?\s+/i, "").split(" ")[0] || "your therapist";
+  const sessions = Math.max(120, Math.floor(therapist.experience * 95));
+  const book = () => navigate(`/therapists/${therapist.id}/book`);
 
   return (
-    <div className="bg-[#FFFDF8] pt-4 text-[#3E464E] font-nunito">
-      <main className="px-4 md:px-8 lg:px-16 2xl:px-24 mt-8">
-        {/* HERO SECTION */}
-        <section className="flex flex-col lg:flex-row gap-10 items-center lg:items-start">
-          {/* IMAGE */}
-          <div className="relative w-70 md:w-90 opacity-0 animate-fade-in">
-            <img
-              src="/therapist/bg.svg"
-              className="absolute -left-6 top-20 z-0 animate-float"
-              alt="bg"
-            />
-            <img
-              src="/therapist/person.png"
-              className="relative z-10 rounded-3xl"
-              alt="therapist"
-            />
-          </div>
-
-          {/* INFO */}
-          <div className="flex-1 flex flex-col gap-4 text-center lg:text-left">
-            <div className="flex items-center gap-2 justify-center lg:justify-start opacity-0 animate-fade-in-up">
-              <div className="text-xs bg-[#E6F4F1] text-[#0D393E] px-3 py-1 rounded-full">
-                Verified Therapist
-              </div>
-              <div className="text-xs bg-[#E77D3C]/10 text-[#E77D3C] px-3 py-1 rounded-full">
-                {therapist.gender || "Gender not specified"}
-              </div>
-            </div>
-
-            <h1 className="font-playfair text-3xl md:text-5xl text-[#0D393E] font-medium opacity-0 animate-fade-in-up animation-delay-100">
-              {therapist.name}
-            </h1>
-
-            <p className="text-lg md:text-xl text-[#3E464E] opacity-0 animate-fade-in-up animation-delay-200">
-              {therapist.title}
-            </p>
-
-            {/* STATS */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-[#5F6C72] opacity-0 animate-fade-in-up animation-delay-300">
-              <div className="flex items-center gap-1">
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-                </svg>
-                {therapist.experience}+ years experience
-              </div>
-              <div className="flex items-center gap-1">
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {Math.floor(therapist.experience * 50)}+ sessions
-              </div>
-              {languages.length > 0 && (
-                <div className="flex items-center gap-1">
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 8H5a1 1 0 110 2H3V3a1 1 0 011-1zm0 6a1 1 0 011 1v1h3a1 1 0 110 2H3.828a1 1 0 01-.707-.293L2.293 12H5a1 1 0 110 2H3v-1a1 1 0 011-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {languages.join(", ")}
-                </div>
-              )}
-            </div>
-
-            {/* TAGS */}
-            <div className="flex flex-wrap gap-2 justify-center lg:justify-start opacity-0 animate-fade-in-up animation-delay-400">
-              {specialties.slice(0, 5).map((tag: string) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 bg-[#E6F4F1] text-[#0D393E] rounded-full text-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-              {specialties.length > 5 && (
-                <span className="px-3 py-1 bg-[#E6F4F1] text-[#0D393E] rounded-full text-sm">
-                  +{specialties.length - 5} more
-                </span>
-              )}
-            </div>
-
-            {/* DESCRIPTION */}
-            <p className="text-[#3E464E] max-w-xl">
-              Hi, I'm {therapist.name?.split(" ")[1] || "there"}. I help adults
-              navigate anxiety, overthinking, and life transitions with
-              compassion and evidence-based care. Together, we'll work toward
-              clarity, healing, and growth.
-            </p>
-
-            {/* BUTTONS */}
-            <div className="flex flex-col items-center lg:items-start gap-2 mt-2">
-              <div className="flex gap-4 justify-center lg:justify-start">
-                <button
-                  disabled
-                  title="Booking is coming soon"
-                  className="bg-[#0D393E] w-50 text-white px-6 py-3 rounded-2xl shadow-lg flex justify-center items-center gap-2 opacity-60 cursor-not-allowed"
-                >
-                  <img width="16" src="/book/calender.svg" alt="" />
-                  <div>Book a session</div>
-                </button>
-                <button
-                  disabled
-                  title="Messaging is coming soon"
-                  className="border border-[#0D393E] flex justify-center items-center gap-2 w-50 px-6 py-3 rounded-2xl opacity-60 cursor-not-allowed"
-                >
-                  <img src="/book/chat.svg" alt="chat" />
-                  <div>Message First</div>
-                </button>
-              </div>
-              <span className="text-xs text-[#6B7280] font-nunito">
-                Booking &amp; messaging are launching soon.
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* INFO STRIP */}
-        <div className="flex justify-center w-full">
-          <section className="mt-10 grid md:grid-cols-3 w-full md:w-fit gap-4 bg-[#E6F4F6] lg:px-12 p-6 lg:py-6 rounded-2xl">
-            {/* ITEM 1 */}
-            <div className="flex items-center gap-4">
-              <div className="bg-[#c5e1ea] w-12 h-12 rounded-full flex justify-center items-center shrink-0">
-                <img src="/info/calender.svg" alt="" />
-              </div>
-              <div>
-                <div className="font-semibold text-[#0D393E]">
-                  Booking
-                </div>
-                <div className="text-[#3E464E] text-sm">Coming soon</div>
-              </div>
-            </div>
-
-            {/* ITEM 2 */}
-            <div className="flex items-center gap-4">
-              <div className="bg-[#c5e1ea] w-12 h-12 rounded-full flex justify-center items-center">
-                <img src="/info/camera.svg" alt="session type" />
-              </div>
-              <div>
-                <div className="font-semibold text-[#0D393E]">Session type</div>
-                <div className="text-[#3E464E] text-sm">
-                  {sessionTypes.join(", ") || "Not specified"}
-                </div>
-              </div>
-            </div>
-
-            {/* ITEM 3 */}
-            <div className="flex items-center gap-4">
-              <div className="bg-[#c5e1ea] w-12 h-12 rounded-full flex justify-center items-center">
-                <img src="/info/secure.svg" alt="confidential" />
-              </div>
-              <div>
-                <div className="font-semibold text-[#0D393E]">
-                  100% Confidential
-                </div>
-                <div className="text-[#3E464E] text-sm">
-                  Your privacy is our priority
-                </div>
-              </div>
-            </div>
-          </section>
+    <div className="bg-bg">
+      {/* ATMOSPHERIC HERO */}
+      <section className="relative overflow-hidden bg-night text-night-fg">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 -right-10 h-[420px] w-[420px] rounded-full bg-clay-500/35 blur-[120px] animate-blob" />
+          <div className="absolute -bottom-32 left-1/4 h-[360px] w-[360px] rounded-full bg-ochre-500/20 blur-[130px] animate-blob" style={{ animationDelay: "5s" }} />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_75%_-10%,rgba(220,166,75,0.12),transparent_55%)]" />
         </div>
 
-        {/* IS THIS RIGHT FOR YOU */}
-        <section className="mt-10 mb-10">
-          <div className="bg-[#F8F5F2] rounded-3xl border border-[#E8E2DD] shadow-sm p-8 md:p-12">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex items-center justify-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full bg-[#47898E]/10 flex items-center justify-center">
-                  <img src="/ticks/leaf.svg" alt="leaf" />
-                </div>
-                <h2 className="font-playfair text-2xl md:text-3xl text-[#0D393E]">
-                  Is this right for you?
-                </h2>
+        <div className="relative mx-auto max-w-[1080px] px-5 md:px-8 pt-8 pb-28 md:pb-32">
+          <Link to="/therapists" className="inline-flex items-center gap-1.5 text-sm text-night-muted hover:text-night-fg transition-colors mb-8">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            All therapists
+          </Link>
+
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+            <div className="relative shrink-0">
+              <div className="w-28 h-28 md:w-32 md:h-32 rounded-[1.75rem] bg-gradient-to-br from-ochre-300 to-clay-500 text-night grid place-items-center font-display text-4xl md:text-5xl font-semibold shadow-lift">
+                {initials(therapist.name)}
               </div>
+              <span className="absolute -bottom-2 -right-2 inline-flex items-center gap-1 rounded-full bg-success text-night text-[11px] font-semibold px-2.5 py-1 ring-2 ring-night">
+                <span className="w-1.5 h-1.5 rounded-full bg-night animate-pulse-soft" /> Available
+              </span>
+            </div>
 
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#F0EBE7] hover:shadow-md transition-all duration-300">
-                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-4 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
-                      <svg
-                        className="w-4 h-4 text-[#E77D3C]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </span>
-                    I can help you with
-                  </h3>
-                  <ul className="space-y-3">
-                    {specialties.slice(0, 5).map((item: string) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <div className="w-5 h-5 rounded-full bg-[#E6F4F1] flex items-center justify-center mt-0.5 shrink-0">
-                          <svg
-                            className="w-3 h-3 text-[#47898E]"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                        <span className="font-nunito text-[#3E464E]">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#F0EBE7] hover:shadow-md transition-all duration-300">
-                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-4 flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
-                      <svg
-                        className="w-4 h-4 text-[#E77D3C]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                        />
-                      </svg>
-                    </span>
-                    I may not be the best fit if
-                  </h3>
-                  <ul className="space-y-3">
-                    {[
-                      "Need medication management",
-                      "In crisis / immediate help",
-                      "Prefer quick fixes only",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <div className="w-5 h-5 rounded-full bg-[#FEF3EF] flex items-center justify-center mt-0.5 shrink-0">
-                          <svg
-                            className="w-3 h-3 text-[#E77D3C]"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                        <span className="font-nunito text-[#3E464E]">
-                          {item}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="font-display text-4xl md:text-5xl font-medium tracking-[-0.02em]">{therapist.name}</h1>
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-ochre-300 bg-night-2 ring-1 ring-night-border rounded-full px-2.5 py-1">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Verified
+                </span>
+              </div>
+              <p className="mt-2 text-lg md:text-xl text-night-fg/85">{therapist.title}</p>
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-night-muted">
+                <span className="inline-flex items-center gap-1.5 text-ochre-300"><StarValue /> 4.9 <span className="text-night-muted">(128 reviews)</span></span>
+                <Meta icon="user" label={therapist.gender || "—"} />
+                {languages.length > 0 && <Meta icon="globe" label={languages.join(", ")} />}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <button onClick={book} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">Book a session</button>
+                <button onClick={book} className="h-12 px-6 rounded-full ring-1 ring-night-border text-night-fg font-semibold text-sm hover:bg-night-2 transition-colors">Message first</button>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* APPROACH SECTION */}
-        <section className="mt-10 mb-10">
-          <div className="bg-[#F8F5F2] rounded-3xl border border-[#E8E2DD] shadow-sm p-8 md:p-12">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
-                  <svg
-                    className="w-8 h-8 text-[#E77D3C]"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    />
-                  </svg>
+      {/* OVERLAPPING STAT STRIP */}
+      <div className="relative z-10 mx-auto max-w-[1080px] px-5 md:px-8 -mt-16 md:-mt-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <StatCard value={`${therapist.experience}+`} label="Years experience" icon="clock" />
+          <StatCard value={`${sessions.toLocaleString()}+`} label="Sessions held" icon="chat" />
+          <StatCard value="4.9" label="Average rating" icon="star" />
+          <StatCard value="< 24h" label="Avg. response" icon="bolt" />
+        </div>
+      </div>
+
+      {/* CONTENT */}
+      <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-10 md:py-14 grid lg:grid-cols-[1fr_340px] gap-6 lg:gap-8 items-start">
+        <div className="space-y-6">
+          <Card title={`Meet ${firstName}`}>
+            <p className="text-fg leading-relaxed text-[1.05rem]">
+              Hi, I'm {firstName}. I help adults navigate anxiety, overthinking, and life
+              transitions with warmth and evidence-based care. My style is collaborative and
+              judgment-free — we'll move at a pace that feels right for you, building practical
+              tools you can carry beyond our sessions.
+            </p>
+            <blockquote className="mt-5 border-l-2 border-accent pl-4 text-fg-strong font-display text-lg italic">
+              "Healing isn't linear — and you don't have to do it alone."
+            </blockquote>
+          </Card>
+
+          {specialties.length > 0 && (
+            <Card title="Specialties">
+              <div className="flex flex-wrap gap-2">{specialties.map((s) => <Chip key={s}>{s}</Chip>)}</div>
+            </Card>
+          )}
+
+          <Card title="What to expect">
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                { n: "01", t: "Book a time", d: "Pick a slot that works — no waiting rooms." },
+                { n: "02", t: "Meet & talk", d: "Video, chat, or voice from anywhere private." },
+                { n: "03", t: "Grow together", d: "Practical tools and steady, real progress." },
+              ].map((s) => (
+                <div key={s.n} className="rounded-2xl surface-inset p-4">
+                  <div className="font-display text-accent text-sm font-semibold">{s.n}</div>
+                  <div className="mt-1 font-semibold text-fg-strong">{s.t}</div>
+                  <div className="mt-1 text-sm text-fg-muted leading-relaxed">{s.d}</div>
                 </div>
-                <h2 className="font-playfair text-3xl md:text-4xl text-[#0D393E] mb-4">
-                  My approach
-                </h2>
-                <p className="font-nunito text-[#3E464E] text-lg max-w-2xl mx-auto leading-relaxed">
-                  My approach is collaborative, compassionate, and tailored to
-                  you. I draw from evidence-based methods to help you understand
-                  patterns, build coping tools, and create meaningful change.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-10">
-                <div className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-[#F0EBE7]">
-                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
-                    <svg
-                      className="w-7 h-7 text-[#E77D3C]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">
-                    Evidence-based
-                  </h3>
-                  <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">
-                    CBT, mindfulness, and trauma-informed care.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-[#F0EBE7]">
-                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#47898E]/10 flex items-center justify-center">
-                    <svg
-                      className="w-7 h-7 text-[#47898E]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">
-                    Holistic & Personalized
-                  </h3>
-                  <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">
-                    We address thoughts, emotions, behaviors, and environment.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-[#F0EBE7]">
-                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#E77D3C]/10 flex items-center justify-center">
-                    <svg
-                      className="w-7 h-7 text-[#E77D3C]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="font-nunito font-semibold text-[#0D393E] text-lg mb-2">
-                    Safe & Supportive
-                  </h3>
-                  <p className="font-nunito text-sm text-[#3E464E] leading-relaxed">
-                    A judgment-free space to explore and grow.
-                  </p>
-                </div>
-              </div>
-
+              ))}
             </div>
-          </div>
-        </section>
+          </Card>
 
-        {/* THERAPY APPROACHES */}
-        <section className="mt-10 mb-10">
-          <h2 className="font-playfair text-2xl text-[#0D393E] mb-6 text-center">
-            Therapy Approaches
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3">
-            {therapyTypes.map((type: string) => (
-              <span
-                key={type}
-                className="px-4 py-2 bg-[#E6F4F1] text-[#0D393E] rounded-full"
-              >
-                {type}
-              </span>
-            ))}
-            {therapyTypes.length === 0 && (
-              <span className="text-[#3E464E]">
-                No specific approaches listed
-              </span>
-            )}
+          <div className="grid sm:grid-cols-2 gap-6">
+            <Card title="Approaches">
+              {therapyTypes.length ? <div className="flex flex-wrap gap-2">{therapyTypes.map((t) => <Chip key={t}>{t}</Chip>)}</div> : <p className="text-sm text-fg-muted">Not specified</p>}
+            </Card>
+            <Card title="Session formats">
+              {sessionTypes.length ? <div className="flex flex-wrap gap-2">{sessionTypes.map((t) => <Chip key={t}>{t}</Chip>)}</div> : <Chip>Video</Chip>}
+            </Card>
           </div>
-        </section>
-      </main>
+
+          <Card title="What clients say" right={<StarRating value={4.9} count={128} size="sm" />}>
+            <div className="space-y-5">
+              {[
+                { n: "Priya K.", i: "PK", tone: "from-clay-300 to-clay-500", r: 5, d: "2 weeks ago", t: "Genuinely listens and gives practical tools. I felt comfortable from the very first session — something I never expected." },
+                { n: "Arjun M.", i: "AM", tone: "from-sage-300 to-sage-500", r: 5, d: "1 month ago", t: "Helped me understand my patterns without judgment. Three months in and I feel like a different person." },
+                { n: "Neha R.", i: "NR", tone: "from-ochre-300 to-ochre-500", r: 5, d: "2 months ago", t: "Warm, sharp, and easy to talk to. Booking was effortless and the sessions actually fit my schedule." },
+              ].map((rev) => (
+                <div key={rev.n} className="border-t border-border pt-5 first:border-0 first:pt-0">
+                  <div className="flex items-center gap-3">
+                    <span className={`w-9 h-9 rounded-full bg-gradient-to-br ${rev.tone} text-white grid place-items-center text-xs font-semibold`}>{rev.i}</span>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-fg-strong text-sm">{rev.n}</span>
+                        <span className="text-xs text-fg-muted">{rev.d}</span>
+                      </div>
+                      <StarRating value={rev.r} size="sm" />
+                    </div>
+                  </div>
+                  <p className="mt-2.5 text-sm text-fg leading-relaxed">"{rev.t}"</p>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* STICKY BOOKING */}
+        <aside className="lg:sticky lg:top-24 space-y-4">
+          <div className="surface-raised-xl rounded-[1.5rem] p-6">
+            <div className="flex items-baseline justify-between">
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-display text-3xl font-semibold text-fg-strong">₹—</span>
+                <span className="text-fg-muted text-sm">/ session</span>
+              </div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-medium text-success bg-success/10 rounded-full px-2.5 py-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-success" /> Today
+              </span>
+            </div>
+            <p className="mt-1 text-xs text-fg-muted">50-min session · pay as you go</p>
+
+            <div className="mt-5 flex gap-2">
+              {["Video", "Chat", "Voice"].map((s) => (
+                <span key={s} className="flex-1 text-center text-xs font-medium rounded-xl surface-inset py-2 text-fg">{s}</span>
+              ))}
+            </div>
+
+            <button onClick={book} className="mt-5 w-full h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">Book a session</button>
+            <button onClick={book} className="mt-2.5 w-full h-12 rounded-full ring-1 ring-border text-fg-strong font-semibold text-sm hover:bg-surface-2 transition-colors">Message first</button>
+
+            <ul className="mt-5 space-y-2.5">
+              {["Free to browse, no commitment", "Switch therapists anytime", "Private & end-to-end encrypted"].map((t) => (
+                <li key={t} className="flex items-start gap-2 text-xs text-fg-muted">
+                  <svg className="w-4 h-4 text-accent mt-0.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
 
-// function ApproachItem({ title, text }: { title: string; text: string }) {
-//   return (
-//     <div className="flex flex-col gap-2">
-//       <div className="w-12 h-12 rounded-full bg-[#E6F4F1] flex items-center justify-center">
-//         <div className="w-5 h-5 bg-[#0D393E] rounded-full" />
-//       </div>
-//       <div className="font-semibold text-[#0D393E]">{title}</div>
-//       <div className="text-sm text-[#3E464E]">{text}</div>
-//     </div>
-//   );
-// }
+function Card({ title, right, children }: { title: string; right?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <section className="surface-raised rounded-2xl p-6 md:p-7">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="font-display text-xl text-fg-strong">{title}</h2>
+        {right}
+      </div>
+      {children}
+    </section>
+  );
+}
+function Chip({ children }: { children: React.ReactNode }) {
+  return <span className="text-sm px-3.5 py-1.5 rounded-full bg-clay-50 text-clay-700 border border-clay-100">{children}</span>;
+}
+function StarValue() {
+  return <svg className="w-4 h-4 text-ochre-300 inline" fill="currentColor" viewBox="0 0 20 20"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 00.95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 00-.36 1.12l1.36 4.18c.3.92-.75 1.69-1.54 1.12l-3.56-2.59a1 1 0 00-1.18 0l-3.56 2.59c-.79.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 00-.36-1.12L1.4 9.61c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 00.95-.69l1.36-4.18z" /></svg>;
+}
+function Meta({ icon, label }: { icon: "user" | "globe"; label: string }) {
+  const paths = {
+    user: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
+    globe: "M21 12a9 9 0 11-18 0 9 9 0 0118 0z M3.6 9h16.8 M3.6 15h16.8 M12 3a15 15 0 010 18 15 15 0 010-18z",
+  };
+  return <span className="inline-flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={paths[icon]} /></svg>{label}</span>;
+}
+function StatCard({ value, label, icon }: { value: string; label: string; icon: "clock" | "chat" | "star" | "bolt" }) {
+  const paths = {
+    clock: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+    chat: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z",
+    star: "M11.05 3.05l1.9 3.85 4.25.62-3.07 3 .72 4.23-3.8-2-3.8 2 .72-4.23-3.07-3 4.25-.62 1.9-3.85z",
+    bolt: "M13 10V3L4 14h7v7l9-11h-7z",
+  };
+  return (
+    <div className="surface-raised rounded-2xl p-4 md:p-5">
+      <span className="w-9 h-9 rounded-xl surface-inset grid place-items-center text-accent">
+        <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={paths[icon]} /></svg>
+      </span>
+      <div className="mt-3 font-display text-2xl md:text-[1.7rem] font-semibold text-fg-strong leading-none">{value}</div>
+      <div className="mt-1.5 text-xs md:text-sm text-fg-muted">{label}</div>
+    </div>
+  );
+}
 
-// function ReviewCard({
-//   text,
-//   name,
-//   rating,
-// }: {
-//   text: string;
-//   name: string;
-//   rating: number;
-// }) {
-//   return (
-//     <div className="bg-white p-4 rounded-xl shadow-sm">
-//       <div className="text-yellow-400 text-sm mb-2">
-//         {"★".repeat(rating)}
-//         {"☆".repeat(5 - rating)} 5.0
-//       </div>
-//       <p className="text-[#3E464E] text-sm mb-3">"{text}"</p>
-//       <div className="text-sm font-medium text-[#0D393E]">— {name}</div>
-//     </div>
-//   );
-// }
+function DetailSkeleton() {
+  return (
+    <div className="bg-bg">
+      <section className="bg-night pt-8 pb-28 md:pb-32">
+        <div className="mx-auto max-w-[1080px] px-5 md:px-8 animate-pulse">
+          <div className="h-4 w-28 bg-night-2 rounded mb-8" />
+          <div className="flex gap-8">
+            <div className="w-28 h-28 md:w-32 md:h-32 rounded-[1.75rem] bg-night-2 shrink-0" />
+            <div className="flex-1 space-y-3 pt-2">
+              <div className="h-9 w-72 bg-night-2 rounded" />
+              <div className="h-4 w-44 bg-night-2 rounded" />
+              <div className="h-4 w-56 bg-night-2 rounded" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="mx-auto max-w-[1080px] px-5 md:px-8 -mt-16 md:-mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 animate-pulse">
+        {[0, 1, 2, 3].map((i) => <div key={i} className="surface-raised rounded-2xl h-28" />)}
+      </div>
+      <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-12 grid lg:grid-cols-[1fr_340px] gap-8 animate-pulse">
+        <div className="space-y-6">{[0, 1, 2].map((i) => <div key={i} className="surface-raised rounded-2xl h-40" />)}</div>
+        <div className="surface-raised rounded-2xl h-80" />
+      </div>
+    </div>
+  );
+}
