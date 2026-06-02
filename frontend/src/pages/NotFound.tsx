@@ -22,7 +22,7 @@ export default function NotFound() {
             The page you're looking for doesn't exist — it may have moved, or never been here at all.
           </p>
           <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
-            <button onClick={() => navigate("/")} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">
+            <button onClick={() => navigate("/")} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold hover:bg-accent-hover transition-all duration-300 shadow-lift">
               Go home
             </button>
             <button onClick={() => navigate("/therapists")} className="h-12 px-7 rounded-full ring-1 ring-border text-fg-strong font-semibold bg-surface/50 hover:bg-surface transition-colors">
