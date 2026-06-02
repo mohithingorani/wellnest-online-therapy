@@ -15,7 +15,7 @@ import CountUp from "../components/CountUp";
    ============================================================================ */
 
 const btnAccent =
-  "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
+  "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
 const btnOutline =
   "inline-flex items-center justify-center gap-2 h-14 px-7 rounded-full font-semibold text-base text-fg-strong ring-1 ring-border bg-surface/50 backdrop-blur hover:bg-surface transition-all duration-300";
 
@@ -136,7 +136,7 @@ function Hero() {
                 {/* pulsing glow ring */}
                 <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
                 Find your therapist
-                <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                <span className="transition-transform duration-300">→</span>
               </button>
               <button onClick={() => scrollTo("journey")} className={btnOutline}>See how it works</button>
             </div>
@@ -399,7 +399,7 @@ function Journey() {
       <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-5">
         {steps.map((s, i) => (
           <Reveal key={s.n} delay={i * 110}>
-            <div className={`group h-full rounded-[1.5rem] surface-raised p-5 transition-transform duration-300 hover:-translate-y-1.5 ${i % 2 ? "lg:mt-8" : ""}`}>
+            <div className={`group h-full rounded-[1.5rem] surface-raised p-5 transition-transform duration-300 ${i % 2 ? "lg:mt-8" : ""}`}>
               <div className="rounded-2xl surface-inset h-40 p-4 overflow-hidden flex items-center justify-center">{s.mock}</div>
               <div className="mt-5 flex items-center gap-2">
                 <span className="font-display text-sm font-semibold text-accent">{s.n}</span>
@@ -538,7 +538,7 @@ function Therapists() {
           const toneCls = { clay: "from-clay-300 to-clay-500", sage: "from-sage-300 to-sage-500", ochre: "from-ochre-300 to-ochre-500" }[p.tone];
           return (
             <Reveal key={p.name} delay={i * 100}>
-              <div className="group h-full rounded-2xl surface-raised p-6 transition-transform duration-300 hover:-translate-y-1.5">
+              <div className="group h-full rounded-2xl surface-raised p-6 transition-transform duration-300">
                 <div className="flex items-center gap-4">
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${toneCls} text-white flex items-center justify-center font-display text-2xl font-semibold shadow-soft`}>{initials}</div>
                   <div>
@@ -740,10 +740,10 @@ function FinalCTA() {
           </p>
         </Reveal>
         <Reveal delay={240}>
-          <button onClick={() => navigate("/therapists")} className="group relative mt-10 inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full font-semibold text-base bg-accent text-primary-fg hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">
+          <button onClick={() => navigate("/therapists")} className="group relative mt-10 inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full font-semibold text-base bg-accent text-primary-fg hover:bg-accent-hover transition-all duration-300 shadow-lift">
             <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
             Find your therapist
-            <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            <span className="transition-transform duration-300">→</span>
           </button>
         </Reveal>
       </div>
