@@ -3,7 +3,7 @@ import { type ReactNode, type CSSProperties } from "react";
 import Reveal from "../components/Reveal";
 
 const btnAccent =
-  "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
+  "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
 const btnOutline =
   "inline-flex items-center justify-center gap-2 h-14 px-7 rounded-full font-semibold text-base text-fg-strong ring-1 ring-border bg-surface/50 backdrop-blur hover:bg-surface transition-all duration-300";
 
@@ -41,7 +41,7 @@ export default function AboutPage() {
               <button onClick={() => navigate("/therapists")} className={btnAccent}>
                 <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
                 Find a therapist
-                <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                <span className="transition-transform duration-300">→</span>
               </button>
               <button onClick={() => scrollTo("how-it-works")} className={btnOutline}>How it works</button>
             </div>
@@ -116,7 +116,7 @@ export default function AboutPage() {
             { n: "03", t: "Start Your Journey", d: "Connect with the right therapist and begin getting the support you need." },
           ].map((s, i) => (
             <Reveal key={s.n} delay={i * 110}>
-              <div className="h-full rounded-[1.5rem] surface-raised p-7 transition-transform duration-300 hover:-translate-y-1.5">
+              <div className="h-full rounded-[1.5rem] surface-raised p-7 transition-transform duration-300">
                 <span className="font-display text-sm font-semibold text-accent">{s.n}</span>
                 <span className="block h-px w-full bg-border mt-3" />
                 <h3 className="mt-4 font-display text-xl text-fg-strong">{s.t}</h3>
@@ -170,10 +170,10 @@ export default function AboutPage() {
             <p className="mx-auto mt-6 max-w-lg text-lg text-night-muted leading-relaxed">Start exploring therapists who match your needs and preferences.</p>
           </Reveal>
           <Reveal delay={170}>
-            <button onClick={() => navigate("/therapists")} className="group relative mt-10 inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full font-semibold text-base bg-accent text-primary-fg hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">
+            <button onClick={() => navigate("/therapists")} className="group relative mt-10 inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full font-semibold text-base bg-accent text-primary-fg hover:bg-accent-hover transition-all duration-300 shadow-lift">
               <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
               Browse therapists
-              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+              <span className="transition-transform duration-300">→</span>
             </button>
           </Reveal>
         </div>
