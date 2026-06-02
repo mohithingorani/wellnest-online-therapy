@@ -1,5 +1,32 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "./Logo";
+
+const columns = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Find a therapist", to: "/therapists" },
+      { label: "How it works", to: "/#how" },
+      { label: "Pricing", to: "/#pricing" },
+      { label: "About", to: "/about" },
+    ],
+  },
+  {
+    title: "Account",
+    links: [
+      { label: "Log in", to: "/signin" },
+      { label: "Create account", to: "/signup" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "Privacy", to: "/about" },
+      { label: "Contact", to: "/about" },
+    ],
+  },
+];
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -13,88 +40,68 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#0D393E] text-white ">
-      <div className="px-4 md:px-8 lg:px-16 2xl:px-24 py-10">
-
-        {/* TOP */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-
-          {/* BRAND */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-3">
-              <img src="/logos/wellnest.svg" className="w-6 h-6" />
-              <span className=" tracking-wide text-2xl">WellNest</span>
-            </div>
-
-            <p className="text-sm text-gray-300 max-w-sm">
-              Compassionate support for your mental well-being. Anytime, anywhere.
+    <footer className="bg-night text-night-fg">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 lg:px-12 py-14">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          {/* Brand + newsletter */}
+          <div>
+            <Logo onDark />
+            <p className="mt-4 text-sm text-night-muted max-w-xs leading-relaxed">
+              Therapy that meets you where you are. Get matched with a licensed
+              therapist who truly fits.
             </p>
-          </div>
 
-          {/* EXPLORE */}
-          <div>
-            <h4 className="font-semibold mb-3">Explore</h4>
-            <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <Link to="/therapists" className="w-fit hover:text-white transition-colors duration-200">Find a therapist</Link>
-              <Link to="/about" className="w-fit hover:text-white transition-colors duration-200">About us</Link>
+            <div className="mt-6">
+              <div className="text-sm font-semibold">Stay in the loop</div>
+              {subscribed ? (
+                <p className="mt-3 text-sm text-apricot-400">Thanks — we'll be in touch.</p>
+              ) : (
+                <form onSubmit={handleSubscribe} className="mt-3 flex max-w-xs">
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email"
+                    className="h-11 flex-1 min-w-0 px-4 rounded-l-xl bg-night-2 border border-night-border border-r-0 text-sm text-night-fg placeholder-night-muted outline-none focus:border-indigo-400 transition-colors"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Subscribe"
+                    className="h-11 px-4 rounded-r-xl bg-gradient-to-b from-indigo-500 to-indigo-700 text-white flex items-center justify-center hover:brightness-110 transition"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </button>
+                </form>
+              )}
             </div>
           </div>
 
-          {/* ACCOUNT */}
-          <div>
-            <h4 className="font-semibold mb-3">Account</h4>
-            <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <Link to="/signin" className="w-fit hover:text-white transition-colors duration-200">Sign in</Link>
-              <Link to="/signup" className="w-fit hover:text-white transition-colors duration-200">Create account</Link>
+          {/* Link columns */}
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h4 className="text-sm font-semibold text-night-fg">{col.title}</h4>
+              <div className="mt-4 flex flex-col gap-2.5 text-sm text-night-muted">
+                {col.links.map((l) => (
+                  <Link key={l.label} to={l.to} className="w-fit hover:text-night-fg transition-colors">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-
-          {/* CONTACT */}
-          <div>
-            <h4 className="font-semibold mb-3">Contact</h4>
-            <div className="flex flex-col gap-2 text-sm text-gray-300">
-              <a href="mailto:hello@wellnest.com" className="w-fit hover:text-white transition-colors duration-200">hello@wellnest.com</a>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* NEWSLETTER */}
-        <div className="mt-10 flex flex-col  lg:justify-between items-start gap-6">
-
-          <div>
-            <h4 className="font-semibold">Stay in the loop</h4>
-            <p className="text-sm text-gray-300">
-              Tips, resources, and updates for your mental well-being.
-            </p>
-          </div>
-
-          {subscribed ? (
-            <p className="text-sm text-[#9FE7C8]">Thanks for subscribing — we'll be in touch.</p>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex w-full lg:w-auto">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full lg:w-80 h-11 px-4 bg-white rounded-l-lg text-black outline-none focus:ring-2 focus:ring-[#47898E]/50 transition-all duration-200"
-              />
-              <button type="submit" aria-label="Subscribe" className="bg-white px-4 rounded-r-lg flex items-center justify-center hover:bg-[#E6F0F2] transition-colors duration-200">
-                <img src="/send.svg" className="w-4 h-4" />
-              </button>
-            </form>
-          )}
-        </div>
-
-        {/* BOTTOM */}
-        <div className="mt-10 border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-300">
-
-          <div>© 2026 WellNest. All rights reserved.</div>
-
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-night-border pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-sm text-night-muted">
+          <div>© {new Date().getFullYear()} WellNest. All rights reserved.</div>
           <div className="flex items-center gap-2">
-            <img src="/lock.svg" className="w-4 h-4 opacity-80" />
-            <span>We follow HIPAA and GDPR standards.</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span>Encrypted &amp; confidential. We never sell your data.</span>
           </div>
         </div>
       </div>
