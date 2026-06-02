@@ -8,6 +8,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "http://localhost:3000",
+      // Socket.IO (WebSocket + long-poll fallback) must be proxied too,
+      // otherwise the handshake hits the Vite server and real-time chat breaks.
+      "/socket.io": { target: "http://localhost:3000", ws: true },
     },
   },
 })
