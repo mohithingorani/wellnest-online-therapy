@@ -148,27 +148,28 @@ export default function Journal() {
 
   if (loading) {
     return (
-      <div className="h-full overflow-y-auto">
-        <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 animate-pulse space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
-              <div className="h-9 w-40 rounded bg-surface-2" />
-              <div className="h-4 w-52 rounded bg-surface-2" />
+      <div className="journal-canvas min-h-[calc(100vh-68px)]">
+        <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 animate-pulse space-y-8">
+          <div className="flex items-end justify-between">
+            <div className="space-y-2.5">
+              <div className="h-3 w-28 rounded bg-clay-200/50" />
+              <div className="h-10 w-44 rounded-lg bg-surface-2" />
+              <div className="h-4 w-56 rounded bg-surface-2" />
             </div>
-            <div className="h-10 w-32 rounded-full bg-surface-2" />
+            <div className="h-11 w-36 rounded-full bg-surface-2" />
           </div>
-          <div className="h-20 rounded-[1.4rem] bg-surface-2" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+          <div className="h-40 rounded-[1.6rem] bg-night/80" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 md:gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-[88px] rounded-[1.4rem] bg-surface-2" />
+              <div key={i} className="h-[148px] rounded-[1.4rem] card-elevated" />
             ))}
           </div>
-          <div className="h-11 rounded-full bg-surface-2" />
-          <div className="space-y-4 mt-2">
+          <div className="h-12 w-full max-w-md rounded-full card-elevated" />
+          <div className="space-y-4">
             <div className="h-3 w-24 rounded bg-surface-2" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-4">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-36 rounded-[1.4rem] bg-surface-2" />
+                <div key={i} className="h-44 rounded-[1.4rem] card-elevated" />
               ))}
             </div>
           </div>
@@ -289,8 +290,8 @@ export default function Journal() {
   }
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 space-y-6">
+    <div className="journal-canvas min-h-[calc(100vh-68px)]">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 space-y-8 animate-page">
         <JournalHeader
           totalEntries={entries.length}
           streak={streak}
@@ -300,31 +301,38 @@ export default function Journal() {
           onCreate={startCreate}
         />
 
-        <div className="relative">
-          <svg
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-fg-muted pointer-events-none"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+        <div className="flex items-center justify-between gap-4">
+          <div className="relative flex-1 max-w-md">
+            <svg
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-fg-muted pointer-events-none"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+              />
+            </svg>
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search your reflections..."
+              className="w-full h-12 pl-11 pr-4 rounded-full card-elevated text-sm text-fg-strong placeholder-fg-muted outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/20 transition-all"
             />
-          </svg>
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search your entries..."
-            className="w-full h-11 pl-11 pr-4 rounded-full surface-inset text-sm text-fg-strong placeholder-fg-muted outline-none focus:ring-2 focus:ring-accent/30 transition-all"
-          />
+          </div>
+          {!search && filteredEntries.length > 0 && (
+            <span className="hidden sm:block text-xs font-medium text-fg-muted">
+              {filteredEntries.length} {filteredEntries.length === 1 ? "entry" : "entries"}
+            </span>
+          )}
         </div>
 
         {search && filteredEntries.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-12 h-12 rounded-full bg-surface-2 text-fg-muted grid place-items-center mb-3">
+          <div className="card-elevated flex flex-col items-center justify-center py-16 px-6 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-surface-2 text-fg-muted grid place-items-center mb-4">
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -339,15 +347,15 @@ export default function Journal() {
                 />
               </svg>
             </div>
-            <p className="text-sm font-medium text-fg-strong">
-              No results found
+            <p className="font-display text-lg font-medium text-fg-strong">
+              No matches for &ldquo;{search}&rdquo;
             </p>
-            <p className="text-xs text-fg-muted mt-1">
-              Try a different search term
+            <p className="text-sm text-fg-muted mt-1">
+              Try a different word or phrase.
             </p>
             <button
               onClick={() => setSearch("")}
-              className="mt-3 text-xs font-semibold text-accent hover:text-accent-hover"
+              className="mt-4 h-9 px-4 rounded-full ring-1 ring-border text-sm font-semibold text-fg-strong hover:bg-surface-2 transition-colors"
             >
               Clear search
             </button>
