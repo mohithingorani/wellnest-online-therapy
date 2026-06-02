@@ -10,6 +10,7 @@ declare global {
       sessionToken?: string;
       adminId?: number;
       adminRole?: string;
+      therapistId?: number;
     }
   }
 }

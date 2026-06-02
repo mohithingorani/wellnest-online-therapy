@@ -114,3 +114,83 @@ export const UpdateTherapistSchema = z.object({
 });
 
 export const SpecialtyArraySchema = z.array(SpecialtySchema);
+
+// Message
+export const MessageSchema = z.object({
+  id,
+  content: z.string().min(1),
+  conversationId: id,
+  senderType: z.enum(["user", "therapist"]),
+  senderId: id,
+  createdAt: z.date(),
+});
+
+export const ConversationSchema = z.object({
+  id,
+  userId: id,
+  therapistId: id,
+  therapist: z.object({
+    id,
+    name: z.string(),
+    title: z.string(),
+  }).optional(),
+  messages: z.array(MessageSchema).optional(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export const ConversationListItemSchema = z.object({
+  id,
+  userId: id,
+  therapistId: id,
+  therapist: z.object({
+    id,
+    name: z.string(),
+    title: z.string(),
+  }),
+  lastMessage: MessageSchema.nullable(),
+  unreadCount: z.number().int().nonnegative(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export const SendMessageSchema = z.object({
+  content: z.string().min(1).max(5000),
+});
+
+export const CreateConversationSchema = z.object({
+  therapistId: id,
+});
+
+export const TherapistLoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+// Journal
+export const JournalEntrySchema = z.object({
+  id,
+  userId: id,
+  title: z.string().min(1),
+  content: z.string(),
+  mood: z.number().int().min(1).max(5).nullable(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export const CreateJournalEntrySchema = z.object({
+  title: z.string().min(1).max(200),
+  content: z.string().min(1).max(50000),
+  mood: z.number().int().min(1).max(5).optional(),
+});
+
+export const UpdateJournalEntrySchema = z.object({
+  title: z.string().min(1).max(200).optional(),
+  content: z.string().min(1).max(50000).optional(),
+  mood: z.number().int().min(1).max(5).optional().nullable(),
+});
+
+export const JournalEntryListQuerySchema = z.object({
+  cursor: z.coerce.number().int().positive().optional(),
+  limit: z.coerce.number().int().min(1).max(100).default(50),
+});
