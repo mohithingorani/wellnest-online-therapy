@@ -134,7 +134,7 @@ export default function Breathe() {
   const remaining = Math.max(0, totalDuration - elapsed);
 
   return (
-    <div className="relative min-h-[calc(100vh-68px)] overflow-x-hidden bg-bg flex flex-col">
+    <div className="relative min-h-[calc(100vh-68px)] overflow-x-hidden journal-canvas flex flex-col animate-page">
       {/* Atmospheric blobs */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-32 -right-16 h-[500px] w-[500px] rounded-full bg-clay-200/50 blur-[130px] animate-blob" />
@@ -154,7 +154,7 @@ export default function Breathe() {
               <p className="mt-2 text-fg-muted">Well done. You took {duration}-minute{duration > 1 ? "s" : ""} for yourself.</p>
             </div>
             <div className="flex gap-3">
-              <button onClick={start} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">
+              <button onClick={start} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-lift">
                 Start again
               </button>
               <button onClick={() => navigate("/dashboard")} className="h-12 px-7 rounded-full ring-1 ring-border text-fg-strong font-semibold text-sm hover:bg-surface-2 transition-colors">
@@ -213,7 +213,7 @@ export default function Breathe() {
               {/* Controls */}
               <div className="flex items-center gap-4">
                 {status === "idle" && (
-                  <button onClick={start} className="h-14 w-14 rounded-full bg-accent text-primary-fg grid place-items-center hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-soft">
+                  <button onClick={start} className="h-14 w-14 rounded-full bg-accent text-primary-fg grid place-items-center hover:bg-accent-hover transition-all duration-300 shadow-soft">
                     <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
                   </button>
                 )}
@@ -223,7 +223,7 @@ export default function Breathe() {
                   </button>
                 )}
                 {status === "paused" && (
-                  <button onClick={resume} className="h-14 w-14 rounded-full bg-accent text-primary-fg grid place-items-center hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-soft">
+                  <button onClick={resume} className="h-14 w-14 rounded-full bg-accent text-primary-fg grid place-items-center hover:bg-accent-hover transition-all duration-300 shadow-soft">
                     <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
                   </button>
                 )}
