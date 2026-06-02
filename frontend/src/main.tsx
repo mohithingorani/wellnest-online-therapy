@@ -23,7 +23,10 @@ const Booking = lazy(() => import("./pages/Booking"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const BookingConfirm = lazy(() => import("./pages/BookingConfirm"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const JournalPage = lazy(() => import("./pages/Journal"));
 const MyBookings = lazy(() => import("./pages/MyBookings"));
+const MessagesPage = lazy(() => import("./pages/Messages"));
+const Breathe = lazy(() => import("./pages/Breathe"));
 const DashboardShell = lazy(() => import("./components/DashboardShell"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -58,13 +61,20 @@ createRoot(document.getElementById("root")!).render(
               <Route path="checkout" element={<Checkout />} />
               <Route path="booking/:id/confirmed" element={<BookingConfirm />} />
             </Route>
-          </Route>
 
-          {/* Authenticated app (own dashboard shell, no marketing chrome) */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<DashboardShell />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/bookings" element={<MyBookings />} />
+            {/* Dashboard inside Layout so NavBar is visible */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<DashboardShell />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/bookings" element={<MyBookings />} />
+                <Route path="/journal" element={<JournalPage />} />
+                <Route path="/messages" element={<MessagesPage />} />
+              </Route>
+            </Route>
+
+            {/* Free tools */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/breathe" element={<Breathe />} />
             </Route>
           </Route>
 

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { fetchTherapist } from "./services/api";
 import type { Therapist } from "./services/api";
+import { messagesService } from "./services/messages";
 import StarRating from "./components/StarRating";
 
 function initials(name: string) {
@@ -53,6 +54,14 @@ export default function TherapistPage() {
   const firstName = therapist.name?.replace(/^Dr\.?\s+/i, "").split(" ")[0] || "your therapist";
   const sessions = Math.max(120, Math.floor(therapist.experience * 95));
   const book = () => navigate(`/therapists/${therapist.id}/book`);
+  const messageTherapist = async () => {
+    try {
+      await messagesService.createConversation(therapist.id);
+      navigate("/messages");
+    } catch {
+      navigate("/messages");
+    }
+  };
 
   return (
     <div className="bg-bg">
@@ -96,7 +105,7 @@ export default function TherapistPage() {
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
                 <button onClick={book} className="h-12 px-7 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">Book a session</button>
-                <button onClick={book} className="h-12 px-6 rounded-full ring-1 ring-night-border text-night-fg font-semibold text-sm hover:bg-night-2 transition-colors">Message first</button>
+                <button onClick={messageTherapist} className="h-12 px-6 rounded-full ring-1 ring-night-border text-night-fg font-semibold text-sm hover:bg-night-2 transition-colors">Message first</button>
               </div>
             </div>
           </div>
@@ -205,7 +214,7 @@ export default function TherapistPage() {
             </div>
 
             <button onClick={book} className="mt-5 w-full h-12 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">Book a session</button>
-            <button onClick={book} className="mt-2.5 w-full h-12 rounded-full ring-1 ring-border text-fg-strong font-semibold text-sm hover:bg-surface-2 transition-colors">Message first</button>
+            <button onClick={messageTherapist} className="mt-2.5 w-full h-12 rounded-full ring-1 ring-border text-fg-strong font-semibold text-sm hover:bg-surface-2 transition-colors">Message first</button>
 
             <ul className="mt-5 space-y-2.5">
               {["Free to browse, no commitment", "Switch therapists anytime", "Private & end-to-end encrypted"].map((t) => (

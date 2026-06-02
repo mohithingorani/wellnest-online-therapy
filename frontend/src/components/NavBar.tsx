@@ -61,7 +61,7 @@ export default function NavBar() {
   return (
     <header
       className={`sticky top-0 z-40 transition-colors duration-300 ${
-        transparent ? "bg-transparent" : "bg-bg/80 backdrop-blur-xl border-b border-border"
+        transparent ? "bg-transparent" : "bg-bg md:bg-bg/80 md:backdrop-blur-xl border-b border-border"
       }`}
     >
       <nav className="grid grid-cols-[1fr_auto_1fr] md:flex md:justify-between items-center min-h-[68px] px-4 py-3 md:px-8 lg:px-12 mx-auto max-w-[1180px]">
@@ -85,6 +85,16 @@ export default function NavBar() {
               {p.name}
             </NavLink>
           ))}
+          {user && (
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `${linkBase} ${isActive ? "text-fg-strong after:w-full" : "text-fg-muted hover:text-fg-strong after:w-0 hover:after:w-full"}`
+              }
+            >
+              Dashboard
+            </NavLink>
+          )}
         </div>
 
         <div className="hidden md:flex justify-end gap-2 items-center">
@@ -118,7 +128,7 @@ export default function NavBar() {
       </nav>
 
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden bg-bg/95 backdrop-blur-xl flex flex-col">
+        <div className="fixed inset-0 z-50 md:hidden bg-bg flex flex-col">
           <div className="flex justify-between items-center px-4 py-3 border-b border-border">
             <button onClick={() => navigate("/")} aria-label="WellNest home"><Logo /></button>
             <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" className="p-2 text-fg-strong">
@@ -135,6 +145,7 @@ export default function NavBar() {
               <>
                 <NavLink to="/dashboard" onClick={() => setMobileMenuOpen(false)} className={({ isActive }) => `font-display text-2xl ${isActive ? "text-accent" : "text-fg-strong"}`}>Dashboard</NavLink>
                 <NavLink to="/bookings" onClick={() => setMobileMenuOpen(false)} className={({ isActive }) => `font-display text-2xl ${isActive ? "text-accent" : "text-fg-strong"}`}>My sessions</NavLink>
+                <NavLink to="/breathe" onClick={() => setMobileMenuOpen(false)} className={({ isActive }) => `font-display text-2xl ${isActive ? "text-accent" : "text-fg-strong"}`}>Breathing</NavLink>
               </>
             )}
             <div className="flex flex-col gap-3 mt-6 w-64">

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Logo from "./Logo";
 
 function firstName(name?: string) {
   const f = name?.trim().split(" ")[0] || "";
@@ -11,9 +10,11 @@ function firstName(name?: string) {
 const NAV = [
   { to: "/dashboard", label: "Overview", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
   { to: "/bookings", label: "Sessions", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+  { to: "/journal", label: "Journal", icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" },
+  { to: "/breathe", label: "Breathing", icon: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" },
+  { to: "/messages", label: "Messages", icon: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" },
 ];
 const SOON = [
-  { label: "Messages", icon: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" },
   { label: "Settings", icon: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065zM15 12a3 3 0 11-6 0 3 3 0 016 0z" },
 ];
 
@@ -32,10 +33,7 @@ export default function DashboardShell() {
   const handleLogout = async () => { await logout(); navigate("/"); };
 
   const Sidebar = (
-    <div className="flex flex-col h-full bg-surface">
-      <div className="px-5 h-16 flex items-center border-b border-border">
-        <Link to="/" aria-label="WellNest home"><Logo /></Link>
-      </div>
+    <div className="flex flex-col bg-surface h-full">
       <nav className="flex-1 px-3 py-5 space-y-1">
         <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-fg-muted">Menu</p>
         {NAV.map((n) => (
@@ -87,9 +85,9 @@ export default function DashboardShell() {
   );
 
   return (
-    <div className="min-h-screen bg-bg grain flex">
+    <div className="flex-1 flex">
       {/* desktop sidebar */}
-      <aside className="hidden lg:block w-[248px] shrink-0 border-r border-border sticky top-0 h-screen">{Sidebar}</aside>
+      <aside className="hidden lg:block w-[248px] shrink-0 border-r border-border sticky top-[68px] h-[calc(100vh-68px)]">{Sidebar}</aside>
 
       {/* mobile drawer */}
       {open && (
@@ -101,13 +99,6 @@ export default function DashboardShell() {
 
       {/* content */}
       <div className="flex-1 min-w-0">
-        <header className="lg:hidden sticky top-0 z-30 h-16 px-4 flex items-center justify-between bg-bg/80 backdrop-blur-xl border-b border-border">
-          <button onClick={() => setOpen(true)} aria-label="Open menu" className="p-2 -ml-2 text-fg-strong">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
-          </button>
-          <Logo />
-          <span className="w-6" />
-        </header>
         <Outlet />
       </div>
     </div>

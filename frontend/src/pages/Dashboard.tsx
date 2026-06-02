@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { bookings as bStore, isUpcoming, type Booking } from "../services/bookings";
 import { moods as mStore, MOODS, type MoodEntry } from "../services/moods";
 import MoodChart from "../components/MoodChart";
+import { getDailyAffirmation } from "../data/affirmations";
 
 function firstName(name?: string) {
   const f = name?.trim().split(" ")[0] || "";
@@ -78,6 +79,16 @@ export default function Dashboard() {
           <button onClick={dismissVerify} aria-label="Dismiss" className="text-fg-muted hover:text-fg-strong"><svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
         </div>
       )}
+
+      {/* AFFIRMATION */}
+      <div className="mt-5 rounded-2xl bg-clay-50/60 border border-clay-100 p-4 md:p-5 animate-fade-in-up">
+        <div className="flex items-start gap-3">
+          <span className="w-8 h-8 rounded-full bg-clay-200/60 text-clay-600 grid place-items-center shrink-0 mt-0.5">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+          </span>
+          <p className="flex-1 text-sm md:text-base text-fg italic leading-relaxed font-medium">&ldquo;{getDailyAffirmation()}&rdquo;</p>
+        </div>
+      </div>
 
       {/* BENTO */}
       <div className="mt-6 grid lg:grid-cols-3 gap-4 md:gap-5">
@@ -167,7 +178,8 @@ export default function Dashboard() {
           <div className="space-y-2.5">
             <Action onClick={() => navigate("/therapists")} icon="search" title={next ? "Book your next session" : "Find your therapist"} body="Keep your momentum going." />
             <Action onClick={() => navigate("/bookings")} icon="calendar" title="Review your sessions" body="See upcoming and past appointments." />
-            <Action onClick={() => {}} soon icon="lotus" title="2-minute breathing reset" body="A quick exercise to settle your mind." />
+            <Action onClick={() => navigate("/journal")} icon="journal" title="Write in your journal" body="Reflect, track, and grow with daily entries." />
+            <Action onClick={() => navigate("/breathe")} icon="lotus" title="2-minute breathing reset" body="Calm your mind with a guided breathing exercise." />
           </div>
         </Tile>
 
@@ -220,11 +232,12 @@ function MiniStat({ icon, value, label }: { icon: "fire" | "check" | "heart"; va
   );
 }
 
-function Action({ icon, title, body, onClick, soon }: { icon: "search" | "calendar" | "lotus"; title: string; body: string; onClick: () => void; soon?: boolean }) {
+function Action({ icon, title, body, onClick, soon }: { icon: "search" | "calendar" | "lotus" | "journal"; title: string; body: string; onClick: () => void; soon?: boolean }) {
   const paths = {
     search: "M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z",
     calendar: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
     lotus: "M12 21c-5 0-8-3-8-3s2-5 8-5 8 5 8 5-3 3-8 3zM12 13c0-4 2-7 2-7s-2-1-2-3c0 2-2 3-2 3s2 3 2 7z",
+    journal: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z",
   };
   return (
     <button onClick={soon ? undefined : onClick} className={`w-full flex items-center gap-3.5 rounded-2xl border border-border p-3.5 text-left transition-colors ${soon ? "opacity-60 cursor-default" : "hover:border-accent/50 hover:bg-surface-2/60"}`}>
