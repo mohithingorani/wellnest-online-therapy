@@ -62,18 +62,19 @@ export default function Dashboard() {
   if (loading) return <DashSkeleton />;
 
   return (
-    <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9">
+    <div className="journal-canvas min-h-[calc(100vh-68px)]">
+    <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 animate-page">
       {/* header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="font-display text-[1.9rem] md:text-[2.1rem] font-medium text-fg-strong tracking-[-0.02em] leading-tight">{greeting()}, {firstName(user?.name)}.</h1>
-          <p className="text-sm text-fg-muted mt-0.5">{new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-clay-600">{new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}</p>
+          <h1 className="mt-2 font-display text-[2rem] md:text-[2.5rem] font-medium text-fg-strong tracking-[-0.03em] leading-[1.02]">{greeting()}, {firstName(user?.name)}.</h1>
         </div>
-        <button onClick={() => navigate("/therapists")} className="self-start h-10 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors shadow-soft">Find a therapist</button>
+        <button onClick={() => navigate("/therapists")} className="self-start h-11 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-[0_4px_12px_-6px_rgba(120,58,40,0.35)]">Find a therapist</button>
       </div>
 
       {showVerify && (
-        <div className="mt-5 flex items-start gap-3 rounded-[1.4rem] bg-ochre-100 border border-ochre-300/60 p-4 animate-fade-in-up">
+        <div className="mt-5 flex items-start gap-3 rounded-[1.4rem] bg-ochre-100 border border-ochre-300/60 p-4">
           <svg className="w-5 h-5 text-ochre-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           <p className="flex-1 text-sm text-fg"><b className="text-fg-strong">Verify your email.</b> We sent a link to {user?.email || "your inbox"}.</p>
           <button onClick={dismissVerify} aria-label="Dismiss" className="text-fg-muted hover:text-fg-strong"><svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg></button>
@@ -81,12 +82,16 @@ export default function Dashboard() {
       )}
 
       {/* AFFIRMATION */}
-      <div className="mt-5 rounded-[1.4rem] bg-clay-50/60 border border-clay-100 p-4 md:p-5 animate-fade-in-up">
-        <div className="flex items-start gap-3">
-          <span className="w-8 h-8 rounded-full bg-clay-200/60 text-clay-600 grid place-items-center shrink-0 mt-0.5">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+      <div className="mt-6 relative overflow-hidden rounded-[1.6rem] bg-gradient-to-br from-clay-50 to-ochre-100/70 border border-clay-100 p-5 md:p-6">
+        <div aria-hidden className="pointer-events-none absolute -top-10 -right-6 h-36 w-36 rounded-full bg-ochre-300/20 blur-2xl" />
+        <div className="relative flex items-start gap-4">
+          <span className="w-10 h-10 rounded-2xl bg-gradient-to-br from-clay-300 to-clay-500 text-white grid place-items-center shrink-0 shadow-soft">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
           </span>
-          <p className="flex-1 text-sm md:text-base text-fg italic leading-relaxed font-medium">&ldquo;{getDailyAffirmation()}&rdquo;</p>
+          <div className="flex-1">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-clay-600">A thought for today</p>
+            <p className="mt-1.5 font-display text-base md:text-lg text-fg-strong italic leading-relaxed">&ldquo;{getDailyAffirmation()}&rdquo;</p>
+          </div>
         </div>
       </div>
 
@@ -106,7 +111,7 @@ export default function Dashboard() {
               const sel = todayMood === m.v;
               return (
                 <button key={m.v} onClick={() => logMood(m.v)} className="flex flex-col items-center gap-2 group focus-visible:outline-none">
-                  <span className={`w-12 h-12 md:w-14 md:h-14 rounded-full grid place-items-center transition-all duration-200 group-hover:scale-110 ${sel ? `bg-gradient-to-br ${m.tone} text-white shadow-soft scale-110 ring-2 ring-accent/30` : "surface-inset text-fg-muted group-hover:text-fg"}`}>
+                  <span className={`w-12 h-12 md:w-14 md:h-14 rounded-full grid place-items-center transition-all duration-200 ${sel ? `bg-gradient-to-br ${m.tone} text-white shadow-soft scale-110 ring-2 ring-accent/30` : "surface-inset text-fg-muted group-hover:text-fg"}`}>
                     <svg viewBox="0 0 24 24" className="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" strokeWidth={2}>
                       <circle cx="9" cy="10" r="0.9" fill="currentColor" stroke="none" />
                       <circle cx="15" cy="10" r="0.9" fill="currentColor" stroke="none" />
@@ -205,6 +210,7 @@ export default function Dashboard() {
         </Tile>
       </div>
     </div>
+    </div>
   );
 }
 
@@ -212,7 +218,7 @@ export default function Dashboard() {
 
 function Tile({ children, className = "", dark = false }: { children: React.ReactNode; className?: string; dark?: boolean }) {
   return (
-    <section className={`${dark ? "bg-night text-night-fg ring-1 ring-night-border" : "surface-raised"} rounded-[1.4rem] p-5 md:p-6 transition-transform duration-300 hover:-translate-y-0.5 ${className}`}>
+    <section className={`${dark ? "bg-night text-night-fg ring-1 ring-night-border" : "surface-raised"} rounded-[1.4rem] p-5 md:p-6 transition-transform duration-300 ${className}`}>
       {children}
     </section>
   );
@@ -225,7 +231,7 @@ function MiniStat({ icon, value, label }: { icon: "fire" | "check" | "heart"; va
     heart: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
   };
   return (
-    <div className="surface-raised rounded-[1.4rem] p-5 flex items-center gap-4 transition-transform duration-300 hover:-translate-y-0.5">
+    <div className="surface-raised rounded-[1.4rem] p-5 flex items-center gap-4 transition-transform duration-300">
       <span className="w-11 h-11 rounded-xl surface-inset grid place-items-center text-accent shrink-0"><svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={paths[icon]} /></svg></span>
       <div><div className="font-display text-2xl font-semibold text-fg-strong leading-none">{value}</div><div className="mt-1 text-xs text-fg-muted">{label}</div></div>
     </div>
@@ -250,7 +256,8 @@ function Action({ icon, title, body, onClick, soon }: { icon: "search" | "calend
 
 function DashSkeleton() {
   return (
-    <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 animate-pulse">
+    <div className="journal-canvas min-h-[calc(100vh-68px)]">
+    <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 animate-pulse">
       {/* header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="space-y-2">
@@ -274,6 +281,7 @@ function DashSkeleton() {
         <div className="lg:col-span-2 surface-raised rounded-[1.4rem] h-80" />
         <div className="lg:col-span-1 surface-raised rounded-[1.4rem] h-72" />
       </div>
+    </div>
     </div>
   );
 }
