@@ -22,7 +22,7 @@ export default function StarRating({ value, count, size = "md", onChange }: Star
             </svg>
           );
           return interactive ? (
-            <button key={i} type="button" onClick={() => onChange!(i)} aria-label={`${i} star${i > 1 ? "s" : ""}`} className="p-0.5 hover:scale-110 transition-transform">{star}</button>
+            <button key={i} type="button" onClick={() => onChange!(i)} aria-label={`${i} star${i > 1 ? "s" : ""}`} className="p-0.5 transition-transform">{star}</button>
           ) : (
             <span key={i}>{star}</span>
           );

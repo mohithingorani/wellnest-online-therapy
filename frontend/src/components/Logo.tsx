@@ -1,6 +1,6 @@
-/* WellNest brand mark — a warm "bloom": five soft petals opening from a center,
-   symbolizing growth, care, and calm. Sits in a clay→ochre gradient squircle.
-   Used by the navbar, footer, dashboard shell, and auth pages. */
+/* WellNest brand mark — a "nest": two cupping arcs cradling a seed, for safety,
+   holding, and quiet growth. Sits in a warm clay→ochre gradient squircle with a
+   soft top highlight. Used by the navbar, footer, dashboard shell, auth pages. */
 export default function Logo({
   withWordmark = true,
   onDark = false,
@@ -12,18 +12,32 @@ export default function Logo({
 }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <span className="relative grid place-items-center w-9 h-9 rounded-[0.7rem] bg-gradient-to-br from-clay-400 via-clay-500 to-ochre-500 shadow-soft ring-1 ring-black/5">
-        <svg viewBox="0 0 24 24" className="w-[22px] h-[22px] text-white" aria-hidden="true">
-          {[0, 1, 2, 3, 4].map((i) => (
-            <ellipse key={i} cx="12" cy="7.6" rx="2.15" ry="4.3" fill="currentColor" fillOpacity="0.92" transform={`rotate(${i * 72} 12 12)`} />
-          ))}
-          <circle cx="12" cy="12" r="2.05" fill="currentColor" />
-          <circle cx="12" cy="12" r="2.05" fill="#000" fillOpacity="0.08" />
+      <span className="relative grid place-items-center w-9 h-9 rounded-[0.72rem] bg-gradient-to-br from-clay-400 via-clay-500 to-ochre-500 shadow-soft ring-1 ring-black/5 overflow-hidden">
+        {/* soft top-light highlight for a tactile, premium feel */}
+        <span aria-hidden className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/30 to-transparent" />
+        <svg
+          viewBox="0 0 24 24"
+          className="relative w-[22px] h-[22px] text-white"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          aria-hidden="true"
+        >
+          {/* nest — two concentric cupping arcs */}
+          <path d="M4.5 11a7.5 7.5 0 0 0 15 0" />
+          <path d="M8 11a4 4 0 0 0 8 0" stroke="currentColor" strokeOpacity="0.85" />
+          {/* seed nestled at the rim */}
+          <circle cx="12" cy="8.9" r="2.05" fill="currentColor" stroke="none" />
         </svg>
       </span>
       {withWordmark && (
-        <span className={`font-display text-[1.35rem] leading-none font-semibold tracking-[-0.01em] ${onDark ? "text-night-fg" : "text-fg-strong"}`}>
-          WellNest
+        <span
+          className={`font-display text-[1.35rem] leading-none font-semibold tracking-[-0.01em] ${
+            onDark ? "text-night-fg" : "text-fg-strong"
+          }`}
+        >
+          Well<span className={onDark ? "text-ochre-300" : "text-accent"}>Nest</span>
         </span>
       )}
     </span>
