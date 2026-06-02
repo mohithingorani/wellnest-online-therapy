@@ -18,10 +18,10 @@ function FilterSection({ title, children, img }: {
   img: string;
 }) {
   return (
-    <div className="border-b border-[#EFEAE7] pb-4">
+    <div className="border-b border-border pb-4">
       <div className="flex justify-start gap-1 items-center mb-3">
         <img width={16} height={14} src={`/filter/${img}.svg`} alt="" />
-        <h4 className="font-nunito text-sm font-semibold text-[#0D393E]">
+        <h4 className="font-nunito text-sm font-semibold text-fg-strong">
           {title}
         </h4>
       </div>
@@ -38,10 +38,10 @@ interface CheckboxProps {
 
 function Checkbox({ label, checked, onChange }: CheckboxProps) {
   return (
-    <label className="flex items-center gap-2 text-sm text-[#4B5563] cursor-pointer">
+    <label className="flex items-center gap-2 text-sm text-fg-muted cursor-pointer">
       <input
         type="checkbox"
-        className="accent-[#0D393E]"
+        className="accent-accent"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
@@ -60,11 +60,11 @@ interface RadioProps {
 
 function Radio({ label, name, value, checked, onChange }: RadioProps) {
   return (
-    <label className="flex items-center gap-2 text-sm text-[#4B5563] cursor-pointer">
+    <label className="flex items-center gap-2 text-sm text-fg-muted cursor-pointer">
       <input
         type="radio"
         name={name}
-        className="accent-[#0D393E]"
+        className="accent-accent"
         checked={checked}
         onChange={() => onChange(value)}
       />
@@ -135,7 +135,7 @@ export default function FiltersSidebar({ filters, setFilters }: FilterProps) {
       <div className="lg:col-span-1">
         <button
           onClick={() => setIsVisible(true)}
-          className="flex items-center gap-2 text-sm text-[#0D393E] font-medium cursor-pointer hover:text-[#47898E] transition-colors duration-200 bg-[#F9F7F5]/50 border border-[#EFEAE7] rounded-2xl p-4"
+          className="flex items-center gap-2 text-sm text-fg-strong font-medium cursor-pointer hover:text-accent transition-colors duration-200 bg-surface-2/50 border border-border rounded-2xl p-4"
         >
           <img src="/filter.svg" alt="filter" />
           <div>Show filters</div>
@@ -145,9 +145,9 @@ export default function FiltersSidebar({ filters, setFilters }: FilterProps) {
   }
 
   return (
-    <div className="bg-[#F9F7F5]/50 border border-[#EFEAE7] rounded-2xl p-4 flex flex-col gap-5 sticky top-6 max-h-[90vh] overflow-y-auto hover:shadow-md transition-shadow duration-300">      
+    <div className="bg-surface-2/50 border border-border rounded-2xl p-4 flex flex-col gap-5 sticky top-6 max-h-[90vh] overflow-y-auto hover:shadow-md transition-shadow duration-300">      
       <div 
-        className="text-sm text-[#0D393E] flex items-center gap-2 font-medium cursor-pointer hover:text-[#47898E] transition-colors duration-200"
+        className="text-sm text-fg-strong flex items-center gap-2 font-medium cursor-pointer hover:text-accent transition-colors duration-200"
         onClick={() => setIsVisible(false)}
       >
         <img src="/filter.svg" alt="filter"/>
@@ -165,7 +165,7 @@ export default function FiltersSidebar({ filters, setFilters }: FilterProps) {
         ))}
         {!showAllConcerns && (
           <span 
-            className="text-xs text-[#0D393E] cursor-pointer mt-1 hover:text-[#47898E] hover:underline transition-all duration-200"
+            className="text-xs text-fg-strong cursor-pointer mt-1 hover:text-accent hover:underline transition-all duration-200"
             onClick={() => setShowAllConcerns(true)}
           >
             Show more
@@ -173,7 +173,7 @@ export default function FiltersSidebar({ filters, setFilters }: FilterProps) {
         )}
         {showAllConcerns && (
           <span 
-            className="text-xs text-[#0D393E] cursor-pointer mt-1 hover:text-[#47898E] hover:underline transition-all duration-200"
+            className="text-xs text-fg-strong cursor-pointer mt-1 hover:text-accent hover:underline transition-all duration-200"
             onClick={() => setShowAllConcerns(false)}
           >
             Show less
@@ -206,7 +206,7 @@ export default function FiltersSidebar({ filters, setFilters }: FilterProps) {
       </FilterSection>
 
       <div
-        className="text-sm text-[#0D393E] font-medium cursor-pointer hover:text-[#E77D3C] transition-colors duration-200"
+        className="text-sm text-fg-strong font-medium cursor-pointer hover:text-accent transition-colors duration-200"
         onClick={clearAll}
       >
         Clear all
