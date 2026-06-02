@@ -27,7 +27,7 @@ function BookingCard({ booking, kind, onCancel }: { booking: Booking; kind: "upc
   const isVideo = booking.sessionType === "Video";
 
   return (
-    <div className="surface-raised rounded-[1.4rem] p-5 md:p-6 flex flex-col transition-transform duration-300 hover:-translate-y-0.5">
+    <div className="surface-raised rounded-[1.4rem] p-5 md:p-6 flex flex-col transition-transform duration-300">
       <div className="flex items-start gap-4">
         {/* date block */}
         <div className={`shrink-0 w-14 rounded-2xl grid place-items-center py-2 text-center ${kind === "cancelled" ? "surface-inset text-fg-muted" : "bg-clay-50 border border-clay-100 text-clay-700"}`}>
