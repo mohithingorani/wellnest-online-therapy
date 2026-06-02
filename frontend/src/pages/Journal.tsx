@@ -148,20 +148,27 @@ export default function Journal() {
 
   if (loading) {
     return (
-      <div className="h-full p-6">
-        <div className="animate-pulse space-y-6 max-w-4xl">
-          <div className="h-8 w-32 rounded bg-surface-2" />
-          <div className="h-20 rounded-2xl bg-surface-2" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="h-full overflow-y-auto">
+        <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 animate-pulse space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <div className="h-9 w-40 rounded bg-surface-2" />
+              <div className="h-4 w-52 rounded bg-surface-2" />
+            </div>
+            <div className="h-10 w-32 rounded-full bg-surface-2" />
+          </div>
+          <div className="h-20 rounded-[1.4rem] bg-surface-2" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-20 rounded-xl bg-surface-2" />
+              <div key={i} className="h-[88px] rounded-[1.4rem] bg-surface-2" />
             ))}
           </div>
-          <div className="space-y-4 mt-8">
-            <div className="h-4 w-24 rounded bg-surface-2" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-32 rounded-2xl bg-surface-2" />
+          <div className="h-11 rounded-full bg-surface-2" />
+          <div className="space-y-4 mt-2">
+            <div className="h-3 w-24 rounded bg-surface-2" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-36 rounded-[1.4rem] bg-surface-2" />
               ))}
             </div>
           </div>
@@ -282,57 +289,37 @@ export default function Journal() {
   }
 
   return (
-    <div className="h-full overflow-y-auto px-4 sm:px-6 py-6">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="h-full overflow-y-auto">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 space-y-6">
         <JournalHeader
           totalEntries={entries.length}
           streak={streak}
           weeklyEntries={stats.weeklyEntries}
           averageMood={stats.averageMood}
           dailyPrompt={dailyPrompt}
+          onCreate={startCreate}
         />
 
-        <div className="flex items-center gap-3">
-          <div className="relative flex-1">
-            <svg
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-fg-muted pointer-events-none"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
-              />
-            </svg>
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search entries..."
-              className="w-full h-10 pl-10 pr-4 rounded-full surface-inset text-sm text-fg-strong placeholder-fg-muted outline-none focus:ring-2 focus:ring-accent/30 transition-all"
-            />
-          </div>
-          <button
-            onClick={startCreate}
-            className="h-10 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors shadow-soft shrink-0 flex items-center gap-1.5"
+        <div className="relative">
+          <svg
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-fg-muted pointer-events-none"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2.5}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            New Entry
-          </button>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+            />
+          </svg>
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search your entries..."
+            className="w-full h-11 pl-11 pr-4 rounded-full surface-inset text-sm text-fg-strong placeholder-fg-muted outline-none focus:ring-2 focus:ring-accent/30 transition-all"
+          />
         </div>
 
         {search && filteredEntries.length === 0 ? (

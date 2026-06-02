@@ -69,12 +69,8 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/bookings" element={<MyBookings />} />
                 <Route path="/journal" element={<JournalPage />} />
                 <Route path="/messages" element={<MessagesPage />} />
+                <Route path="/breathe" element={<Breathe />} />
               </Route>
-            </Route>
-
-            {/* Free tools */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/breathe" element={<Breathe />} />
             </Route>
           </Route>
 

@@ -85,7 +85,7 @@ export default function DashboardShell() {
   );
 
   return (
-    <div className="flex-1 flex">
+    <div className="flex-1 flex min-h-[calc(100vh-68px)]">
       {/* desktop sidebar */}
       <aside className="hidden lg:block w-[248px] shrink-0 border-r border-border sticky top-[68px] h-[calc(100vh-68px)]">{Sidebar}</aside>
 
@@ -97,7 +97,8 @@ export default function DashboardShell() {
         </div>
       )}
 
-      {/* content */}
+      {/* content — plain block so pages keep their own mx-auto width
+          (auto margins on a flex child disable stretch and collapse the page) */}
       <div className="flex-1 min-w-0">
         <Outlet />
       </div>

@@ -49,10 +49,10 @@ export default function JournalFeed({ entries, onSelect }: JournalFeedProps) {
     <div className="space-y-8">
       {grouped.map(([label, groupEntries]) => (
         <div key={label}>
-          <h2 className="font-display text-sm font-semibold text-fg-muted uppercase tracking-wider mb-3">
+          <h2 className="text-[11px] font-semibold text-fg-muted uppercase tracking-wider mb-3">
             {label}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
             {groupEntries.map((entry) => (
               <JournalCard
                 key={entry.id}

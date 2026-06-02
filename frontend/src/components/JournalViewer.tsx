@@ -49,7 +49,7 @@ export default function JournalViewer({
 
   return (
     <div className="flex flex-col h-full animate-fade-in">
-      <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border shrink-0">
+      <div className="flex items-center justify-between px-5 md:px-8 py-4 border-b border-border shrink-0">
         <button
           onClick={onBack}
           className="flex items-center gap-1.5 text-sm font-semibold text-fg-muted hover:text-fg-strong transition-colors"
@@ -85,7 +85,7 @@ export default function JournalViewer({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="flex-1 overflow-y-auto px-5 md:px-8 py-7 md:py-9">
         <div className="max-w-prose mx-auto">
           <div className="flex items-center flex-wrap gap-x-2 gap-y-1 text-sm text-fg-muted">
             <span>{formatDate(entry.createdAt)}</span>
@@ -103,7 +103,7 @@ export default function JournalViewer({
             <span>·</span>
             <span>{rt} min read</span>
           </div>
-          <h1 className="mt-6 font-display text-3xl sm:text-4xl font-medium text-fg-strong leading-tight">
+          <h1 className="mt-6 font-display text-[1.9rem] sm:text-[2.1rem] font-medium tracking-[-0.02em] text-fg-strong leading-tight">
             {entry.title}
           </h1>
           <div className="mt-8 text-[1.05rem] leading-[1.8] text-fg whitespace-pre-wrap">

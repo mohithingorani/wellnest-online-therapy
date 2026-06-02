@@ -143,16 +143,7 @@ export default function Breathe() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex-1 flex flex-col px-5 pb-8 pt-4 lg:pb-12">
-        {/* Back link */}
-        <button
-          onClick={() => navigate("/dashboard")}
-          className="self-start inline-flex items-center gap-1.5 text-sm text-fg-muted hover:text-fg-strong transition-colors mb-6 lg:mb-0"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-          Dashboard
-        </button>
-
+      <div className="relative z-10 flex-1 flex flex-col px-5 md:px-8 py-7 md:py-9">
         {status === "complete" ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-6 animate-scale-in">
             <div className="w-20 h-20 rounded-full bg-success/15 text-success grid place-items-center">

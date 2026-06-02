@@ -235,7 +235,7 @@ export default function Messages() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-full p-8">
+      <div className="flex-1 flex items-center justify-center p-8 min-h-[calc(100vh-68px)]">
         <div className="text-center max-w-sm">
           <div className="w-16 h-16 rounded-full bg-error/10 text-error grid place-items-center mx-auto mb-4">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -254,21 +254,34 @@ export default function Messages() {
   }
 
   if (loading) {
-    return <ConversationSkeleton />;
+    return (
+      <div className="flex-1 flex h-[calc(100vh-68px)]">
+        <div className="hidden lg:flex flex-col w-[340px] border-r border-border shrink-0">
+          <div className="px-5 py-5 border-b border-border">
+            <div className="h-6 w-28 rounded bg-surface-2 animate-pulse" />
+          </div>
+          <ConversationSkeleton />
+        </div>
+        <div className="flex-1 hidden lg:flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-surface-2 animate-pulse" />
+        </div>
+        <div className="lg:hidden w-full"><ConversationSkeleton /></div>
+      </div>
+    );
   }
 
   if (conversations.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full p-8">
+      <div className="flex-1 flex items-center justify-center p-8 min-h-[calc(100vh-68px)]">
         <div className="text-center max-w-sm">
-          <div className="w-16 h-16 rounded-full bg-surface-2 text-fg-muted grid place-items-center mx-auto mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" /></svg>
+          <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-200 to-ochre-200 text-clay-600 grid place-items-center mx-auto mb-5 shadow-soft">
+            <svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" /></svg>
           </div>
-          <h3 className="font-display text-lg font-medium text-fg-strong mb-1">No conversations yet</h3>
-          <p className="text-sm text-fg-muted mb-4">Find a therapist and send them a message to get started.</p>
+          <h3 className="font-display text-2xl font-medium text-fg-strong mb-1">No conversations yet</h3>
+          <p className="text-sm text-fg-muted leading-relaxed mb-5 max-w-xs mx-auto">Once you book or reach out to a therapist, your conversations will live here.</p>
           <button
             onClick={() => navigate("/therapists")}
-            className="h-10 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors"
+            className="h-10 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors shadow-soft"
           >
             Browse therapists
           </button>
@@ -278,33 +291,34 @@ export default function Messages() {
   }
 
   return (
-    <div className="flex h-full">
+    <div className="flex-1 flex h-[calc(100vh-68px)]">
       {/* Conversation list — desktop always visible, mobile toggle */}
       <div
         className={`${
           mobileView === "list" ? "flex" : "hidden"
-        } lg:flex flex-col w-full lg:w-[320px] border-r border-border shrink-0`}
+        } lg:flex flex-col w-full lg:w-[340px] border-r border-border shrink-0 bg-surface`}
       >
-        <div className="px-4 py-4 border-b border-border">
-          <h2 className="font-display text-lg font-medium text-fg-strong">Messages</h2>
+        <div className="px-5 py-5 border-b border-border">
+          <h2 className="font-display text-xl font-medium text-fg-strong tracking-[-0.01em]">Messages</h2>
+          <p className="text-xs text-fg-muted mt-0.5">{sortedConversations.length} conversation{sortedConversations.length !== 1 ? "s" : ""}</p>
         </div>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto p-2">
           {sortedConversations.map((conv) => {
             const isActive = activeConv?.id === conv.id;
             return (
               <button
                 key={conv.id}
                 onClick={() => selectConversation(conv)}
-                className={`w-full flex items-center gap-3 px-4 py-3.5 text-left transition-colors hover:bg-surface-2 ${
-                  isActive ? "bg-accent/8" : ""
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl text-left transition-colors ${
+                  isActive ? "bg-accent/10" : "hover:bg-surface-2"
                 }`}
               >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-clay-400 to-ochre-400 text-white grid place-items-center font-display text-sm font-semibold shrink-0">
+                <div className="w-11 h-11 rounded-full bg-gradient-to-br from-clay-400 to-ochre-400 text-white grid place-items-center font-display text-sm font-semibold shrink-0">
                   {conv.therapist.name[0]}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-semibold text-fg-strong truncate">
+                    <span className={`text-sm font-semibold truncate ${isActive ? "text-accent" : "text-fg-strong"}`}>
                       {conv.therapist.name}
                     </span>
                     {conv.lastMessage && (
@@ -332,14 +346,14 @@ export default function Messages() {
         {activeConv ? (
           <>
             {/* Thread header */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
+            <div className="flex items-center gap-3 px-5 py-3.5 border-b border-border bg-surface shrink-0">
               <button
                 onClick={handleBack}
-                className="lg:hidden p-1 text-fg-muted hover:text-fg-strong"
+                className="lg:hidden p-1 -ml-1 text-fg-muted hover:text-fg-strong"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
               </button>
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-clay-400 to-ochre-400 text-white grid place-items-center font-display text-sm font-semibold shrink-0">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-clay-400 to-ochre-400 text-white grid place-items-center font-display text-sm font-semibold shrink-0">
                 {activeConv.therapist.name[0]}
               </div>
               <div className="min-w-0 flex-1">
@@ -350,11 +364,14 @@ export default function Messages() {
                   {activeConv.therapist.title}
                 </div>
               </div>
-              <div className={`w-2 h-2 rounded-full ${socket.connected ? "bg-success" : "bg-warning"}`} />
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-fg-muted">
+                <span className={`w-2 h-2 rounded-full ${socket.connected ? "bg-success" : "bg-warning"}`} />
+                {socket.connected ? "Online" : "Connecting"}
+              </span>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-5 space-y-3 bg-bg/40">
               {messagesLoading ? (
                 <ThreadSkeleton />
               ) : messages.length === 0 ? (
@@ -391,16 +408,16 @@ export default function Messages() {
             <ChatInput onSend={handleSend} disabled={!socket.connected} />
           </>
         ) : (
-          <div className="flex-1 hidden lg:flex items-center justify-center">
+          <div className="flex-1 hidden lg:flex items-center justify-center bg-bg/40">
             <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-surface-2 text-fg-muted grid place-items-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" /></svg>
+              <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-200 to-ochre-200 text-clay-600 grid place-items-center mx-auto mb-5 shadow-soft">
+                <svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" /></svg>
               </div>
-              <h3 className="font-display text-lg font-medium text-fg-strong mb-1">
+              <h3 className="font-display text-xl font-medium text-fg-strong mb-1">
                 Select a conversation
               </h3>
               <p className="text-sm text-fg-muted">
-                Choose a conversation from the left to start chatting
+                Choose a conversation on the left to start chatting.
               </p>
             </div>
           </div>

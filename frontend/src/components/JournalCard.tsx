@@ -44,7 +44,7 @@ export default function JournalCard({ entry, onClick }: JournalCardProps) {
   return (
     <button
       onClick={onClick}
-      className="group relative surface-raised rounded-2xl p-4 hover:-translate-y-0.5 transition-all text-left w-full cursor-pointer"
+      className="group relative surface-raised rounded-[1.4rem] p-5 transition-transform duration-300 hover:-translate-y-0.5 text-left w-full cursor-pointer"
     >
       {mood && <div className={`h-1 rounded-full w-12 mb-3 ${mood.color}`} />}
       <div className="flex items-center justify-between text-xs text-fg-muted">
@@ -54,13 +54,13 @@ export default function JournalCard({ entry, onClick }: JournalCardProps) {
           {wc} words
         </span>
       </div>
-      <h3 className="mt-1.5 font-display text-base font-medium text-fg-strong leading-snug line-clamp-1">
+      <h3 className="mt-2 font-display text-lg font-medium text-fg-strong leading-snug line-clamp-1">
         {entry.title}
       </h3>
-      <p className="mt-1 text-sm text-fg-muted line-clamp-2 leading-relaxed">
+      <p className="mt-1.5 text-sm text-fg-muted line-clamp-2 leading-relaxed">
         {entry.content}
       </p>
-      <span className="mt-2 inline-block text-[10px] font-medium text-fg-muted bg-surface-2 rounded-full px-2 py-0.5">
+      <span className="mt-3 inline-block text-[10px] font-medium text-fg-muted bg-surface-2 rounded-full px-2 py-0.5">
         {rt} min read
       </span>
     </button>

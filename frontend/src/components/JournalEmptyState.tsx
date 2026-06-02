@@ -57,25 +57,25 @@ export default function JournalEmptyState({
           patterns over time.
         </p>
 
-        <div className="mt-8 surface-raised rounded-2xl px-5 py-4 text-left">
-          <p className="text-xs font-semibold text-fg-muted uppercase tracking-wider mb-1">
+        <div className="mt-8 rounded-[1.4rem] bg-clay-50/60 border border-clay-100 px-5 py-4 text-left">
+          <p className="text-[11px] font-semibold text-clay-600 uppercase tracking-wider mb-1">
             Today's prompt
           </p>
-          <p className="text-sm text-fg-strong font-display italic leading-relaxed">
+          <p className="text-sm text-fg font-medium font-display italic leading-relaxed">
             &ldquo;{dailyPrompt}&rdquo;
           </p>
         </div>
 
         <div className="mt-6 text-left">
-          <p className="text-xs font-semibold text-fg-muted uppercase tracking-wider mb-3">
+          <p className="text-[11px] font-semibold text-fg-muted uppercase tracking-wider mb-3">
             More prompts to try
           </p>
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {featured.map((prompt, i) => (
               <button
                 key={i}
                 onClick={onCreate}
-                className="w-full text-left p-3 rounded-xl bg-surface-2/50 ring-1 ring-border text-sm text-fg-strong hover:bg-surface-2 transition-colors font-display italic"
+                className="w-full text-left p-3.5 rounded-2xl bg-surface-2/50 ring-1 ring-border text-sm text-fg-strong hover:bg-surface-2 transition-colors font-display italic"
               >
                 &ldquo;{prompt}&rdquo;
               </button>
