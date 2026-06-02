@@ -16,7 +16,9 @@ model User {
   email        String    @unique
   name         String
   passwordHash String
-  sessions     Session[]
+  sessions       Session[]
+  conversations  Conversation[]
+  journalEntries JournalEntry[]
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -40,6 +42,10 @@ model Therapist {
   title        String
   experience   Int
   gender       String
+  email        String?     @unique
+  passwordHash String?
+  sessionToken String?     @unique
+  conversations Conversation[]
   sessionTypes SessionType[] @relation("TherapistSessionTypes")
   specialities Concerns[] @relation("TherapistConcerns")
   therapyTypes TherapyType[] @relation("TherapistTherapyTypes")
@@ -65,6 +71,47 @@ model Admin {
   sessionToken String?   @unique
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+}
+
+model Conversation {
+  id           Int         @id @default(autoincrement())
+  userId       Int
+  therapistId  Int
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  therapist    Therapist    @relation(fields: [therapistId], references: [id], onDelete: Cascade)
+  messages     Message[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@unique([userId, therapistId])
+  @@index([userId])
+  @@index([therapistId])
+}
+
+model Message {
+  id             Int          @id @default(autoincrement())
+  content        String
+  conversationId Int
+  senderType     String
+  senderId       Int
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+}
+
+model JournalEntry {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  content   String
+  mood      Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, createdAt])
 }
 
 model SessionType {
