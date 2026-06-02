@@ -1,23 +1,137 @@
 @import "tailwindcss";
 
-body {
-  margin: 0;
-}
+/* Class-based dark mode (infrastructure only — not auto-activated yet).
+   Add `class="dark"` to <html> once components are migrated off hardcoded hex. */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-nunito: "Nunito", sans-serif;
-  --font-playfair: "Playfair Display", serif;
+  /* ---- Type families ---- */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  /* Back-compat aliases: existing `font-playfair` / `font-nunito` classes now
+     render the new pairing. Migrate these to font-display / font-body over time. */
+  --font-playfair: "Fraunces", Georgia, serif;
+  --font-nunito: "Inter", system-ui, sans-serif;
 
-  /* Brand palette — public site */
+  /* ============================================================
+     "SANCTUARY" — sun-warmed bone canvas, espresso ink, a bold
+     terracotta accent with ochre + sage support. Warm, editorial,
+     organic, textured. Premium through art direction, not gradients.
+     ============================================================ */
+
+  /* ---- Clay / terracotta ramp ---- */
+  --color-clay-50: #faf1eb;
+  --color-clay-100: #f3decf;
+  --color-clay-200: #e7c0a6;
+  --color-clay-300: #d89e78;
+  --color-clay-400: #c77b50;
+  --color-clay-500: #bc553a;
+  --color-clay-600: #a2452e;
+  --color-clay-700: #7e3a28;
+  --color-clay-800: #5e2d20;
+  --color-clay-900: #3f1f17;
+
+  /* ---- Ochre ramp (warm gold) ---- */
+  --color-ochre-100: #f7e9cc;
+  --color-ochre-200: #efd49e;
+  --color-ochre-300: #e6bd6f;
+  --color-ochre-400: #dca64b;
+  --color-ochre-500: #ce9038;
+  --color-ochre-600: #b0762a;
+
+  /* ---- Sage ramp (calm green) ---- */
+  --color-sage-100: #e6eadd;
+  --color-sage-200: #cdd5bc;
+  --color-sage-300: #aab892;
+  --color-sage-400: #8a9b6e;
+  --color-sage-500: #6f8056;
+  --color-sage-600: #586843;
+
+  /* ---- Back-compat aliases: indigo/apricot/teal/amber now render warm ---- */
+  --color-indigo-50: #faf1eb;  --color-indigo-100: #f3decf; --color-indigo-200: #e7c0a6;
+  --color-indigo-300: #d89e78; --color-indigo-400: #c77b50; --color-indigo-500: #bc553a;
+  --color-indigo-600: #a2452e; --color-indigo-700: #7e3a28; --color-indigo-800: #5e2d20;
+  --color-indigo-900: #3f1f17; --color-indigo-950: #2c1610;
+  --color-apricot-300: #e6bd6f; --color-apricot-400: #dca64b; --color-apricot-500: #ce9038; --color-apricot-600: #b0762a;
+  --color-teal-50: #faf1eb;  --color-teal-100: #f3decf; --color-teal-200: #e7c0a6;
+  --color-teal-300: #d89e78; --color-teal-400: #c77b50; --color-teal-500: #bc553a;
+  --color-teal-600: #a2452e; --color-teal-700: #7e3a28; --color-teal-800: #5e2d20;
+  --color-teal-900: #3f1f17; --color-teal-950: #2c1610;
+  --color-amber-300: #e6bd6f; --color-amber-400: #dca64b; --color-amber-500: #ce9038; --color-amber-600: #b0762a;
+
+  /* ---- Semantic tokens (light) ---- */
+  --color-bg: #f3ece0;            /* warm bone */
+  --color-surface: #fbf6ec;       /* cream card */
+  --color-surface-2: #ece1d0;     /* deeper sand */
+  --color-border: #e2d6c3;
+  --color-fg-strong: #2a2420;     /* espresso ink */
+  --color-fg: #4c4239;
+  --color-fg-muted: #897a6a;
+  --color-primary: #2a2420;       /* espresso (chic dark CTA) */
+  --color-primary-hover: #3d352e;
+  --color-primary-fg: #fbf6ec;
+  --color-accent: #bc553a;        /* terracotta — the signature */
+  --color-accent-hover: #a2452e;
+  --color-ring: #bc553a;
+
+  /* ---- Immersive dark section (deep espresso) ---- */
+  --color-night: #221c18;
+  --color-night-2: #2e261f;
+  --color-night-border: #41362d;
+  --color-night-fg: #f0e7da;
+  --color-night-muted: #b3a595;
+
+  /* ---- Premium soft shadow scale (warm brown, low-alpha, layered) ---- */
+  --shadow-soft: 0 1px 2px rgba(42, 36, 32, 0.05), 0 12px 30px -12px rgba(42, 36, 32, 0.14);
+  --shadow-lift: 0 2px 4px rgba(42, 36, 32, 0.07), 0 28px 52px -20px rgba(42, 36, 32, 0.22);
+
+  /* ---- States ---- */
+  --color-success: #5e8c5a;
+  --color-warning: #ce9038;
+  --color-error: #c0492f;
+  --color-info: #7e8e6e;
+
+  /* ---- Legacy brand + admin tokens (kept for back-compat) ---- */
   --color-brand-deep: #0d393e;
   --color-brand-teal: #47898e;
   --color-brand-accent: #e77d3c;
   --color-brand-surface: #fffdf8;
-
-  /* Admin (dark) surfaces */
   --color-admin-bg: #0a0a0a;
   --color-admin-card: #111111;
   --color-admin-border: #1f1f1f;
+}
+
+/* ---- Dark-mode semantic overrides (indigo-tinted night) ---- */
+.dark {
+  --color-bg: #0f0f1e;
+  --color-surface: #181830;
+  --color-surface-2: #1f1f3a;
+  --color-border: #2c2c4c;
+  --color-fg-strong: #ececf6;
+  --color-fg: #c8c8db;
+  --color-fg-muted: #9494ac;
+  --color-primary: #8784ce;
+  --color-primary-hover: #aba8e0;
+  --color-primary-fg: #15142e;
+  --color-accent: #f6a871;
+  --color-accent-hover: #fbc9a0;
+  --color-ring: #8784ce;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-feature-settings: "cv05" 1, "cv08" 1, "ss01" 1;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Editorial display headings get optical sizing + a touch of softness */
+.font-display {
+  font-optical-sizing: auto;
 }
 
 @keyframes fadeIn {
@@ -85,6 +199,61 @@ body {
   50% { transform: translateY(-10px); }
 }
 
+/* Signature ambient motion — slow "breathing" of the hero glow.
+   Calm expressed literally. Disabled under prefers-reduced-motion. */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(1.12); opacity: 0.8; }
+}
+.animate-breathe { animation: breathe 9s ease-in-out infinite; }
+
+/* Aurora — slow drifting light field for the night hero */
+@keyframes aurora {
+  0%   { transform: translate3d(-6%, -3%, 0) scale(1.15); opacity: 0.5; }
+  50%  { transform: translate3d(7%, 5%, 0) scale(1.3);  opacity: 0.75; }
+  100% { transform: translate3d(-6%, -3%, 0) scale(1.15); opacity: 0.5; }
+}
+.animate-aurora { animation: aurora 20s ease-in-out infinite; }
+
+/* Starlight twinkle */
+@keyframes twinkle { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.7; } }
+.animate-twinkle { animation: twinkle 5s ease-in-out infinite; }
+
+/* Gentle scroll nudge */
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+.animate-nudge { animation: nudge 1.8s ease-in-out infinite; }
+
+/* Organic morphing blob — soft living shapes instead of rectangles */
+@keyframes blob {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%; }
+  33%      { border-radius: 58% 42% 38% 62% / 63% 55% 45% 37%; }
+  66%      { border-radius: 38% 62% 55% 45% / 42% 63% 37% 58%; }
+}
+.animate-blob { animation: blob 18s ease-in-out infinite; }
+
+/* Marquee — horizontal infinite scroll for the concerns band */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.animate-marquee { animation: marquee 36s linear infinite; }
+
+/* Animated gradient border — soft shift across the hero demo window */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient { animation: gradient-shift 5s ease infinite; }
+
+/* Film grain — premium texture overlay */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("/noise.png");
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -147,6 +316,92 @@ body {
 
 .transition-colors-300 {
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================================================
+   Modern skeuomorphism — soft MATERIAL depth (not neumorphism).
+   Surfaces read as physical objects: a top-edge light highlight, a whisper of
+   surface gradient, layered ambient shadow. Full contrast + real borders are
+   preserved (the opposite of soft-UI extrusion). Used selectively.
+   ============================================================================ */
+
+/* Raised card — tactile, like a smooth pebble */
+.surface-raised {
+  background-image: linear-gradient(180deg, #ffffff 0%, var(--color-bg) 150%);
+  border: 1px solid var(--color-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 2px rgba(42, 36, 32, 0.04),
+    0 14px 30px -14px rgba(42, 36, 32, 0.16);
+}
+
+/* Hero-grade elevation for the product canvas */
+.surface-raised-xl {
+  background-image: linear-gradient(180deg, #ffffff 0%, var(--color-bg) 170%);
+  border: 1px solid var(--color-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 4px rgba(42, 36, 32, 0.05),
+    0 44px 80px -34px rgba(42, 36, 32, 0.30);
+}
+
+/* Recessed well — for input groups / inner panels */
+.surface-inset {
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 2px rgba(42, 36, 32, 0.07);
+}
+
+/* Frosted glass — floating chrome only */
+.glass {
+  background-color: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 10px 30px -14px rgba(42, 36, 32, 0.2);
+}
+
+/* Pressable material button */
+.btn-material {
+  background-image: linear-gradient(180deg, var(--color-primary-hover) 0%, var(--color-primary) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 1px 2px rgba(42, 36, 32, 0.25),
+    0 12px 22px -10px rgba(120, 58, 40, 0.5);
+  transition: box-shadow 0.3s ease, transform 0.15s ease, filter 0.3s ease;
+}
+.btn-material:hover {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 2px 4px rgba(42, 36, 32, 0.25),
+    0 16px 30px -10px rgba(120, 58, 40, 0.55);
+}
+.btn-material:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.28),
+    0 1px 2px rgba(42, 36, 32, 0.2);
+}
+
+/* Respect users who ask for reduced motion. Critical for an anxious /
+   vestibular-sensitive audience. Forces any opacity-0 reveal state to visible
+   so content is never hidden behind a disabled animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .opacity-0 {
+    opacity: 1 !important;
+  }
 }
 
   

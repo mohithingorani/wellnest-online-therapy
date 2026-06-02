@@ -11,21 +11,22 @@ import { AdminLayout } from "./components/admin/AdminLayout";
 
 import Layout from "./components/Layout";
 import LoadingPage from "./components/Loading";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// Only add delay to landing page
-const LandingPage = lazy(async () => {
-  await delay(2000);
-  return import("./pages/App");
-});
-
-// All other pages - no delay
+const LandingPage = lazy(() => import("./pages/App"));
 const AboutPage = lazy(() => import("./pages/About"));
 const Signin = lazy(() => import("./pages/Signin"));
 const SignUp = lazy(() => import("./pages/SignUp"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const TherapistsPage = lazy(() => import("./pages/Therapists"));
 const TherapistPage = lazy(() => import("./Therapist"));
+const Booking = lazy(() => import("./pages/Booking"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const BookingConfirm = lazy(() => import("./pages/BookingConfirm"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const MyBookings = lazy(() => import("./pages/MyBookings"));
+const DashboardShell = lazy(() => import("./components/DashboardShell"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Admin - no delay
@@ -52,6 +53,7 @@ function SuspenseFallback() {
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
+    <ScrollToTop />
     <ToastProvider>
       <Suspense fallback={<SuspenseFallback />}>
         <AuthProvider>
@@ -62,8 +64,24 @@ createRoot(document.getElementById("root")!).render(
             <Route path="about" element={<AboutPage />} />
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<SignUp />} />
+            <Route path="reset-password" element={<ResetPassword />} />
             <Route path="therapists" element={<TherapistsPage />} />
             <Route path="therapists/:id" element={<TherapistPage />} />
+
+            {/* Authenticated, marketing-chrome transactional routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="therapists/:id/book" element={<Booking />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="booking/:id/confirmed" element={<BookingConfirm />} />
+            </Route>
+          </Route>
+
+          {/* Authenticated app (own dashboard shell, no marketing chrome) */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<DashboardShell />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/bookings" element={<MyBookings />} />
+            </Route>
           </Route>
 
           {/* Admin Login */}
