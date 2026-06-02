@@ -1,393 +1,220 @@
-
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, type CSSProperties } from "react";
+import Reveal from "../components/Reveal";
 
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.unobserve(el);
-        }
-      },
-      { threshold }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [threshold]);
-
-  return { ref, inView };
-}
+const btnAccent =
+  "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
+const btnOutline =
+  "inline-flex items-center justify-center gap-2 h-14 px-7 rounded-full font-semibold text-base text-fg-strong ring-1 ring-border bg-surface/50 backdrop-blur hover:bg-surface transition-all duration-300";
 
 export default function AboutPage() {
   const navigate = useNavigate();
-  const { ref: heroRef, inView: heroInView } = useInView(0.2);
-  const { ref: problemRef, inView: problemInView } = useInView(0.2);
-  const { ref: whyRef, inView: whyInView } = useInView(0.2);
-  const { ref: howRef, inView: howInView } = useInView(0.2);
-  const { ref: faqRef, inView: faqInView } = useInView(0.2);
-  const { ref: ctaRef, inView: ctaInView } = useInView(0.2);
-
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#FFFDF8] to-[#EEFFFF] font-nunito text-[#3E464E]">
-      
-      {/* HERO */}
-      <section
-        ref={heroRef}
-        className={`border-b border-[#EFEAE7] relative overflow-hidden transition-all duration-700 ${heroInView ? 'animate-fade-in-up' : 'opacity-0'}`}
-      >
-        <img
-          src="/petal.svg"
-          alt=""
-          className="absolute -top-10 right-10 w-32 opacity-30 animate-float pointer-events-none"
-        />
-        <img
-          src="/leaves.svg"
-          alt=""
-          className="absolute bottom-10 left-0 w-28 opacity-20 animate-float pointer-events-none"
-          style={{ animationDelay: "1.5s" }}
-        />
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 relative z-10">
-          
-          <div className="max-w-4xl">
-            
-            <div className="inline-flex items-center gap-2 border border-[#EFEAE7] rounded-full px-4 py-2 text-sm text-[#3E464E] mb-8">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              Built for accessible mental healthcare
+    <div className="grain relative text-fg bg-bg overflow-x-clip">
+      {/* ============================================================ HERO === */}
+      <section className="relative overflow-hidden pt-[68px]">
+        <Blob className="absolute top-1/3 -right-44 h-[500px] w-[500px] bg-gradient-to-br from-sage-300/40 to-clay-500/15 blur-2xl opacity-60" style={{ animationDelay: "6s" }} />
+
+        <div className="relative mx-auto max-w-[1080px] px-5 md:px-8 py-20 md:py-32">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 rounded-full bg-surface/70 ring-1 ring-border px-3 py-1.5 text-[0.8rem] font-medium text-fg backdrop-blur shadow-soft">
+              <span className="w-2 h-2 rounded-full bg-success animate-pulse-soft" />
+              About WellNest
             </div>
+          </Reveal>
 
-            <h1 className="font-playfair leading-15 md:leading-20 text-5xl md:text-7xl font-extrabold tracking-tight text-[#0D393E]">
-              Finding the right therapist
-              <span className="block text-[#E77D3C] italic">
-                should not feel overwhelming.
-              </span>
-            </h1>
+          <h1 className="mt-6 font-display font-medium tracking-[-0.035em] text-fg-strong text-[clamp(3rem,8vw,6rem)] leading-[0.9] max-w-4xl">
+            <Reveal delay={60}><span className="block">Finding the right therapist</span></Reveal>
+            <Reveal delay={130}><span className="block italic text-accent">should not feel overwhelming.</span></Reveal>
+          </h1>
 
-            <p className="mt-8 text-lg md:text-xl leading-relaxed text-[#3E464E] max-w-2xl">
-              WellNest helps students and young adults discover trusted,
-              verified mental health professionals without the confusion,
-              friction, or long wait times traditional systems create.
+          <Reveal delay={220}>
+            <p className="mt-7 max-w-2xl text-lg md:text-xl text-fg leading-relaxed">
+              WellNest helps students and young adults discover trusted, verified mental health professionals without the confusion, friction, or long wait times traditional systems create.
             </p>
+          </Reveal>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => navigate("/therapists")}
-                className="h-12 px-6 rounded-xl bg-[#0D393E] text-white font-semibold hover:opacity-90 transition"
-              >
+          <Reveal delay={300}>
+            <div className="mt-9 flex flex-col sm:flex-row gap-3">
+              <button onClick={() => navigate("/therapists")} className={btnAccent}>
+                <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
                 Find a therapist
+                <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
               </button>
-
-              <button
-                onClick={() => scrollTo("how-it-works")}
-                className="h-12 px-6 rounded-xl border border-[#E8E2DD] bg-white text-[#0D393E] font-semibold hover:bg-[#F9F7F5] transition"
-              >
-                Learn more
-              </button>
+              <button onClick={() => scrollTo("how-it-works")} className={btnOutline}>How it works</button>
             </div>
+          </Reveal>
 
-            <div className="flex flex-wrap gap-6 text-sm text-[#6B7280] mt-12">
-              <span>Verified professionals</span>
-              <span>Privacy-first</span>
-              <span>Flexible sessions</span>
-              <span>Built for young adults</span>
+          <Reveal delay={380}>
+            <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3">
+              <div className="flex items-center gap-2 text-sm text-fg"><IconShield className="w-4 h-4 text-accent" /> Verified professionals</div>
+              <span className="hidden sm:block h-4 w-px bg-border" />
+              <div className="flex items-center gap-2 text-sm text-fg"><IconLock className="w-4 h-4 text-accent" /> Privacy-first</div>
+              <span className="hidden sm:block h-4 w-px bg-border" />
+              <div className="flex items-center gap-2 text-sm text-fg"><IconCheck className="w-4 h-4 text-accent" /> Flexible sessions</div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* PROBLEM */}
-      <section
-        ref={problemRef}
-        className={`py-24 border-b border-[#EFEAE7] transition-all duration-700 ${problemInView ? 'animate-fade-in-up' : 'opacity-0'}`}
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          
-          <div className="grid lg:grid-cols-2 gap-16">
-            
+      {/* ========================================================= PROBLEM === */}
+      <Section>
+        <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-20">
+          <Reveal>
             <div>
-              <div className="text-sm font-semibold uppercase tracking-wider text-[#0D393E] mb-4">
-                The Problem
-              </div>
-
-              <h2 className="text-4xl font-playfair md:text-5xl font-bold tracking-tight leading-tight text-[#0D393E]">
+              <Eyebrow>The Problem</Eyebrow>
+              <h2 className="mt-4 font-display font-medium text-4xl md:text-[3.2rem] md:leading-[1.04] tracking-[-0.025em] text-fg-strong text-balance">
                 Mental healthcare is still too hard to access.
               </h2>
             </div>
-
-            <div className="space-y-6 text-lg text-[#3E464E] leading-relaxed">
-              <p>
-                Finding a therapist today is often confusing, expensive,
-                and emotionally exhausting — especially for students and
-                young adults already dealing with stress, anxiety,
-                burnout, or uncertainty.
+          </Reveal>
+          <Reveal delay={120}>
+            <div className="space-y-5 text-lg md:text-xl leading-relaxed">
+              <p className="text-fg">
+                Finding a therapist today is often confusing, expensive, and emotionally exhausting — especially for students and young adults already dealing with stress, anxiety, burnout, or uncertainty.
               </p>
-
-              <p>
-                Most platforms focus on directories instead of actual
-                trust, compatibility, and accessibility.
+              <p className="text-fg-muted">
+                Most platforms focus on directories instead of actual trust, compatibility, and accessibility.
               </p>
-
-              <p>
-                We’re building WellNest to make discovering the right
-                support feel simpler, safer, and more human.
+              <p className="text-fg-muted">
+                We&apos;re building WellNest to make discovering the right support feel simpler, safer, and more human.
               </p>
             </div>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ========================================================= VALUES === */}
+      <Section>
+        <SectionHead eyebrow="Why WellNest" title="Designed for trust, clarity, and accessibility." />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Verified Professionals", desc: "Every therapist on the platform is reviewed and verified before onboarding." },
+            { title: "Flexible Sessions", desc: "Book video, chat, or voice sessions that fit your schedule and comfort." },
+            { title: "Privacy First", desc: "Your conversations and personal data stay secure and confidential." },
+            { title: "Built for Young Adults", desc: "Designed specifically around the challenges students and young professionals face." },
+          ].map((v, i) => (
+            <Reveal key={v.title} delay={i * 100}>
+              <div className="h-full rounded-2xl surface-raised p-7">
+                <h3 className="font-display text-xl text-fg-strong">{v.title}</h3>
+                <p className="mt-2 text-fg-muted leading-relaxed text-sm">{v.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* ====================================================== HOW IT WORKS === */}
+      <Section id="how-it-works">
+        <SectionHead eyebrow="How It Works" title="Getting support should feel simple." />
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { n: "01", t: "Browse Therapists", d: "Explore verified professionals based on specialties, experience, and preferences." },
+            { n: "02", t: "Book a Session", d: "Choose a time and format that works best for you — quickly and securely." },
+            { n: "03", t: "Start Your Journey", d: "Connect with the right therapist and begin getting the support you need." },
+          ].map((s, i) => (
+            <Reveal key={s.n} delay={i * 110}>
+              <div className="h-full rounded-[1.5rem] surface-raised p-7 transition-transform duration-300 hover:-translate-y-1.5">
+                <span className="font-display text-sm font-semibold text-accent">{s.n}</span>
+                <span className="block h-px w-full bg-border mt-3" />
+                <h3 className="mt-4 font-display text-xl text-fg-strong">{s.t}</h3>
+                <p className="mt-2 text-sm text-fg-muted leading-relaxed">{s.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* ============================================================== FAQ === */}
+      <Section>
+        <div className="max-w-3xl mx-auto">
+          <SectionHead eyebrow="FAQ" title="Frequently asked questions" center />
+          <div className="divide-y divide-border border-y border-border">
+            {[
+              { q: "How are therapists verified?", a: "We review therapist licenses, credentials, and professional information before onboarding." },
+              { q: "Is my information confidential?", a: "Yes. Your data and sessions are protected using secure, privacy-first systems." },
+              { q: "Can I switch therapists?", a: "Absolutely. Finding the right fit matters, and you can switch anytime." },
+              { q: "What types of sessions are supported?", a: "Depending on therapist availability, sessions may include video, voice, or chat." },
+            ].map((f, i) => (
+              <Reveal key={f.q} delay={i * 50}>
+                <details className="group py-5">
+                  <summary className="flex items-center justify-between cursor-pointer list-none gap-4">
+                    <span className="font-semibold text-fg-strong text-lg">{f.q}</span>
+                    <span className="grid place-items-center w-7 h-7 rounded-full border border-border text-fg-muted shrink-0 transition-all duration-300 group-open:rotate-45 group-open:border-accent group-open:text-accent">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
+                    </span>
+                  </summary>
+                  <p className="mt-3 pr-10 text-fg-muted leading-relaxed">{f.a}</p>
+                </details>
+              </Reveal>
+            ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* WHY WELLNEST */}
-      <section
-        ref={whyRef}
-        className={`py-24 transition-all duration-700 ${whyInView ? 'animate-fade-in-up' : 'opacity-0'}`}
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          
-          <div className="max-w-2xl mb-16">
-            <div className="text-sm font-semibold uppercase tracking-wider text-[#0D393E] mb-4">
-              Why WellNest
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-playfair leading-15 font-bold tracking-tight text-[#0D393E]">
-              Designed for trust, clarity, and accessibility.
+      {/* =========================================================== CTA === */}
+      <section className="relative overflow-hidden bg-night text-night-fg mx-3 md:mx-6 mb-8 rounded-[2.25rem] ring-1 ring-night-border">
+        <Blob className="absolute left-1/2 -bottom-28 h-[440px] w-[700px] -translate-x-1/2 bg-clay-500/35 blur-[120px]" />
+        <Blob className="absolute top-0 right-0 h-[280px] w-[280px] bg-ochre-500/25 blur-[110px]" style={{ animationDelay: "4s" }} />
+        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_110%,rgba(220,166,75,0.14),transparent_55%)]" />
+        <div className="relative mx-auto max-w-[860px] px-6 md:px-8 py-24 md:py-36 text-center">
+          <Reveal>
+            <h2 className="font-display font-medium text-[clamp(2.8rem,7vw,5.5rem)] tracking-[-0.03em] leading-[0.95] text-balance text-night-fg">
+              Better mental healthcare,<br />
+              <span className="italic text-ochre-300">designed for modern life.</span>
             </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <FeatureCard
-              title="Verified Professionals"
-              description="Every therapist on the platform is reviewed and verified before onboarding."
-            />
-
-            <FeatureCard
-              title="Flexible Sessions"
-              description="Book video, chat, or voice sessions that fit your schedule and comfort."
-            />
-
-            <FeatureCard
-              title="Privacy First"
-              description="Your conversations and personal data stay secure and confidential."
-            />
-
-            <FeatureCard
-              title="Built for Young Adults"
-              description="Designed specifically around the challenges students and young professionals face."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section
-        id="how-it-works"
-        ref={howRef}
-        className={`py-24 border-y border-[#EFEAE7] bg-[#F8F5F2] transition-all duration-700 ${howInView ? 'animate-fade-in-up' : 'opacity-0'}`}
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          
-          <div className="max-w-2xl mb-16">
-            <div className="text-sm font-semibold uppercase tracking-wider text-[#0D393E] mb-4">
-              How It Works
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-playfair leading-15 font-bold tracking-tight text-[#0D393E]">
-              Getting support should feel simple.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            
-            <StepCard
-              number="01"
-              title="Browse Therapists"
-              description="Explore verified professionals based on specialties, experience, and preferences."
-            />
-
-            <StepCard
-              number="02"
-              title="Book a Session"
-              description="Choose a time and format that works best for you — quickly and securely."
-            />
-
-            <StepCard
-              number="03"
-              title="Start Your Journey"
-              description="Connect with the right therapist and begin getting the support you need."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section
-        ref={faqRef}
-        className={`py-24 transition-all duration-700 ${faqInView ? 'animate-fade-in-up' : 'opacity-0'}`}
-      >
-        <div className="max-w-3xl mx-auto px-6">
-          
-          <div className="mb-16 text-center">
-            <div className="text-sm font-semibold uppercase tracking-wider text-[#0D393E] mb-4">
-              FAQ
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#0D393E]">
-              Frequently asked questions
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            
-            <FAQItem
-              question="How are therapists verified?"
-              answer="We review therapist licenses, credentials, and professional information before onboarding."
-            />
-
-            <FAQItem
-              question="Is my information confidential?"
-              answer="Yes. Your data and sessions are protected using secure, privacy-first systems."
-            />
-
-            <FAQItem
-              question="Can I switch therapists?"
-              answer="Absolutely. Finding the right fit matters, and you can switch anytime."
-            />
-
-            <FAQItem
-              question="What types of sessions are supported?"
-              answer="Depending on therapist availability, sessions may include video, voice, or chat."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section
-        ref={ctaRef}
-        className={`border-t border-[#EFEAE7] relative overflow-hidden transition-all duration-700 ${ctaInView ? 'animate-fade-in-up' : 'opacity-0'}`}
-      >
-        <img
-          src="/flowers.svg"
-          alt=""
-          className="absolute -bottom-6 right-6 w-24 opacity-25 animate-float pointer-events-none"
-        />
-        <div className="max-w-4xl mx-auto px-6 py-24 text-center">
-          
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-[#0D393E] font-playfair leading-15">
-            Better mental healthcare,
-            <span className="block text-[#0D393E]">
-              designed for modern life.
-            </span>
-          </h2>
-
-          <p className="mt-6 text-lg text-[#3E464E] max-w-2xl mx-auto leading-relaxed">
-            Start exploring therapists who match your needs and preferences.
-          </p>
-
-          <button
-            onClick={() => navigate("/therapists")}
-            className="mt-10 h-12 px-8 rounded-xl bg-[#0D393E] text-white font-semibold hover:opacity-90 transition"
-          >
-            Browse therapists
-          </button>
+          </Reveal>
+          <Reveal delay={90}>
+            <p className="mx-auto mt-6 max-w-lg text-lg text-night-muted leading-relaxed">Start exploring therapists who match your needs and preferences.</p>
+          </Reveal>
+          <Reveal delay={170}>
+            <button onClick={() => navigate("/therapists")} className="group relative mt-10 inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full font-semibold text-base bg-accent text-primary-fg hover:bg-accent-hover transition-all duration-300 hover:-translate-y-0.5 shadow-lift">
+              <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
+              Browse therapists
+              <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </button>
+          </Reveal>
         </div>
       </section>
     </div>
   );
 }
 
-function FeatureCard({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) {
+/* ============================================================ PRIMITIVES === */
+function Blob({ className = "", style }: { className?: string; style?: CSSProperties }) {
+  return <div aria-hidden className={`pointer-events-none animate-blob ${className}`} style={style} />;
+}
+function Section({ id, className = "", children }: { id?: string; className?: string; children: ReactNode }) {
   return (
-    <div className="border border-[#EFEAE7] rounded-2xl p-6 bg-white hover:border-[#47898E] hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-      <h3 className="text-xl font-bold text-[#0D393E] mb-3">
-        {title}
-      </h3>
-
-      <p className="text-[#3E464E] leading-relaxed">
-        {description}
-      </p>
-    </div>
+    <section id={id} className={`relative ${className}`}>
+      <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-16 md:py-24">{children}</div>
+    </section>
   );
 }
-
-function StepCard({
-  number,
-  title,
-  description,
-}: {
-  number: string;
-  title: string;
-  description: string;
-}) {
+function Eyebrow({ children }: { children: ReactNode }) {
+  return <div className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">{children}</div>;
+}
+function SectionHead({ eyebrow, title, sub, center = false }: { eyebrow: string; title: string; sub?: string; center?: boolean }) {
   return (
-    <div className="bg-white border border-[#EFEAE7] rounded-2xl p-8 hover:border-[#47898E] hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-      
-      <div className="text-sm font-bold text-[#0D393E] mb-6">
-        {number}
+    <Reveal>
+      <div className={`mb-12 max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h2 className="mt-4 font-display font-medium text-4xl md:text-[2.9rem] md:leading-[1.05] tracking-[-0.025em] text-fg-strong text-balance">{title}</h2>
+        {sub && <p className="mt-4 text-lg text-fg-muted leading-relaxed">{sub}</p>}
       </div>
-
-      <h3 className="text-2xl font-bold text-[#0D393E] mb-4">
-        {title}
-      </h3>
-
-      <p className="text-[#3E464E] leading-relaxed">
-        {description}
-      </p>
-    </div>
+    </Reveal>
   );
 }
 
-function FAQItem({
-  question,
-  answer,
-}: {
-  question: string;
-  answer: string;
-}) {
-  return (
-    <details className="group border border-[#EFEAE7] rounded-2xl p-6 bg-white transition-all duration-300 open:border-[#0D393E] open:shadow-md">
-      
-      <summary className="flex items-center justify-between cursor-pointer list-none">
-        <span className="text-lg font-semibold text-[#0D393E] group-open:text-[#0D393E] transition-colors duration-300">
-          {question}
-        </span>
-
-        <svg
-          className="w-5 h-5 text-[#6B7280] transition-all duration-300 group-open:rotate-180 group-open:text-[#0D393E]"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </summary>
-
-      <p className="mt-4 text-[#3E464E] leading-relaxed">
-        {answer}
-      </p>
-    </details>
-  );
+/* ================================================================= ICONS === */
+function IconShield({ className = "w-5 h-5" }: { className?: string }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>;
+}
+function IconLock({ className = "w-5 h-5" }: { className?: string }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>;
+}
+function IconCheck({ className = "w-4 h-4" }: { className?: string }) {
+  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>;
 }
