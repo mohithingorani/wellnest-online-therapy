@@ -1,14 +1,27 @@
+import { memo, useMemo } from "react";
 import type { MoodEntry } from "../services/moods";
 
 /* Lightweight SVG area chart for the mood trend. No chart library — soft
    gridlines across all five mood levels, a gradient-filled area, a line that
    draws itself in, and a gently pulsing latest point. The displayed aspect
    ratio matches the viewBox (w-full + h-auto), so nothing is distorted. */
-export default function MoodChart({ data }: { data: MoodEntry[] }) {
-  const W = 640, H = 210, padX = 18, padTop = 18, padBottom = 24;
+const W = 640, H = 210, padX = 18, padTop = 18, padBottom = 24;
+const LEVELS = [1, 2, 3, 4, 5];
+
+const MoodChart = memo(function MoodChart({ data }: { data: MoodEntry[] }) {
   const n = data.length;
 
-  if (n < 2)
+  const chart = useMemo(() => {
+    if (n < 2) return null;
+    const x = (i: number) => padX + (i * (W - padX * 2)) / (n - 1);
+    const y = (v: number) => padTop + (1 - (v - 1) / 4) * (H - padTop - padBottom);
+    const pts = data.map((d, i) => ({ x: x(i), y: y(d.value) }));
+    const line = pts.map((p, i) => `${i ? "L" : "M"} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ");
+    const area = `${line} L ${pts[n - 1].x.toFixed(1)} ${H - padBottom} L ${pts[0].x.toFixed(1)} ${H - padBottom} Z`;
+    return { pts, line, area, last: pts[n - 1] };
+  }, [data, n]);
+
+  if (!chart)
     return (
       <div className="h-[210px] grid place-items-center text-center">
         <div className="flex flex-col items-center gap-3 px-6">
@@ -25,14 +38,7 @@ export default function MoodChart({ data }: { data: MoodEntry[] }) {
       </div>
     );
 
-  const x = (i: number) => padX + (i * (W - padX * 2)) / (n - 1);
-  const y = (v: number) => padTop + (1 - (v - 1) / 4) * (H - padTop - padBottom);
-  const pts = data.map((d, i) => ({ x: x(i), y: y(d.value), d }));
-
-  const line = pts.map((p, i) => `${i ? "L" : "M"} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ");
-  const area = `${line} L ${pts[n - 1].x.toFixed(1)} ${H - padBottom} L ${pts[0].x.toFixed(1)} ${H - padBottom} Z`;
-  const last = pts[n - 1];
-  const levels = [1, 2, 3, 4, 5];
+  const { pts, line, area, last } = chart;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto overflow-visible" role="img" aria-label="Mood trend over the last two weeks">
@@ -44,8 +50,8 @@ export default function MoodChart({ data }: { data: MoodEntry[] }) {
       </defs>
 
       {/* soft gridlines across every mood level; the "Okay" midline reads a touch stronger */}
-      {levels.map((v) => {
-        const gy = y(v);
+      {LEVELS.map((v) => {
+        const gy = padTop + (1 - (v - 1) / 4) * (H - padTop - padBottom);
         const mid = v === 3;
         return (
           <line
@@ -84,4 +90,6 @@ export default function MoodChart({ data }: { data: MoodEntry[] }) {
       <circle cx={last.x} cy={last.y} r="4.5" fill="var(--color-accent)" stroke="var(--color-surface)" strokeWidth="2" />
     </svg>
   );
-}
+});
+
+export default MoodChart;

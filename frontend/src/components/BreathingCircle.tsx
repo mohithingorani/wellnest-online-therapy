@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 
 interface BreathingCircleProps {
   phase: "idle" | "inhale" | "hold" | "exhale";
@@ -34,6 +34,14 @@ function scaleForPhase(phase: string, progress: number): number {
   }
 }
 
+// Constant — defined once, never recreated
+const GLOW_MAP: Record<string, string> = {
+  idle: "rgba(188,85,58,0.08)",
+  inhale: "rgba(188,85,58,0.30)",
+  hold: "rgba(188,85,58,0.18)",
+  exhale: "rgba(188,85,58,0.10)",
+};
+
 export default function BreathingCircle({ phase, progress, technique }: BreathingCircleProps) {
   const scale = scaleForPhase(phase, progress);
   const isActive = phase !== "idle";
@@ -46,19 +54,11 @@ export default function BreathingCircle({ phase, progress, technique }: Breathin
     );
   }, []);
 
-  const glowMap: Record<string, string> = {
-    idle: "rgba(188,85,58,0.08)",
-    inhale: "rgba(188,85,58,0.30)",
-    hold: "rgba(188,85,58,0.18)",
-    exhale: "rgba(188,85,58,0.10)",
-  };
-
-  const circleStyle: CSSProperties = prefersReducedMotion
+  const circleStyle = useMemo<CSSProperties>(() => prefersReducedMotion
     ? {}
-    : {
-        transform: `scale(${scale})`,
-        transition: "transform 0.15s ease-out",
-      };
+    : { transform: `scale(${scale})`, transition: "transform 0.15s ease-out" },
+    [prefersReducedMotion, scale]
+  );
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-sm mx-auto">
@@ -66,7 +66,7 @@ export default function BreathingCircle({ phase, progress, technique }: Breathin
         <div
           className="absolute inset-0 rounded-full bg-gradient-to-br from-clay-400 to-ochre-400"
           style={{
-            boxShadow: `0 0 100px -10px ${glowMap[phase]}`,
+            boxShadow: `0 0 100px -10px ${GLOW_MAP[phase]}`,
             transition: "box-shadow 0.5s ease",
             ...circleStyle,
           }}

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { JournalEntry } from "../services/journal";
 
 const MOOD_META: Record<
@@ -34,17 +35,17 @@ function readingTime(text: string) {
 
 interface JournalCardProps {
   entry: JournalEntry;
-  onClick: () => void;
+  onSelect: (entry: JournalEntry) => void;
 }
 
-export default function JournalCard({ entry, onClick }: JournalCardProps) {
+const JournalCard = memo(function JournalCard({ entry, onSelect }: JournalCardProps) {
   const mood = entry.mood ? MOOD_META[entry.mood] : null;
   const wc = wordCount(entry.content);
   const rt = readingTime(entry.content);
 
   return (
     <button
-      onClick={onClick}
+      onClick={() => onSelect(entry)}
       className="group card-elevated card-lift text-left w-full p-5 md:p-6 flex flex-col cursor-pointer"
     >
       <div className="flex items-center justify-between gap-3">
@@ -98,4 +99,6 @@ export default function JournalCard({ entry, onClick }: JournalCardProps) {
       </div>
     </button>
   );
-}
+});
+
+export default JournalCard;

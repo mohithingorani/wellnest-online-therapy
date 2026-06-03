@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import JournalCard from "./JournalCard";
 import type { JournalEntry } from "../services/journal";
 
@@ -43,7 +44,7 @@ interface JournalFeedProps {
 }
 
 export default function JournalFeed({ entries, onSelect }: JournalFeedProps) {
-  const grouped = groupEntries(entries);
+  const grouped = useMemo(() => groupEntries(entries), [entries]);
 
   return (
     <div className="space-y-9">
@@ -63,7 +64,7 @@ export default function JournalFeed({ entries, onSelect }: JournalFeedProps) {
               <JournalCard
                 key={entry.id}
                 entry={entry}
-                onClick={() => onSelect(entry)}
+                onSelect={onSelect}
               />
             ))}
           </div>
