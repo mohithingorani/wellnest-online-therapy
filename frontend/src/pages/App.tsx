@@ -19,10 +19,8 @@ export default function LandingPage() {
       <Promise />
       <Journey />
       <Outcomes />
-      <Therapists />
       <Privacy />
       <Testimonials />
-      <Pricing />
       <FAQ />
       <FinalCTA />
     </div>
@@ -475,113 +473,120 @@ function ProgressMock() {
 /* Atmospheric espresso focal section. Metrics are PLACEHOLDER. */
 
 function Outcomes() {
-  const stats = [
-    { to: 92, suffix: "%", label: "would recommend WellNest to a friend" },
-    { to: 4.9, decimals: 1, suffix: "/5", label: "from 3,847 verified client reviews" },
-    { to: 14200, suffix: "+", label: "therapy sessions completed" },
-    { to: 38, suffix: "h", label: "average wait to a first session" },
-  ];
   return (
     <section className="relative overflow-hidden bg-night text-night-fg my-8 md:my-12 mx-3 md:mx-6 rounded-[2.25rem] ring-1 ring-night-border">
-      {/* rich lighting */}
       <Blob className="absolute -top-24 right-6 h-[420px] w-[420px] bg-clay-500/40 blur-[110px]" />
       <Blob className="absolute -bottom-28 -left-12 h-[380px] w-[380px] bg-ochre-500/25 blur-[120px]" style={{ animationDelay: "5s" }} />
       <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-10%,rgba(220,166,75,0.12),transparent_60%)]" />
       <div className="relative mx-auto max-w-[1080px] px-6 md:px-12 py-20 md:py-28">
+
+        {/* eyebrow + heading */}
         <Reveal>
-          <div className="max-w-xl">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre-300">Proof it works</div>
-            <h2 className="mt-4 font-display font-medium text-4xl md:text-[3rem] md:leading-[1.05] tracking-[-0.025em] text-balance">
-              Care that actually moves the needle.
-            </h2>
-          </div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre-300">Proof it works</div>
+          <h2 className="mt-4 font-display font-medium text-4xl md:text-[3rem] md:leading-[1.05] tracking-[-0.025em] text-balance max-w-xl">
+            Care that actually moves the needle.
+          </h2>
         </Reveal>
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-          {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 90}>
-              <div>
-                <div className="font-display text-[clamp(2.8rem,5vw,4rem)] font-medium tracking-tight text-ochre-300 leading-none">
-                  <CountUp to={s.to} decimals={s.decimals ?? 0} suffix={s.suffix} />
-                </div>
-                <div className="mt-3 h-px w-10 bg-night-border" />
-                <p className="mt-3 text-sm text-night-muted leading-relaxed max-w-[20ch]">{s.label}</p>
+
+        {/* top row — two dominant stats split by a vertical hairline */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] items-start gap-0">
+          <Reveal delay={80}>
+            <div className="pr-0 md:pr-12 pb-10 md:pb-0">
+              <div className="font-display font-medium leading-none tracking-tight text-ochre-300 text-[clamp(4.5rem,11vw,8rem)]">
+                <CountUp to={92} suffix="%" />
               </div>
-            </Reveal>
-          ))}
+              <p className="mt-4 text-base text-night-muted leading-relaxed max-w-xs">
+                of clients say they would recommend WellNest to a friend in need.
+              </p>
+            </div>
+          </Reveal>
+          <div className="hidden md:block w-px self-stretch bg-night-border mx-4" />
+          <Reveal delay={160}>
+            <div className="pl-0 md:pl-12 pt-10 md:pt-0 border-t border-night-border md:border-0">
+              <div className="font-display font-medium leading-none tracking-tight text-ochre-300 text-[clamp(3.5rem,8vw,6rem)]">
+                <CountUp to={4.9} decimals={1} suffix="/5" />
+              </div>
+              <p className="mt-4 text-base text-night-muted leading-relaxed max-w-xs">
+                average rating from 3,847 verified client reviews on the platform.
+              </p>
+            </div>
+          </Reveal>
         </div>
+
+        {/* bottom row — two supporting stats as a horizontal band */}
+        <div className="mt-12 border-t border-night-border/60 pt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <Reveal delay={240}>
+            <div className="flex items-baseline gap-4">
+              <div className="font-display font-medium text-[2.8rem] leading-none text-night-fg/80 tracking-tight">
+                <CountUp to={14200} suffix="+" />
+              </div>
+              <p className="text-sm text-night-muted leading-snug max-w-[18ch]">therapy sessions completed to date</p>
+            </div>
+          </Reveal>
+          <Reveal delay={300}>
+            <div className="flex items-baseline gap-4">
+              <div className="font-display font-medium text-[2.8rem] leading-none text-night-fg/80 tracking-tight">
+                <CountUp to={38} suffix="h" />
+              </div>
+              <p className="text-sm text-night-muted leading-snug max-w-[18ch]">average wait to your first session</p>
+            </div>
+          </Reveal>
+        </div>
+
       </div>
     </section>
   );
 }
 
-/* ============================================================ THERAPISTS === */
 
-function Therapists() {
-  const navigate = useNavigate();
-  // PLACEHOLDER — replace with real therapists & credentials.
-  const people = [
-    { name: "Dr. Anjali Rao", title: "Clinical Psychologist", cred: "PhD · RCI-licensed · 9 yrs", tags: ["Anxiety", "CBT"], tone: "clay" as const },
-    { name: "Sahil Mehta", title: "Counselling Psychologist", cred: "M.Phil · 6 yrs", tags: ["Burnout", "Mindfulness"], tone: "sage" as const },
-    { name: "Dr. Leah Fernandes", title: "Psychotherapist", cred: "PsyD · EMDR-certified · 12 yrs", tags: ["Trauma", "EMDR"], tone: "ochre" as const },
-  ];
-  return (
-    <Section>
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-        <div className="max-w-xl">
-          <Eyebrow>The people behind the care</Eyebrow>
-          <h2 className="mt-4 font-display font-medium text-4xl md:text-[2.8rem] md:leading-[1.05] tracking-[-0.025em] text-fg-strong text-balance">
-            Real clinicians. Verified before they ever reach you.
-          </h2>
-        </div>
-        <button onClick={() => navigate("/therapists")} className="inline-flex items-center gap-2 h-12 px-6 rounded-full font-semibold text-sm ring-1 ring-border text-fg-strong hover:bg-surface transition-colors self-start">See all therapists →</button>
-      </div>
-      <div className="grid md:grid-cols-3 gap-6">
-        {people.map((p, i) => {
-          const initials = p.name.replace(/^Dr\.?\s+/, "").split(" ").map((w) => w[0]).slice(0, 2).join("");
-          const toneCls = { clay: "from-clay-300 to-clay-500", sage: "from-sage-300 to-sage-500", ochre: "from-ochre-300 to-ochre-500" }[p.tone];
-          return (
-            <Reveal key={p.name} delay={i * 100}>
-              <div className="group h-full rounded-2xl surface-raised p-6 transition-transform duration-300">
-                <div className="flex items-center gap-4">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${toneCls} text-white flex items-center justify-center font-display text-2xl font-semibold shadow-soft`}>{initials}</div>
-                  <div>
-                    <div className="flex items-center gap-1.5"><span className="font-semibold text-fg-strong text-lg">{p.name}</span><IconVerified className="w-4 h-4 text-accent" /></div>
-                    <div className="text-sm text-fg-muted">{p.title}</div>
-                  </div>
-                </div>
-                <div className="mt-4 inline-flex items-center gap-2 rounded-full surface-inset px-3 py-1 text-xs font-medium text-fg"><IconShield className="w-3.5 h-3.5 text-accent" /> {p.cred}</div>
-                <div className="mt-4 flex flex-wrap gap-1.5">{p.tags.map((t) => <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-clay-50 text-clay-700 border border-clay-100">{t}</span>)}</div>
-              </div>
-            </Reveal>
-          );
-        })}
-      </div>
-    </Section>
-  );
-}
 
 /* =============================================================== PRIVACY === */
 
 function Privacy() {
-  const cards = [
-    { icon: <IconLock />, title: "What you share stays yours", body: "Conversations and account data are encrypted in transit and at rest. Sessions stay between you and your therapist." },
-    { icon: <IconShield />, title: "You're always in control", body: "We never sell your data or use it for advertising. Export or permanently delete your account at any time." },
-    { icon: <IconVerified />, title: "Verified professionals", body: "Every therapist's license, qualifications, and standing is reviewed before they can be booked." },
+  const assertions = [
+    { title: "What you share stays yours.", body: "Conversations and account data are encrypted in transit and at rest. Sessions stay between you and your therapist — no exceptions." },
+    { title: "You are always in control.", body: "We never sell your data or use it for advertising. Export or permanently delete your account at any time, with one click." },
+    { title: "Every therapist is verified.", body: "Each clinician's license, qualifications, and standing is reviewed before they can be booked. The badge means the check is done." },
   ];
   return (
     <Section>
-      <SectionHead eyebrow="Privacy & safety" title="Reaching out should feel safe." sub="It takes courage to ask for help. The least we can do is protect you while you do." />
-      <div className="grid md:grid-cols-3 gap-6">
-        {cards.map((c, i) => (
-          <Reveal key={c.title} delay={i * 100}>
-            <div className="h-full rounded-2xl surface-raised p-7">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-clay-400 to-clay-600 text-white flex items-center justify-center shadow-soft">{c.icon}</div>
-              <h3 className="mt-5 font-display text-xl text-fg-strong">{c.title}</h3>
-              <p className="mt-2 text-fg-muted leading-relaxed">{c.body}</p>
-            </div>
-          </Reveal>
-        ))}
+      <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-24 items-start">
+        {/* left — oversized editorial anchor */}
+        <Reveal direction="right">
+          <div>
+            <Eyebrow>Privacy &amp; safety</Eyebrow>
+            <h2 className="mt-5 font-display font-medium tracking-[-0.03em] leading-[0.92] text-fg-strong text-[clamp(3.2rem,6vw,5.5rem)]">
+              Reaching<br />out should<br />feel <span className="italic text-accent">safe.</span>
+            </h2>
+            <p className="mt-7 text-fg-muted leading-relaxed max-w-xs">
+              It takes courage to ask for help. The least we can do is protect you while you do.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* right — manifesto list */}
+        <div className="divide-y divide-border border-y border-border">
+          {assertions.map((a, i) => (
+            <Reveal key={a.title} delay={i * 90}>
+              <div className="py-7 flex flex-col gap-2">
+                <h3 className="font-display text-xl md:text-2xl text-fg-strong">{a.title}</h3>
+                <p className="text-fg-muted leading-relaxed">{a.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
+
+      {/* seal strip */}
+      <Reveal delay={280}>
+        <div className="mt-10 flex items-center gap-4 rounded-2xl bg-night/60 ring-1 ring-night-border px-6 py-4">
+          <IconShield className="w-5 h-5 text-sage-400 shrink-0" />
+          <p className="text-sm font-semibold text-white">
+            <span className="">Encrypted &amp; confidential.</span>{" "}
+            Your data is never sold, never shared with advertisers, and always yours to delete.
+          </p>
+        </div>
+      </Reveal>
     </Section>
   );
 }
@@ -628,19 +633,28 @@ function Testimonials() {
             </figcaption>
           </figure>
         </Reveal>
-        <div className="grid gap-6">
-          {more.map((t, i) => (
-            <Reveal key={t.name} delay={120 + i * 110}>
-              <figure className="h-full rounded-[1.5rem] surface-raised p-7 flex flex-col">
-                <blockquote className="text-fg leading-relaxed flex-1">"{t.quote}"</blockquote>
-                <figcaption className="mt-5 flex items-center gap-3">
-                  <Avatar initials={t.initials} tone={t.tone} size="w-11 h-11" />
-                  <div className="flex-1 text-sm"><div className="font-semibold text-fg-strong">{t.name}</div><div className="text-fg-muted">{t.role}</div></div>
-                  <span className="rounded-full bg-clay-50 border border-clay-100 px-2.5 py-1 text-[11px] text-clay-700 font-medium">{t.outcome}</span>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+        <div className="flex flex-col gap-5">
+          {/* first secondary — full card */}
+          <Reveal delay={120}>
+            <figure className="rounded-[1.5rem] surface-raised p-7 flex flex-col">
+              <blockquote className="text-fg leading-relaxed">"{more[0].quote}"</blockquote>
+              <figcaption className="mt-5 flex items-center gap-3">
+                <Avatar initials={more[0].initials} tone={more[0].tone} size="w-10 h-10" />
+                <div className="flex-1 text-sm"><div className="font-semibold text-fg-strong">{more[0].name}</div><div className="text-fg-muted">{more[0].role}</div></div>
+                <span className="rounded-full bg-sage-100 border border-sage-200 px-2.5 py-1 text-[11px] text-sage-700 font-medium">{more[0].outcome}</span>
+              </figcaption>
+            </figure>
+          </Reveal>
+          {/* second secondary — compact pull-quote with left accent */}
+          <Reveal delay={230}>
+            <figure className="rounded-[1.5rem] bg-surface border-l-[3px] border-accent pl-6 pr-6 py-6 flex flex-col gap-4">
+              <blockquote className="text-fg-strong font-display text-lg leading-snug italic">"{more[1].quote}"</blockquote>
+              <figcaption className="flex items-center gap-2.5">
+                <Avatar initials={more[1].initials} tone={more[1].tone} size="w-8 h-8" />
+                <div className="text-sm text-fg-muted">{more[1].name} · {more[1].role}</div>
+              </figcaption>
+            </figure>
+          </Reveal>
         </div>
       </div>
     </Section>
@@ -649,49 +663,13 @@ function Testimonials() {
 
 /* =============================================================== PRICING === */
 
-function Pricing() {
-  const navigate = useNavigate();
-  // PLACEHOLDER pricing — set real numbers before launch.
-  const plans = [
-    { name: "Pay as you go", price: "₹—", unit: "/ session", blurb: "No subscription. Book only when you need to.", features: ["Browse all therapists free", "Video, chat, or in person", "Cancel up to 24h before", "No commitment, ever"], featured: false },
-    { name: "Monthly", price: "₹—", unit: "/ month", blurb: "Steady weekly support at a lower per-session rate.", features: ["4 sessions / month", "Priority booking", "Message between sessions", "Progress tracking & summaries"], featured: true },
-  ];
-  return (
-    <Section id="pricing">
-      <SectionHead eyebrow="Pricing" title="Pay for sessions — not subscriptions you forget." sub="Browsing is always free. You only pay when you book." center />
-      <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        {plans.map((p, i) => (
-          <Reveal key={p.name} delay={i * 110}>
-            <div className={`relative h-full rounded-[1.6rem] p-8 flex flex-col ${p.featured ? "bg-night text-night-fg shadow-lift ring-1 ring-night-border overflow-hidden" : "surface-raised"}`}>
-              {p.featured && <Blob className="absolute -top-16 -right-12 h-56 w-56 bg-clay-500/25 blur-3xl" />}
-              <div className="relative flex items-center justify-between">
-                <h3 className={`font-display text-2xl ${p.featured ? "text-night-fg" : "text-fg-strong"}`}>{p.name}</h3>
-                {p.featured && <span className="text-[11px] font-semibold uppercase tracking-wider bg-accent text-primary-fg px-3 py-1 rounded-full">Popular</span>}
-              </div>
-              <div className="relative mt-4 flex items-baseline gap-1.5"><span className="text-4xl font-display font-medium">{p.price}</span><span className={p.featured ? "text-night-muted" : "text-fg-muted"}>{p.unit}</span></div>
-              <p className={`relative mt-2 text-sm ${p.featured ? "text-night-muted" : "text-fg-muted"}`}>{p.blurb}</p>
-              <ul className="relative mt-6 space-y-3 flex-1">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2.5 text-sm"><IconCheck className={`w-4 h-4 mt-0.5 shrink-0 ${p.featured ? "text-ochre-300" : "text-accent"}`} /><span className={p.featured ? "text-night-fg/90" : "text-fg"}>{f}</span></li>
-                ))}
-              </ul>
-              <button onClick={() => navigate("/therapists")} className={`relative mt-7 h-12 rounded-full font-semibold text-sm transition-all duration-300 ${p.featured ? "bg-ochre-300 text-night hover:bg-ochre-200" : "bg-accent text-primary-fg hover:bg-accent-hover"}`}>Get started</button>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-    </Section>
-  );
-}
-
 /* =================================================================== FAQ === */
 
 function FAQ() {
   const faqs = [
     { q: "How are therapists verified?", a: "We review each therapist's license, credentials, and professional standing before they're listed. The verified badge means that check is complete." },
     { q: "Is what I share confidential?", a: "Yes. Your data and sessions are encrypted, and we never sell your information or use it for advertising." },
-    { q: "How much does it cost?", a: "Browsing is always free. You only pay when you book — pay-as-you-go or a monthly plan. Exact rates appear on each therapist's profile." },
-    { q: "What if my therapist isn't the right fit?", a: "That's completely normal, and you can switch anytime — no awkwardness, no questions asked." },
+{ q: "What if my therapist isn't the right fit?", a: "That's completely normal, and you can switch anytime — no awkwardness, no questions asked." },
     { q: "How do sessions happen?", a: "By video, chat, or in person, depending on the therapist — whatever feels most comfortable for you." },
   ];
   return (
@@ -805,15 +783,6 @@ function SectionHead({ eyebrow, title, sub, center = false }: { eyebrow: string;
 }
 
 /* ================================================================= ICONS === */
-function IconVerified({ className = "w-5 h-5" }: { className?: string }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
-}
-function IconLock({ className = "w-5 h-5" }: { className?: string }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>;
-}
 function IconShield({ className = "w-5 h-5" }: { className?: string }) {
   return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>;
-}
-function IconCheck({ className = "w-4 h-4" }: { className?: string }) {
-  return <svg className={className} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>;
 }
