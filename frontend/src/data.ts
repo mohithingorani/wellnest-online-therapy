@@ -20,7 +20,7 @@ export const tagsData = [
 ];
 
 export const colorMap : Record<string,string> = {
-  F9CBB2: "bg-[#F9CBB2]",
-  C3E0DC: "bg-[#C3E0DC]",
-  C8E1EA: "bg-[#C8E1EA]",
+  F9CBB2: "bg-clay-200",
+  C3E0DC: "bg-sage-200",
+  C8E1EA: "bg-ochre-200",
 };
