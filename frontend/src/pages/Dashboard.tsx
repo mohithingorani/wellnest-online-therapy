@@ -45,8 +45,7 @@ export default function Dashboard() {
   useEffect(() => {
     setSeries(mStore.series());
     setTodayMood(mStore.today()?.value ?? null);
-    const t = setTimeout(() => setLoading(false), 400);
-    return () => clearTimeout(t);
+    setLoading(false);
   }, []);
 
   const all = useMemo(() => bStore.list(), []);
