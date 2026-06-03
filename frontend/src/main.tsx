@@ -30,6 +30,13 @@ const JournalPage = lazy(() => import("./pages/Journal"));
 const MyBookings = lazy(() => import("./pages/MyBookings"));
 const MessagesPage = lazy(() => import("./pages/Messages"));
 const Breathe = lazy(() => import("./pages/Breathe"));
+const AssessHub = lazy(() => import("./pages/Assess"));
+const AssessFlow = lazy(() => import("./pages/AssessmentFlow"));
+const AssessResult = lazy(() => import("./pages/AssessmentResult"));
+const Invite = lazy(() => import("./pages/Invite"));
+const ResourcesPage = lazy(() => import("./pages/Resources"));
+const ResourceArticle = lazy(() => import("./pages/ResourceArticle"));
+const Rewards = lazy(() => import("./pages/Rewards"));
 const DashboardShell = lazy(() => import("./components/DashboardShell"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -63,6 +70,8 @@ createRoot(document.getElementById("root")!).render(
             <Route path="contact" element={<ContactPage />} />
             <Route path="therapists" element={<TherapistsPage />} />
             <Route path="therapists/:id" element={<TherapistPage />} />
+            {/* NOTE: /assess and /resources live only inside DashboardShell to avoid
+                duplicate-route inconsistency. Unauthenticated users are redirected to login. */}
 
             {/* Authenticated, marketing-chrome transactional routes */}
             <Route element={<ProtectedRoute />}>
@@ -79,12 +88,19 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/journal" element={<JournalPage />} />
                 <Route path="/messages" element={<MessagesPage />} />
                 <Route path="/breathe" element={<Breathe />} />
+                <Route path="/assess" element={<AssessHub />} />
+                <Route path="/assess/:type" element={<AssessFlow />} />
+                <Route path="/assess/:type/result" element={<AssessResult />} />
+                <Route path="/invite" element={<Invite />} />
+                <Route path="/resources" element={<ResourcesPage />} />
+                <Route path="/resources/:slug" element={<ResourceArticle />} />
+                <Route path="/rewards" element={<Rewards />} />
               </Route>
             </Route>
           </Route>
 
           {/* Admin Login */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/login" element={<AdminAuthProvider><AdminLogin /></AdminAuthProvider>} />
 
           {/* Admin Routes */}
           <Route
