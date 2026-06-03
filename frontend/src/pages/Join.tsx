@@ -98,22 +98,22 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
   return (
     <div className="relative min-h-dvh bg-[#efece4] grain flex items-stretch justify-center overflow-hidden isolate lg:p-4">
       {/* background blobs — mobile ambience */}
-      <div aria-hidden className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gradient-to-br from-sage-300/30 to-sage-400/10 blur-3xl lg:hidden" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-gradient-to-br from-clay-300/25 to-ochre-300/10 blur-3xl lg:hidden" style={{ animationDelay: "4s" }} />
+      <div aria-hidden className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gradient-to-br from-sage-300/30 to-sage-400/10 blur-3xl lg:hidden animate-[fadeIn_0.8s_ease-out_forwards]" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-gradient-to-br from-clay-300/25 to-ochre-300/10 blur-3xl lg:hidden animate-[fadeIn_0.8s_ease-out_forwards]" style={{ animationDelay: "0.2s" }} />
 
       {/* ── Back to home link ── */}
       <Link
         to="/"
-        className="fixed left-4 top-4 z-50 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-3.5 py-2 text-xs font-medium text-fg-strong/70 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] backdrop-blur-md ring-1 ring-white/70 transition-all duration-300  hover:bg-white hover:text-fg-strong hover:shadow-soft lg:left-6 lg:top-6"
+        className="fixed left-4 top-4 z-50 inline-flex items-center gap-1.5 rounded-full bg-white/70 px-3.5 py-2 text-xs font-medium text-fg-strong/70 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] backdrop-blur-md ring-1 ring-white/70 transition-all duration-300  hover:bg-white hover:text-fg-strong hover:shadow-soft lg:left-6 lg:top-6 animate-[fadeIn_0.4s_ease-out_forwards]"
       >
         <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
         Back to home
       </Link>
 
-      <div className="relative w-full max-w-full lg:max-w-[1280px] lg:h-[min(860px,94vh)] lg:flex lg:shadow-[0_30px_80px_-40px_rgba(47,58,50,0.4)] lg:rounded-2xl">
+      <div className="relative w-full max-w-full lg:max-w-[1280px] lg:h-[min(860px,94vh)] lg:flex lg:shadow-[0_30px_80px_-40px_rgba(47,58,50,0.4)] lg:rounded-2xl animate-[fadeInUp_0.6s_ease-out_forwards]">
 
         {/* ── LEFT: image panel ── */}
-        <div className="relative hidden lg:flex lg:w-[52%] lg:rounded-l-2xl lg:overflow-hidden">
+        <div className="relative hidden lg:flex lg:w-[52%] lg:rounded-l-2xl lg:overflow-hidden animate-[fadeIn_0.6s_ease-out_forwards]">
           <img src="/join-sofa.png" alt="" className="absolute inset-0 h-full w-full object-cover object-left" />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-tr from-[#efe9df]/55 via-[#efe9df]/10 to-transparent" />
 
@@ -137,9 +137,9 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
         {/* ── RIGHT: form panel ── */}
         <div className="relative flex w-full flex-col bg-surface px-6 pb-10 pt-16 sm:px-10 lg:min-h-0 lg:w-[48%] lg:justify-center lg:rounded-r-2xl lg:px-12 lg:py-10 xl:px-14">
           <div className="mx-auto w-full max-w-[400px]">
-            <div className="mb-6 flex justify-center lg:hidden"><Logo /></div>
+            <div className="mb-6 flex justify-center lg:hidden animate-[fadeInUp_0.4s_ease-out_forwards]"><Logo /></div>
 
-            <div className="text-center">
+            <div key={mode} className="text-center animate-[fadeInUp_0.4s_ease-out_forwards]">
               <h1 className="font-display text-[1.8rem] font-medium tracking-[-0.02em] text-fg-strong">
                 {isLogin ? "Welcome back" : "Create your account"}
               </h1>
@@ -150,14 +150,14 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
 
             {/* ── Error banner ── */}
             {error && (
-              <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-error/20 bg-error/10 px-4 py-3">
+              <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-error/20 bg-error/10 px-4 py-3 animate-[fadeInUp_0.3s_ease-out_forwards]">
                 <svg className="mt-0.5 h-4 w-4 shrink-0 text-error" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <p className="text-sm leading-relaxed text-error">{error}</p>
               </div>
             )}
 
             {/* ── Form ── */}
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <form key={mode} onSubmit={handleSubmit} className="mt-6 space-y-4 animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: "0.1s" }}>
               {/* Name field — signup only */}
               {!isLogin && (
                 <div>
@@ -269,24 +269,26 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
             </form>
 
             {/* ── Divider ── */}
-            <div className="my-6 flex items-center gap-4">
+            <div className="my-6 flex items-center gap-4 animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: "0.2s" }}>
               <span className="h-px flex-1 bg-border/60" />
               <span className="text-sm text-fg-muted">Or continue with</span>
               <span className="h-px flex-1 bg-border/60" />
             </div>
 
             {/* ── Social buttons ── */}
-            <button
-              type="button"
-              aria-label="Continue with Google"
-              className="flex w-full items-center justify-center gap-3 h-12 rounded-full border border-border bg-surface text-sm font-medium text-fg-strong transition-all duration-300 hover:bg-surface-2 hover:shadow-soft"
-            >
-              <GoogleIcon />
-              Continue with Google
-            </button>
+            <div className="animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: "0.25s" }}>
+              <button
+                type="button"
+                aria-label="Continue with Google"
+                className="flex w-full items-center justify-center gap-3 h-12 rounded-full border border-border bg-surface text-sm font-medium text-fg-strong transition-all duration-300 hover:bg-surface-2 hover:shadow-soft"
+              >
+                <GoogleIcon />
+                Continue with Google
+              </button>
+            </div>
 
             {/* ── Toggle mode ── */}
-            <p className="mt-6 text-center text-sm text-fg-muted">
+            <p className="mt-6 text-center text-sm text-fg-muted animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: "0.3s" }}>
               {isLogin ? "New here? " : "Already have an account? "}
               <button type="button" onClick={toggle} className="font-semibold text-accent transition-colors hover:text-accent-hover">
                 {isLogin ? "Create an account" : "Log in"}
@@ -294,7 +296,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
             </p>
 
             {/* ── Privacy badge — mobile only ── */}
-            <div className="pt-10 lg:hidden">
+            <div className="pt-10 lg:hidden animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: "0.35s" }}>
               <div className="flex items-center gap-2.5 rounded-xl bg-sage-100/60 px-3.5 py-2.5 ring-1 ring-sage-200/50">
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/70 text-sage-600">
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
