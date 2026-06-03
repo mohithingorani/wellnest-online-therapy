@@ -74,7 +74,7 @@ export default function NavBar() {
         </button>
 
         <div className="hidden md:flex justify-center gap-8 lg:gap-10">
-          {location.pathname !== "/" && paths.map((p) => (
+          {paths.map((p) => (
             <NavLink
               key={p.path}
               to={p.path}
@@ -136,7 +136,7 @@ export default function NavBar() {
             </button>
           </div>
           <div className="flex flex-col items-center gap-7 pt-16 flex-1">
-            {location.pathname !== "/" && paths.map((p) => (
+            {paths.map((p) => (
               <NavLink key={p.path} to={p.path} onClick={() => setMobileMenuOpen(false)} className={({ isActive }) => `font-display text-2xl ${isActive ? "text-accent" : "text-fg-strong"}`}>
                 {p.name}
               </NavLink>

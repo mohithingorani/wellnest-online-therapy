@@ -51,7 +51,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from || "/dashboard";
-  const { login, signup } = useAuth();
+  const { login, signup, googleAuth } = useAuth();
 
   const [mode, setMode] = useState<"login" | "signup">(initialMode);
   const isLogin = mode === "login";
@@ -94,6 +94,37 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
       setLoading(false);
     }
   };
+
+  const handleGoogleSignIn = useCallback(() => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (!clientId || clientId === "your_google_client_id_here") {
+      setError("Google sign-in is not configured yet. Add your Google Client ID to the .env file.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      google.accounts.id.initialize({
+        client_id: clientId,
+        callback: async (response: google.accounts.id.CredentialResponse) => {
+          try {
+            await googleAuth(response.credential);
+            navigate(isLogin ? from : "/dashboard?welcome=1", { replace: true });
+          } catch (err) {
+            setError(err instanceof Error ? err.message : "Google sign-in failed");
+          } finally {
+            setLoading(false);
+          }
+        },
+      });
+      google.accounts.id.prompt();
+    } catch {
+      setLoading(false);
+      setError("Failed to initialize Google sign-in. Check your Google Client ID.");
+    }
+  }, [googleAuth, navigate, from, isLogin]);
 
   return (
     <div className="relative min-h-dvh bg-[#efece4] grain flex items-stretch justify-center overflow-hidden isolate lg:p-4">
@@ -279,8 +310,10 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
             <div className="animate-[fadeInUp_0.5s_ease-out_forwards]" style={{ animationDelay: "0.25s" }}>
               <button
                 type="button"
+                onClick={handleGoogleSignIn}
+                disabled={loading}
                 aria-label="Continue with Google"
-                className="flex w-full items-center justify-center gap-3 h-12 rounded-full border border-border bg-surface text-sm font-medium text-fg-strong transition-all duration-300 hover:bg-surface-2 hover:shadow-soft"
+                className="flex w-full items-center justify-center gap-3 h-12 rounded-full border border-border bg-surface text-sm font-medium text-fg-strong transition-all duration-300 hover:bg-surface-2 hover:shadow-soft disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <GoogleIcon />
                 Continue with Google

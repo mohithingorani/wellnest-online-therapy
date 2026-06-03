@@ -3,16 +3,7 @@ import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 
 import Reveal from "../components/Reveal";
 import CountUp from "../components/CountUp";
 
-/* ============================================================================
-   WellNest — "Sanctuary" (exceptional pass).
 
-   Warm bone canvas, espresso ink, terracotta signature, ochre + sage support.
-   Immersive pointer-reactive hero demo, a visual product journey, atmospheric
-   espresso focal sections, layered depth, and specific trust proof.
-
-   PRE-LAUNCH placeholders (search "PLACEHOLDER"): metrics, therapist details,
-   testimonials (incl. avatars), and pricing must be real & consented.
-   ============================================================================ */
 
 const btnAccent =
   "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
