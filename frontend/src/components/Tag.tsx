@@ -33,8 +33,8 @@ export default function Tag({
 
       {/* Text */}
       <div className="text-sm sm:text-xs  w-full sm:w-40 font-bold">
-        <div className="text-[#3D4D55]">{heading}</div>
-        <div className="text-[#8E9193] font-medium">
+        <div className="text-fg-strong">{heading}</div>
+        <div className="text-fg-muted font-medium">
           {text}
         </div>
       </div>
