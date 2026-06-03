@@ -4,20 +4,20 @@ interface SkeletonProps {
 
 export function Skeleton({ className = "" }: SkeletonProps) {
   return (
-    <div className={`animate-pulse bg-[#1f1f1f] rounded ${className}`} />
+    <div className={`animate-pulse bg-[#e4dccb] rounded ${className}`} />
   );
 }
 
 export function TableSkeleton({ rows = 5, cols = 4 }: { rows?: number; cols?: number }) {
   return (
     <div className="w-full">
-      <div className="flex gap-4 p-4 border-b border-[#1f1f1f]">
+      <div className="flex gap-4 p-4 border-b border-[#e4dccb]">
         {Array.from({ length: cols }).map((_, i) => (
           <Skeleton key={i} className="h-4 flex-1" />
         ))}
       </div>
       {Array.from({ length: rows }).map((_, rowIndex) => (
-        <div key={rowIndex} className="flex gap-4 p-4 border-b border-[#1a1a1a]">
+        <div key={rowIndex} className="flex gap-4 p-4 border-b border-[#fffefb]">
           {Array.from({ length: cols }).map((_, colIndex) => (
             <Skeleton key={colIndex} className="h-4 flex-1" />
           ))}
@@ -29,7 +29,7 @@ export function TableSkeleton({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 
 export function CardSkeleton() {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
+    <div className="bg-white dark:bg-surface rounded-2xl p-6 border border-border dark:border-border">
       <div className="flex items-center gap-4 mb-4">
         <Skeleton className="w-12 h-12 rounded-full" />
         <div className="flex-1">
@@ -45,7 +45,7 @@ export function CardSkeleton() {
 
 export function StatsCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800">
+    <div className="bg-white dark:bg-surface rounded-2xl p-6 border border-border dark:border-border">
       <Skeleton className="h-4 w-24 mb-3" />
       <Skeleton className="h-8 w-16" />
     </div>

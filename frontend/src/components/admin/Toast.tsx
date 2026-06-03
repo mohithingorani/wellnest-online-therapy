@@ -61,7 +61,7 @@ function ToastContainer({ toasts, removeToast }: { toasts: Toast[]; removeToast:
               ? "bg-emerald-500 text-white"
               : toast.type === "error"
               ? "bg-red-500 text-white"
-              : "bg-slate-800 text-white"
+              : "bg-surface-2 text-fg-strong"
           }`}
         >
           {toast.type === "success" && <span>✓</span>}

@@ -28,7 +28,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-lg text-fg-muted hover:bg-surface-2 dark:hover:bg-surface-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -36,15 +36,15 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       </button>
       {pages.map((page, idx) =>
         page < 0 ? (
-          <span key={idx} className="px-2 text-slate-400">...</span>
+          <span key={idx} className="px-2 text-fg-muted">...</span>
         ) : (
           <button
             key={idx}
             onClick={() => onPageChange(page)}
             className={`min-w-[36px] h-9 px-2 rounded-lg text-sm font-medium font-nunito transition-colors ${
               currentPage === page
-                ? "bg-[#47898E] text-white"
-                : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                ? "bg-[#4a6b52] text-white"
+                : "text-fg dark:text-fg-muted hover:bg-surface-2 dark:hover:bg-surface-2"
             }`}
           >
             {page}
@@ -54,7 +54,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="p-2 rounded-lg text-fg-muted hover:bg-surface-2 dark:hover:bg-surface-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
