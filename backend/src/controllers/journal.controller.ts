@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../db/prisma";
+import { awardSeeds, grantAchievement, SEED_AMOUNTS } from "../services/seeds";
 import {
   JournalEntrySchema,
   CreateJournalEntrySchema,
@@ -120,6 +121,14 @@ export async function createEntry(req: Request, res: Response) {
     });
 
     const parsed = JournalEntrySchema.parse(entry);
+
+    // Award seeds (once per day)
+    await awardSeeds(userId, "journal_entry", SEED_AMOUNTS.journal_entry);
+
+    // First journal entry achievement
+    const entryCount = await prisma.journalEntry.count({ where: { userId } });
+    if (entryCount === 1) await grantAchievement(userId, "first_reflection");
+
     return res.status(201).json({ success: true, data: parsed });
   } catch (error) {
     console.error(error);

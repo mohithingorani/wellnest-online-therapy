@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { OAuth2Client } from "google-auth-library";
+import { awardSeeds, grantAchievement, SEED_AMOUNTS } from "../services/seeds";
 import argon2 from "argon2";
 import crypto from "crypto";
 import { prisma } from "../db/prisma";
@@ -52,6 +53,9 @@ router.post("/google", async (req, res) => {
           googleId,
         },
       });
+      // Welcome seeds for new Google signups
+      await awardSeeds(user.id, "signup", SEED_AMOUNTS.signup);
+      await grantAchievement(user.id, "first_seed");
     }
 
     const { sessionToken, expiresAt } = await createSession(user.id);

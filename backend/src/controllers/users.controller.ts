@@ -1,6 +1,7 @@
 import argon2 from "argon2";
 import { Request, Response } from "express";
 import { z } from "zod";
+import { awardSeeds, grantAchievement, SEED_AMOUNTS } from "../services/seeds";
 import {
   AuthLoginSchema,
   AuthSignupSchema,
@@ -49,6 +50,10 @@ export async function signup(req: Request, res: Response) {
 
     const { sessionToken } = await createSession(user.id);
     setAuthCookie(res, sessionToken);
+
+    // Welcome seeds + first-seed achievement
+    await awardSeeds(user.id, "signup", SEED_AMOUNTS.signup);
+    await grantAchievement(user.id, "first_seed");
 
     const safeUser = PublicUserSchema.parse(user);
     return res.status(201).json({
