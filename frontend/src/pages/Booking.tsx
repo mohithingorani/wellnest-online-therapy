@@ -78,7 +78,7 @@ export default function Booking() {
           })}
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_320px] gap-6 items-start">
+        <div className="grid md:grid-cols-[1fr_300px] gap-6 items-start">
           {/* step content */}
           <div className="surface-raised rounded-2xl p-6 md:p-8 min-h-[340px]">
             {step === 1 && (
@@ -131,7 +131,7 @@ export default function Booking() {
           </div>
 
           {/* summary */}
-          <aside className="lg:sticky lg:top-24 surface-raised rounded-2xl p-6">
+          <aside className="md:sticky md:top-24 surface-raised rounded-2xl p-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-clay-300 to-clay-500 text-white grid place-items-center font-display font-semibold">{initials(therapist?.name)}</div>
               <div className="min-w-0">

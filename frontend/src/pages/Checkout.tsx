@@ -35,7 +35,6 @@ export default function Checkout() {
     setProcessing(true);
     setError("");
     // TODO(backend): create Razorpay/Stripe order, open checkout, verify signature.
-    await new Promise((r) => setTimeout(r, 900));
     try {
       const b = bookings.create({
         therapistId: draft.therapistId, therapistName: draft.therapistName,

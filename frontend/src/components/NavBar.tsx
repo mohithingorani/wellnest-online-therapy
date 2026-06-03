@@ -8,6 +8,7 @@ const paths = [
   { name: "About", path: "/about" },
 ];
 
+
 function initial(name?: string) {
   return name?.trim().charAt(0).toUpperCase() || "U";
 }

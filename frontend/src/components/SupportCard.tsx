@@ -15,7 +15,7 @@ export default function SupportCard({
     <div className="flex w-full md:w-44 md:flex-col gap-4 md:items-center md:text-center lg:gap-2 transition-transform duration-300 cursor-default">
       {/* ICON */}
       <div className={`w-16 h-16 shrink-0 rounded-full ${className} flex items-center justify-center`}>
-        <img src={`/support/${image}.svg`} alt="" className="w-6 h-6" />
+        <img src={`/support/${image}.svg`} alt="" className="w-6 h-6" loading="lazy" decoding="async" />
       </div>
 
       <div className="md:contents">
