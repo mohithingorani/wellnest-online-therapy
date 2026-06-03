@@ -19,35 +19,10 @@ const btnAccent =
 const btnOutline =
   "inline-flex items-center justify-center gap-2 h-14 px-7 rounded-full font-semibold text-base text-fg-strong ring-1 ring-border bg-surface/50 backdrop-blur hover:bg-surface transition-all duration-300";
 
-/* Pointer-reactive tilt/parallax — writes --px/--py (-1..1) on a container. */
-function usePointer<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    let raf = 0;
-    const onMove = (e: MouseEvent) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--px", (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3));
-        el.style.setProperty("--py", (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3));
-        raf = 0;
-      });
-    };
-    const reset = () => { el.style.setProperty("--px", "0"); el.style.setProperty("--py", "0"); };
-    el.addEventListener("mousemove", onMove);
-    el.addEventListener("mouseleave", reset);
-    return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", reset); cancelAnimationFrame(raf); };
-  }, []);
-  return ref;
-}
-
 export default function LandingPage() {
   return (
     <div className="grain relative text-fg bg-bg overflow-x-clip">
+      <ScrollProgress />
       <Hero />
       <Marquee />
       <Promise />
@@ -68,37 +43,6 @@ export default function LandingPage() {
 function Hero() {
   const navigate = useNavigate();
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  const stage = usePointer<HTMLDivElement>();
-
-  /* Auto-rotating demo: 0=finding, 1=matched, 2=booked */
-  const [demo, setDemo] = useState(0);
-  const [hovered, setHovered] = useState(false);
-
-  useEffect(() => {
-    if (hovered) return;
-    const t = setInterval(() => setDemo((s) => (s + 1) % 3), 4500);
-    return () => clearInterval(t);
-  }, [hovered]);
-
-  /* Count-up match %s on each matched-state entry */
-  const [counts, setCounts] = useState({ m1: 0, m2: 0 });
-  useEffect(() => {
-    if (demo !== 1) {
-      const id = requestAnimationFrame(() => setCounts({ m1: 0, m2: 0 }));
-      return () => cancelAnimationFrame(id);
-    }
-    const dur = 900;
-    const start = performance.now();
-    let raf = 0;
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - start) / dur);
-      const e = 1 - Math.pow(1 - p, 3);
-      setCounts({ m1: Math.round(96 * e), m2: Math.round(90 * e) });
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [demo]);
 
   return (
     <section className="relative -mt-[68px] overflow-hidden pt-[68px]">
@@ -156,162 +100,83 @@ function Hero() {
           </Reveal>
         </div>
 
-        {/* immersive product demo */}
+        {/* "Your match" phone — botanical scene */}
         <Reveal delay={180} direction="left" distance={30}>
-          <div
-            ref={stage}
-            className="relative mx-auto w-full max-w-[460px] [perspective:1400px]"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-          >
-            <Blob className="absolute -inset-8 bg-gradient-to-br from-clay-300/60 to-ochre-300/45 blur-2xl" />
+          <div className="relative mx-auto w-full max-w-[466px]">
+            {/* organic sage blob backdrop */}
+            <div aria-hidden className="absolute left-1/2 top-1/2 h-[110%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-[46%_54%_48%_52%/44%_47%_53%_56%] bg-sage-200/50" />
 
-            {/* animated gradient border */}
-            <div className="relative rounded-[calc(1.9rem+2px)] bg-gradient-to-br from-accent/80 via-ochre-400/70 to-sage-400/60 bg-[length:200%_200%] animate-gradient p-[2px]">
-              {/* main app window — tilts toward cursor */}
-              <div
-                className="relative rounded-[1.9rem] surface-raised-xl overflow-hidden transition-transform duration-300 ease-out will-change-transform"
-                style={{ transform: "rotateX(calc(var(--py,0) * -4deg)) rotateY(calc(var(--px,0) * 5deg))" }}
-              >
-                <div className="flex items-center gap-3 border-b border-border px-5 py-3.5">
-                  <div className="flex gap-1.5"><i className="h-3 w-3 rounded-full bg-border not-italic" /><i className="h-3 w-3 rounded-full bg-border not-italic" /><i className="h-3 w-3 rounded-full bg-border not-italic" /></div>
-                  <div className="mx-auto flex items-center gap-2 rounded-full bg-surface-2 px-4 py-1.5 text-xs text-fg-muted"><IconLock className="w-3.5 h-3.5" /> wellnest.com / match</div>
-                </div>
+            {/* eucalyptus branches peeking out at mid-height */}
+            <LeafBranch className="absolute top-[52%] -left-32 w-64 -translate-y-1/2 -rotate-2" />
+            <LeafBranch className="absolute top-[44%] -right-32 w-64 -translate-y-1/2 -scale-x-100 -rotate-2" />
 
-                {/* cross-fade demo states */}
-                <div className="relative min-h-[252px]">
-                  {/* State 0: Finding */}
-                  {demo === 0 && (
-                    <div className="p-5 animate-fade-in-up">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-semibold text-fg-strong">Finding your match</span>
-                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-fg-muted">
-                          <span className="flex gap-0.5">
-                            {[0,1,2].map((i) => (
-                              <span key={i} className="h-1.5 w-1.5 rounded-full bg-ochre-400 animate-pulse-soft" style={{ animationDelay: `${i * 300}ms` }} />
-                            ))}
-                          </span>
-                          Analyzing
-                        </span>
-                      </div>
-                      <div className="mt-3 space-y-3">
-                        {[0,1].map((i) => (
-                          <div key={i} className="flex items-center gap-3.5 rounded-2xl border border-border bg-surface p-3.5">
-                            <div className="w-11 h-11 rounded-xl bg-surface-2 animate-pulse-soft" />
-                            <div className="flex-1 space-y-2">
-                              <div className="h-3 w-2/3 rounded bg-surface-2 animate-pulse-soft" />
-                              <div className="h-2.5 w-1/3 rounded bg-surface-2 animate-pulse-soft" />
-                            </div>
-                            <div className="h-8 w-10 rounded bg-surface-2 animate-pulse-soft" />
-                          </div>
-                        ))}
-                      </div>
+            {/* dotted texture */}
+            <DotGrid className="absolute -top-2 -right-12 text-sage-600/35" />
+            <DotGrid className="absolute bottom-6 -left-14 text-sage-600/30" />
+
+            {/* phone device */}
+            <div className="relative">
+              {/* side button */}
+              <span aria-hidden className="absolute -left-[5px] top-28 h-16 w-[5px] rounded-full bg-[#e4e2d8]" />
+              {/* device body + screen */}
+              <div className="relative rounded-[2.7rem] bg-[#efeee7] p-2.5 shadow-[0_44px_90px_-34px_rgba(47,58,50,0.4),0_14px_34px_-20px_rgba(47,58,50,0.22)]">
+                <div className="rounded-[2.15rem] bg-white px-6 py-7 sm:px-7">
+                  {/* header */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="text-[1.35rem] font-bold text-fg-strong leading-tight">Your match</div>
+                      <div className="text-[1.02rem] text-fg-strong/85 mt-1">carefully chosen for you</div>
                     </div>
-                  )}
+                    <span className="w-12 h-12 rounded-full bg-clay-50 grid place-items-center shrink-0">
+                      <svg className="w-[26px] h-[26px] text-accent" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.55-4.6-10.05-9.2C.55 9.02 1.4 5.6 4.3 4.6 6.45 3.86 8.6 4.8 12 8c3.4-3.2 5.55-4.14 7.7-3.4 2.9 1 3.75 4.42 2.35 7.2C19.55 16.4 12 21 12 21z" /></svg>
+                    </span>
+                  </div>
 
-                  {/* State 1: Matched */}
-                  {demo === 1 && (
-                    <div className="p-5 animate-fade-in-up">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-semibold text-fg-strong">Your matches</span>
-                        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-success"><span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse-soft" /> 3 found</span>
-                      </div>
-                      <div className="mt-3 space-y-3">
-                        <div className="animate-fade-in-up">
-                          <MatchRow name="Dr. Anjali Rao" title="Clinical Psychologist · 9 yrs" tags={["Anxiety", "CBT"]} match={counts.m1} tone="clay" featured />
-                        </div>
-                        <div className="animate-fade-in-up" style={{ animationDelay: "150ms" }}>
-                          <MatchRow name="Sahil Mehta" title="Counselling Psychologist" tags={["Burnout"]} match={counts.m2} tone="sage" />
-                        </div>
-                      </div>
+                  {/* therapist */}
+                  <div className="mt-6 flex items-start gap-5">
+                    <img src="/therapist.png" alt="Dr. Anjali Rao, Clinical Psychologist" className="w-[116px] h-[116px] rounded-full object-cover shrink-0" />
+                    <div className="pt-1.5">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 text-sage-700 text-[0.92rem] font-medium px-3 py-1.5">
+                        <svg className="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}><path strokeLinejoin="round" d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.78 6.8 19.52l.99-5.8-4.21-4.1 5.82-.85L12 3.5z" /></svg>
+                        Top match
+                      </span>
+                      <div className="mt-2.5 text-[1.55rem] font-bold text-fg-strong leading-[1.1]">Dr. Anjali Rao</div>
+                      <div className="text-[1.05rem] text-fg mt-1.5">Clinical Psychologist</div>
+                      <div className="text-[1rem] text-fg-muted mt-1">8+ years experience</div>
                     </div>
-                  )}
+                  </div>
 
-                  {/* State 2: Booked */}
-                  {demo === 2 && (
-                    <div className="p-5 animate-fade-in-up">
-                      <div className="flex flex-col items-center text-center pt-2 pb-1">
-                        <span className="grid place-items-center w-12 h-12 rounded-full bg-success/15 text-success mb-3">
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                        </span>
-                        <span className="text-sm font-semibold text-fg-strong">Session confirmed!</span>
-                        <span className="text-xs text-fg-muted mt-1">Your therapist will see you soon</span>
-                        <div className="mt-4 w-full rounded-xl border border-border bg-surface p-3.5 text-left">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-clay-200 text-clay-800 flex items-center justify-center font-display font-semibold text-sm">AR</div>
-                            <div>
-                              <div className="text-sm font-semibold text-fg-strong">Dr. Anjali Rao</div>
-                              <div className="text-xs text-fg-muted">Clinical Psychologist</div>
-                            </div>
-                          </div>
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            <span className="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full bg-surface-2 text-fg border border-border">
-                              <svg className="w-3 h-3 text-accent" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                              Thu 4 Apr
-                            </span>
-                            <span className="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full bg-surface-2 text-fg border border-border">
-                              <svg className="w-3 h-3 text-accent" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                              4:00 PM
-                            </span>
-                            <span className="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full bg-surface-2 text-fg border border-border">
-                              <svg className="w-3 h-3 text-accent" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                              Video
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                  {/* specialties */}
+                  <div className="mt-5 flex flex-wrap gap-2.5">
+                    {["Anxiety", "Relationships", "Self-esteem"].map((s) => (
+                      <span key={s} className="rounded-full bg-sage-100 text-sage-700 text-[0.95rem] font-medium px-4 py-2">{s}</span>
+                    ))}
+                  </div>
+
+                  {/* options */}
+                  <div className="mt-5 rounded-[1.5rem] bg-[#f6f5ee] ring-1 ring-black/[0.04] overflow-hidden">
+                    <MatchOption icon="video" title="Video sessions" sub="Available this week" />
+                    <div className="mx-5 h-px bg-black/[0.06]" />
+                    <MatchOption icon="message" title="Message anytime" sub="Support between sessions" />
+                    <div className="mx-5 h-px bg-black/[0.06]" />
+                    <MatchOption icon="location" title="In-person " sub="HSR Layout" />
+                  </div>
+
+                  {/* confidential band */}
+                  <div className="mt-5 flex items-center gap-4 rounded-[1.5rem] bg-sage-100/80 px-5 py-4">
+                    <span className="shrink-0">
+                      <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2.6l7.2 2.7v5.5c0 4.7-3.1 7.9-7.2 9.9-4.1-2-7.2-5.2-7.2-9.9V5.3L12 2.6z" fill="#5f7e55" />
+                        <path d="M8.7 12.1l2.2 2.2 4.3-4.4" stroke="#fff" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <div>
+                      <div className="text-[1.05rem] font-bold text-fg-strong">Safe. Private. Confidential.</div>
+                      <div className="text-[0.95rem] text-fg mt-0.5">Your well-being is always our priority.</div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* floating chips — parallax at depth */}
-            <div
-              className="absolute -top-6 -left-5 rounded-2xl glass px-4 py-2.5 animate-float"
-              style={{ transform: "translate3d(calc(var(--px,0) * 22px), calc(var(--py,0) * 18px), 0)" }}
-            >
-              <div className="flex items-center gap-2 text-sm font-semibold text-fg-strong"><span className="text-ochre-500">★</span> 4.9 average</div>
-            </div>
-            <div
-              className="absolute -bottom-7 -right-4 rounded-2xl surface-raised px-4 py-3 animate-float"
-              style={{ transform: "translate3d(calc(var(--px,0) * -26px), calc(var(--py,0) * -16px), 0)", animationDelay: "1.2s" }}
-            >
-              <div className="text-[10px] uppercase tracking-wide text-fg-muted">Matched in</div>
-              <div className="text-sm font-semibold text-fg-strong">38 hours</div>
-            </div>
-            {/* deep-depth chip */}
-            <div
-              className="absolute -bottom-4 -left-8 rounded-2xl glass px-3 py-2 animate-float"
-              style={{ transform: "translate3d(calc(var(--px,0) * 36px), calc(var(--py,0) * 24px), 0)", animationDelay: "2s" }}
-            >
-              <div className="flex items-center gap-1.5 text-xs font-medium text-fg"><svg className="w-3 h-3 text-accent" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg> 100+ licensed
-              </div>
-            </div>
-            {/* far-depth chip */}
-            <div
-              className="absolute -top-8 -right-6 rounded-2xl surface-raised px-3 py-2 animate-float"
-              style={{ transform: "translate3d(calc(var(--px,0) * -34px), calc(var(--py,0) * -22px), 0)", animationDelay: "0.6s" }}
-            >
-              <div className="flex items-center gap-1.5 text-xs font-medium text-fg"><svg className="w-3 h-3 text-success" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg> No waitlist
-              </div>
-            </div>
-
-            {/* floating particles */}
-            <div className="absolute -inset-16 pointer-events-none overflow-hidden" aria-hidden>
-              {[...Array(5)].map((_, i) => (
-                <span
-                  key={i}
-                  className="absolute h-2 w-2 rounded-full bg-accent/20"
-                  style={{
-                    top: `${15 + i * 17}%`,
-                    left: `${10 + i * 19}%`,
-                    animationDelay: `${i * 0.8}s`,
-                    animationDuration: `${3 + i * 0.6}s`,
-                    transform: `translate3d(calc(var(--px,0) * ${12 + i * 6}px), calc(var(--py,0) * ${10 + i * 5}px), 0)`,
-                  }}
-                />
-              ))}
             </div>
           </div>
         </Reveal>
@@ -320,19 +185,62 @@ function Hero() {
   );
 }
 
-function MatchRow({ name, title, tags, match, tone, featured = false }: { name: string; title: string; tags: string[]; match: number; tone: "clay" | "sage" | "ochre"; featured?: boolean }) {
-  const toneCls = { clay: "bg-clay-200 text-clay-800", sage: "bg-sage-200 text-sage-600", ochre: "bg-ochre-200 text-clay-800" }[tone];
-  const initials = name.replace(/^Dr\.?\s+/, "").split(" ").map((w) => w[0]).slice(0, 2).join("");
+/* Row inside the match card — dark outline icon, label, chevron (hairline-divided) */
+function MatchOption({ icon, title, sub }: { icon: "video" | "message" | "location"; title: string; sub: string }) {
+  const paths = {
+    video: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z",
+    message: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
+    location: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z",
+  };
   return (
-    <div className={`flex items-center gap-3.5 rounded-2xl border p-3.5 ${featured ? "border-clay-300 bg-clay-50/70" : "border-border bg-surface"}`}>
-      <div className={`w-11 h-11 rounded-xl flex items-center justify-center font-display font-semibold ${toneCls}`}>{initials}</div>
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-1.5"><span className="font-semibold text-fg-strong truncate text-sm">{name}</span><IconVerified className="w-4 h-4 text-accent shrink-0" /></div>
-        <div className="text-xs text-fg-muted truncate">{title}</div>
-        <div className="mt-1.5 flex flex-wrap gap-1.5">{tags.map((t) => <span key={t} className="text-[11px] px-2 py-0.5 rounded-full bg-surface-2 text-fg border border-border">{t}</span>)}</div>
-      </div>
-      <div className="text-right shrink-0"><div className="text-base font-display font-semibold text-accent leading-none">{match}%</div><div className="text-[10px] uppercase tracking-wide text-fg-muted mt-1">match</div></div>
-    </div>
+    <button className="group w-full flex items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-black/[0.02]">
+      <svg className="w-6 h-6 text-fg-strong shrink-0" fill="none" stroke="currentColor" strokeWidth={1.7} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={paths[icon]} /></svg>
+      <span className="flex-1 min-w-0">
+        <span className="block text-[1.05rem] font-bold text-fg-strong leading-tight">{title}</span>
+        <span className="block text-[0.92rem] text-fg-muted mt-0.5">{sub}</span>
+      </span>
+      <svg className="w-5 h-5 text-fg-muted/70 shrink-0 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+    </button>
+  );
+}
+
+/* Lush eucalyptus branch — elongated lanceolate leaves with a midrib, two sage
+   tones for depth, along a curved stem. Mirror / rotate / scale via className. */
+function LeafBranch({ className = "" }: { className?: string }) {
+  const light = "#a9c198", mid = "#8aa97a", dark = "#5f7e55";
+  const leaves = [
+    { x: 96, y: 238, r: -48, t: mid, s: 1.0 },
+    { x: 84, y: 214, r: -128, t: light, s: 1.06 },
+    { x: 104, y: 188, r: -40, t: light, s: 1.14 },
+    { x: 82, y: 160, r: -132, t: mid, s: 1.14 },
+    { x: 108, y: 132, r: -34, t: mid, s: 1.08 },
+    { x: 90, y: 104, r: -124, t: light, s: 1.0 },
+    { x: 114, y: 80, r: -28, t: light, s: 0.9 },
+    { x: 100, y: 54, r: -94, t: mid, s: 0.82 },
+  ];
+  return (
+    <svg aria-hidden viewBox="0 0 190 280" className={className} fill="none">
+      <path d="M92 276 C 88 230 98 182 102 134 C 105 98 110 66 113 40" stroke={dark} strokeOpacity="0.5" strokeWidth="2.4" strokeLinecap="round" />
+      {leaves.map((l, i) => (
+        <g key={i} transform={`translate(${l.x} ${l.y}) rotate(${l.r}) scale(${l.s})`}>
+          <path d="M0 0 C 11 -12 34 -12 54 0 C 34 12 11 12 0 0 Z" fill={l.t} />
+          <path d="M5 0 L 49 0" stroke={dark} strokeOpacity="0.32" strokeWidth="1.3" strokeLinecap="round" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* Soft dotted texture block */
+function DotGrid({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden width="92" height="106" viewBox="0 0 92 106" className={className} fill="currentColor">
+      {Array.from({ length: 8 }).map((_, r) =>
+        Array.from({ length: 7 }).map((_, c) => (
+          <circle key={`${r}-${c}`} cx={4 + c * 14} cy={4 + r * 14} r="2" />
+        ))
+      )}
+    </svg>
   );
 }
 
@@ -386,32 +294,140 @@ function Promise() {
 
 /* ======================================================= PRODUCT JOURNEY === */
 
+const journeySteps = [
+  { n: "01", t: "Share how you feel", d: "Answer a few gentle questions — no forms, no pressure. Just you, in your own words.", mock: <ShareMock />, chip: "2 min" },
+  { n: "02", t: "Meet your matches", d: "We surface verified therapists, ranked by how well they actually fit your needs.", mock: <MatchMock />, chip: "96% fit" },
+  { n: "03", t: "Begin your sessions", d: "Video, chat, or in person — start whenever you feel ready, entirely on your terms.", mock: <SessionMock />, chip: "This week" },
+  { n: "04", t: "Track your progress", d: "Watch how you're feeling improve, week over week, with quiet, encouraging insight.", mock: <ProgressMock />, chip: "↑ 31%" },
+];
+
 function Journey() {
-  const steps = [
-    { n: "01", t: "Share how you feel", d: "Answer a few gentle questions — no paperwork.", mock: <ShareMock /> },
-    { n: "02", t: "Meet your matches", d: "Verified therapists, ranked by how well they fit you.", mock: <MatchMock /> },
-    { n: "03", t: "Begin your sessions", d: "Video, chat, or in person — whenever you're ready.", mock: <SessionMock /> },
-    { n: "04", t: "Track your progress", d: "See how you're feeling improve, week over week.", mock: <ProgressMock /> },
-  ];
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  /* Scroll-linked spine fill — writes --jp (0→1) as the timeline crosses the
+     viewport, so the connecting line "draws" itself as you move through it. */
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.setProperty("--jp", "1");
+      return;
+    }
+    let raf = 0;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const start = vh * 0.82, end = vh * 0.45;
+      const p = (start - r.top) / (start - end + r.height);
+      el.style.setProperty("--jp", Math.min(1, Math.max(0, p)).toFixed(4));
+      raf = 0;
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+
   return (
     <Section id="journey">
-      <SectionHead eyebrow="Your journey" title="From the first question to feeling better." sub="Four simple steps — and you can see exactly how it works." center />
-      <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {steps.map((s, i) => (
-          <Reveal key={s.n} delay={i * 110}>
-            <div className={`group h-full rounded-[1.5rem] surface-raised p-5 transition-transform duration-300 ${i % 2 ? "lg:mt-8" : ""}`}>
-              <div className="rounded-2xl surface-inset h-40 p-4 overflow-hidden flex items-center justify-center">{s.mock}</div>
-              <div className="mt-5 flex items-center gap-2">
-                <span className="font-display text-sm font-semibold text-accent">{s.n}</span>
-                <span className="h-px flex-1 bg-border" />
-              </div>
-              <h3 className="mt-2 font-display text-xl text-fg-strong">{s.t}</h3>
-              <p className="mt-1.5 text-sm text-fg-muted leading-relaxed">{s.d}</p>
-            </div>
-          </Reveal>
+      <SectionHead eyebrow="Your journey" title="From the first question to feeling better." sub="Four simple steps — see exactly how it works." center />
+      <div ref={trackRef} className="relative mt-6 lg:mt-12">
+        {/* connecting spine */}
+        <div aria-hidden className="absolute top-4 bottom-4 left-[1.45rem] w-px bg-border lg:left-1/2 lg:-translate-x-1/2">
+          <div
+            className="absolute inset-x-0 top-0 rounded-full bg-gradient-to-b from-accent via-accent to-clay-300/0"
+            style={{ height: "calc(var(--jp, 0) * 100%)" }}
+          />
+        </div>
+        {journeySteps.map((s, i) => (
+          <JourneyStep key={s.n} step={s} index={i} />
         ))}
       </div>
     </Section>
+  );
+}
+
+function JourneyStep({ step, index }: { step: (typeof journeySteps)[number]; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(
+    () => typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  );
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // already shown via initial state
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setShown(true); io.unobserve(el); } },
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const reversed = index % 2 === 1;
+  const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
+  const slide = (dir: number): CSSProperties => ({
+    opacity: shown ? 1 : 0,
+    transform: shown ? "none" : `translateX(${dir}px)`,
+    transition: `opacity 0.7s ${ease}, transform 0.7s ${ease}`,
+  });
+
+  return (
+    <div ref={ref} className="relative pl-14 lg:pl-0 py-10 lg:py-20">
+      {/* node on the spine */}
+      <span aria-hidden className="absolute left-6 top-14 z-10 grid -translate-x-1/2 place-items-center lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2">
+        <span className={`block rounded-full transition-all duration-700 ${shown ? "h-4 w-4 bg-accent shadow-[0_0_0_6px_rgba(217,122,88,0.14)]" : "h-2.5 w-2.5 bg-border shadow-[0_0_0_6px_var(--color-bg)]"}`} />
+      </span>
+
+      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-24">
+        {/* CONTENT */}
+        <div className={reversed ? "lg:order-2 lg:pl-6" : "lg:order-1 lg:pr-6"} style={slide(reversed ? 44 : -44)}>
+          <div className="relative">
+            <span aria-hidden className="pointer-events-none absolute -top-14 -left-3 select-none font-display text-[7rem] font-semibold leading-none text-clay-200/90 lg:-top-[5.5rem] lg:text-[12rem]">{step.n}</span>
+            <div className="relative">
+              <span className="inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-accent">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Step {step.n}
+              </span>
+              <h3 className="mt-3 font-display text-[2.1rem] font-medium leading-[1.04] tracking-[-0.02em] text-fg-strong lg:text-[2.7rem]">{step.t}</h3>
+              <p className="mt-4 max-w-md text-[1.08rem] leading-relaxed text-fg-muted">{step.d}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* MOCK — scroll-linked parallax drift */}
+        <div className={reversed ? "lg:order-1" : "lg:order-2"} style={slide(reversed ? -44 : 44)}>
+          <div style={{ transform: `translateY(calc((var(--jp, 0.5) - 0.5) * ${reversed ? 26 : -26}px))` }}>
+            <MockFrame chip={step.chip} index={index}>{step.mock}</MockFrame>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MockFrame({ children, chip, index }: { children: ReactNode; chip: string; index: number }) {
+  const tones = [
+    "from-clay-300/30 to-ochre-300/20",
+    "from-sage-300/30 to-sage-500/12",
+    "from-ochre-300/25 to-clay-300/18",
+    "from-clay-300/25 to-sage-300/18",
+  ];
+  return (
+    <div className="group relative">
+      <Blob className={`absolute -inset-5 bg-gradient-to-br ${tones[index % 4]} blur-2xl opacity-60`} />
+      <div className="relative rounded-[1.7rem] surface-raised-xl p-4 transition-transform duration-500 group-hover:-translate-y-1.5">
+        <div className="grid h-52 place-items-center overflow-hidden rounded-[1.3rem] surface-inset p-5">{children}</div>
+      </div>
+      {/* layered floating chip */}
+      <div className="absolute -bottom-4 -right-3 rounded-2xl glass px-3.5 py-2 shadow-lift lg:-right-4">
+        <div className="flex items-center gap-1.5 text-sm font-semibold text-fg-strong">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-soft" />
+          {chip}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -755,6 +771,29 @@ function FinalCTA() {
 
 function Blob({ className = "", style }: { className?: string; style?: CSSProperties }) {
   return <div aria-hidden className={`pointer-events-none animate-blob ${className}`} style={style} />;
+}
+
+/* Thin top scroll-progress bar — fills left→right as the page scrolls. */
+function ScrollProgress() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    const update = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      el.style.transform = `scaleX(${h > 0 ? Math.min(1, window.scrollY / h) : 0})`;
+      raf = 0;
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+  return (
+    <div aria-hidden className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-accent to-ochre-400" style={{ transform: "scaleX(0)" }} ref={ref} />
+  );
 }
 function Section({ id, className = "", children }: { id?: string; className?: string; children: ReactNode }) {
   return (
