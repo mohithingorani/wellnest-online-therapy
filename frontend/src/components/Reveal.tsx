@@ -52,10 +52,7 @@ export default function Reveal({
   const [visible, setVisible] = useState(() => prefersReducedMotion());
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      setVisible(true);
-      return;
-    }
+    if (prefersReducedMotion()) return; // already visible via initial state
     const el = ref.current;
     if (!el) return;
 
@@ -82,9 +79,10 @@ export default function Reveal({
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "none" : OFFSETS[direction](distance),
-        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1)`,
+        filter: visible ? "blur(0px)" : "blur(8px)",
+        transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s cubic-bezier(0.16,1,0.3,1)`,
         transitionDelay: `${delay}ms`,
-        willChange: "opacity, transform",
+        willChange: "opacity, transform, filter",
       }}
     >
       {children}
