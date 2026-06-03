@@ -15,6 +15,7 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
+  googleAuth: (credential: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -65,6 +66,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const googleAuth = useCallback(async (credential: string) => {
+    const res = await authService.googleSignIn(credential);
+    if (res.success && res.data) {
+      setAuthUser(res.data);
+      setUser(res.data);
+    } else {
+      throw new Error(res.message || "Google sign-in failed");
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     try {
       await authService.logout();
@@ -76,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, googleAuth, logout }}>
       {children}
     </AuthContext.Provider>
   );

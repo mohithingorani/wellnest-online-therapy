@@ -73,6 +73,13 @@ export const authService = {
     });
   },
 
+  async googleSignIn(credential: string): Promise<AuthResponse> {
+    return fetchApi<AuthResponse>("/auth/google", {
+      method: "POST",
+      body: JSON.stringify({ credential }),
+    });
+  },
+
   async logout(): Promise<AuthResponse> {
     return fetchApi<AuthResponse>("/users/logout", {
       method: "POST",
