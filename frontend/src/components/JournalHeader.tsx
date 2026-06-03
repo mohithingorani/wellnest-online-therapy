@@ -23,7 +23,7 @@ export default function JournalHeader({
       {/* title row */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-clay-600">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-fg-muted">
             Your private space
           </p>
           <h1 className="mt-2 font-display text-[2rem] md:text-[2.5rem] font-medium text-fg-strong tracking-[-0.03em] leading-[1.02]">

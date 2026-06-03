@@ -1,4 +1,4 @@
-const MOOD_DOT = ["bg-clay-400", "bg-ochre-400", "bg-sage-400", "bg-clay-500", "bg-accent"];
+const MOOD_DOT = ["bg-sage-400", "bg-ochre-400", "bg-sage-400", "bg-sage-500", "bg-accent"];
 
 const ICON_PATHS = {
   entries:
@@ -10,10 +10,10 @@ const ICON_PATHS = {
 } as const;
 
 const TINTS: Record<string, string> = {
-  clay: "bg-clay-100 text-clay-700",
+  clay: "bg-sage-100 text-sage-700",
   ochre: "bg-ochre-100 text-ochre-600",
   sage: "bg-sage-100 text-sage-600",
-  accent: "bg-clay-100 text-accent",
+  accent: "bg-sage-100 text-accent",
 };
 
 interface JournalStatsBarProps {

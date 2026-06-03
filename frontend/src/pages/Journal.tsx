@@ -260,7 +260,7 @@ export default function Journal() {
   }
 
   return (
-    <div className="journal-canvas min-h-[calc(100vh-68px)]">
+    <div className="bg-bg min-h-[calc(100vh-68px)]">
       <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 space-y-8 animate-page">
         <JournalHeader
           totalEntries={entries.length}

@@ -235,7 +235,7 @@ export default function Messages() {
 
   if (error) {
     return (
-      <div className="journal-canvas flex-1 flex items-center justify-center p-8 min-h-[calc(100vh-68px)] animate-page">
+      <div className="bg-bg flex-1 flex items-center justify-center p-8 min-h-[calc(100vh-68px)] animate-page">
         <div className="text-center max-w-sm">
           <div className="w-16 h-16 rounded-full bg-error/10 text-error grid place-items-center mx-auto mb-4">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -255,7 +255,7 @@ export default function Messages() {
 
   if (loading) {
     return (
-      <div className="journal-canvas flex-1 flex h-[calc(100vh-68px)]">
+      <div className="bg-bg flex-1 flex h-[calc(100vh-68px)]">
         <div className="hidden lg:flex flex-col w-[340px] border-r border-border shrink-0">
           <div className="px-5 py-5 border-b border-border">
             <div className="h-6 w-28 rounded bg-surface-2 animate-pulse" />
@@ -272,9 +272,9 @@ export default function Messages() {
 
   if (conversations.length === 0) {
     return (
-      <div className="journal-canvas flex-1 flex items-center justify-center p-8 min-h-[calc(100vh-68px)] animate-page">
+      <div className="bg-bg flex-1 flex items-center justify-center p-8 min-h-[calc(100vh-68px)] animate-page">
         <div className="text-center max-w-sm">
-          <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-200 to-ochre-200 text-clay-600 grid place-items-center mx-auto mb-5 shadow-soft">
+          <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-200 to-ochre-200 text-fg-muted grid place-items-center mx-auto mb-5 shadow-soft">
             <svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" /></svg>
           </div>
           <h3 className="font-display text-2xl font-medium text-fg-strong mb-1">No conversations yet</h3>
@@ -291,7 +291,7 @@ export default function Messages() {
   }
 
   return (
-    <div className="journal-canvas flex-1 flex h-[calc(100vh-68px)] animate-page">
+    <div className="bg-bg flex-1 flex h-[calc(100vh-68px)] animate-page">
       {/* Conversation list — desktop always visible, mobile toggle */}
       <div
         className={`${
@@ -410,7 +410,7 @@ export default function Messages() {
         ) : (
           <div className="flex-1 hidden lg:flex items-center justify-center">
             <div className="text-center">
-              <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-200 to-ochre-200 text-clay-600 grid place-items-center mx-auto mb-5 shadow-soft">
+              <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-200 to-ochre-200 text-fg-muted grid place-items-center mx-auto mb-5 shadow-soft">
                 <svg className="w-9 h-9" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" /></svg>
               </div>
               <h3 className="font-display text-xl font-medium text-fg-strong mb-1">

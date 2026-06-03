@@ -31,7 +31,7 @@ export default function JournalEmptyState({
   const featured = getFeaturedPrompts();
 
   return (
-    <div className="journal-canvas min-h-[calc(100vh-68px)]">
+    <div className="bg-bg min-h-[calc(100vh-68px)]">
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-68px)] px-6 py-14 animate-page">
         <div className="max-w-xl w-full text-center">
           <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-300 to-ochre-300 text-white grid place-items-center mx-auto mb-6 shadow-[0_8px_20px_-10px_rgba(120,58,40,0.4)]">
@@ -94,7 +94,7 @@ export default function JournalEmptyState({
                   onClick={onCreate}
                   className="group card-elevated card-lift w-full text-left p-4 flex items-center gap-3"
                 >
-                  <span className="w-8 h-8 rounded-full bg-clay-100 text-clay-600 grid place-items-center shrink-0">
+                  <span className="w-8 h-8 rounded-full bg-clay-100 text-fg-muted grid place-items-center shrink-0">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                     </svg>

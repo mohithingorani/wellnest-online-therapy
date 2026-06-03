@@ -82,7 +82,7 @@ export default function JournalEditor({
           />
 
           <div className="rounded-[1.4rem] bg-clay-50/60 border border-clay-100 px-4 py-3">
-            <p className="text-[11px] font-semibold text-clay-600 uppercase tracking-wider mb-1">
+            <p className="text-[11px] font-semibold text-fg-muted uppercase tracking-wider mb-1">
               Today's prompt
             </p>
             <p className="text-sm text-fg font-medium font-display italic">
