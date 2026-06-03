@@ -14,111 +14,117 @@
   --font-nunito: "Inter", system-ui, sans-serif;
 
   /* ============================================================
-     "SANCTUARY" — sun-warmed bone canvas, espresso ink, a bold
-     terracotta accent with ochre + sage support. Warm, editorial,
-     organic, textured. Premium through art direction, not gradients.
+     "GROVE" — airy warm-cream canvas, calm sage-green as the lead
+     brand color, a friendly soft-coral accent with warm ochre support.
+     Light, timeless, organic, reassuring. Personality through hue and
+     art direction, not heavy dark fields or gradients.
      ============================================================ */
 
-  /* ---- Clay / terracotta ramp ---- */
-  --color-clay-50: #faf1eb;
-  --color-clay-100: #f3decf;
-  --color-clay-200: #e7c0a6;
-  --color-clay-300: #d89e78;
-  --color-clay-400: #c77b50;
-  --color-clay-500: #bc553a;
-  --color-clay-600: #a2452e;
-  --color-clay-700: #7e3a28;
-  --color-clay-800: #5e2d20;
-  --color-clay-900: #3f1f17;
+  /* ---- Clay / soft-coral ramp (the warm accent) ---- */
+  --color-clay-50: #fdf3ee;
+  --color-clay-100: #f9e2d6;
+  --color-clay-200: #f2c4ad;
+  --color-clay-300: #eaa886;
+  --color-clay-400: #e08a6b;
+  --color-clay-500: #d06f4d;
+  --color-clay-600: #b85838;
+  --color-clay-700: #95462d;
+  --color-clay-800: #6e3623;
+  --color-clay-900: #49241a;
 
-  /* ---- Ochre ramp (warm gold) ---- */
-  --color-ochre-100: #f7e9cc;
-  --color-ochre-200: #efd49e;
-  --color-ochre-300: #e6bd6f;
-  --color-ochre-400: #dca64b;
-  --color-ochre-500: #ce9038;
-  --color-ochre-600: #b0762a;
+  /* ---- Ochre ramp (warm gold support) ---- */
+  --color-ochre-100: #f7ebd0;
+  --color-ochre-200: #efd7a3;
+  --color-ochre-300: #e6c279;
+  --color-ochre-400: #dbac52;
+  --color-ochre-500: #c7943c;
+  --color-ochre-600: #a8782e;
 
-  /* ---- Sage ramp (calm green) ---- */
-  --color-sage-100: #e6eadd;
-  --color-sage-200: #cdd5bc;
-  --color-sage-300: #aab892;
-  --color-sage-400: #8a9b6e;
-  --color-sage-500: #6f8056;
-  --color-sage-600: #586843;
+  /* ---- Sage ramp (the lead brand green) ---- */
+  --color-sage-50: #f0f4ee;
+  --color-sage-100: #dfe9da;
+  --color-sage-200: #c2d4b9;
+  --color-sage-300: #9cb791;
+  --color-sage-400: #75976a;
+  --color-sage-500: #587a4f;
+  --color-sage-600: #4a6b52;
+  --color-sage-700: #3b5642;
+  --color-sage-800: #2f4435;
+  --color-sage-900: #25352a;
 
-  /* ---- Back-compat aliases: indigo/apricot/teal/amber now render warm ---- */
-  --color-indigo-50: #faf1eb;  --color-indigo-100: #f3decf; --color-indigo-200: #e7c0a6;
-  --color-indigo-300: #d89e78; --color-indigo-400: #c77b50; --color-indigo-500: #bc553a;
-  --color-indigo-600: #a2452e; --color-indigo-700: #7e3a28; --color-indigo-800: #5e2d20;
-  --color-indigo-900: #3f1f17; --color-indigo-950: #2c1610;
-  --color-apricot-300: #e6bd6f; --color-apricot-400: #dca64b; --color-apricot-500: #ce9038; --color-apricot-600: #b0762a;
-  --color-teal-50: #faf1eb;  --color-teal-100: #f3decf; --color-teal-200: #e7c0a6;
-  --color-teal-300: #d89e78; --color-teal-400: #c77b50; --color-teal-500: #bc553a;
-  --color-teal-600: #a2452e; --color-teal-700: #7e3a28; --color-teal-800: #5e2d20;
-  --color-teal-900: #3f1f17; --color-teal-950: #2c1610;
-  --color-amber-300: #e6bd6f; --color-amber-400: #dca64b; --color-amber-500: #ce9038; --color-amber-600: #b0762a;
+  /* ---- Back-compat aliases: indigo/teal now render sage; apricot/amber render warm ---- */
+  --color-indigo-50: #f0f4ee;  --color-indigo-100: #dfe9da; --color-indigo-200: #c2d4b9;
+  --color-indigo-300: #9cb791; --color-indigo-400: #75976a; --color-indigo-500: #587a4f;
+  --color-indigo-600: #4a6b52; --color-indigo-700: #3b5642; --color-indigo-800: #2f4435;
+  --color-indigo-900: #25352a; --color-indigo-950: #1b271f;
+  --color-apricot-300: #eaa886; --color-apricot-400: #e08a6b; --color-apricot-500: #d06f4d; --color-apricot-600: #b85838;
+  --color-teal-50: #f0f4ee;  --color-teal-100: #dfe9da; --color-teal-200: #c2d4b9;
+  --color-teal-300: #9cb791; --color-teal-400: #75976a; --color-teal-500: #587a4f;
+  --color-teal-600: #4a6b52; --color-teal-700: #3b5642; --color-teal-800: #2f4435;
+  --color-teal-900: #25352a; --color-teal-950: #1b271f;
+  --color-amber-300: #e6c279; --color-amber-400: #dbac52; --color-amber-500: #c7943c; --color-amber-600: #a8782e;
 
   /* ---- Semantic tokens (light) ----
-     A deliberate value ladder: a deeper, warmly-tinted canvas, near-white
-     elevated cards, and a distinctly recessed sand for inset wells. The gap
-     between these is what lets cards read as real, layered objects. */
-  --color-bg: #ece2d1;            /* deeper warm bone canvas */
-  --color-surface: #fffdf8;       /* near-white cream card */
-  --color-surface-2: #e6dac4;     /* recessed sand well */
-  --color-border: #e1d3bc;
-  --color-fg-strong: #2a2420;     /* espresso ink */
-  --color-fg: #4c4239;
-  --color-fg-muted: #897a6a;
-  --color-primary: #2a2420;       /* espresso (chic dark CTA) */
-  --color-primary-hover: #3d352e;
-  --color-primary-fg: #fbf6ec;
-  --color-accent: #bc553a;        /* terracotta — the signature */
-  --color-accent-hover: #a2452e;
-  --color-ring: #bc553a;
+     An airy value ladder: a soft warm-cream canvas, near-white elevated
+     cards, and a gently recessed sand for inset wells. The gaps stay small
+     and light so the whole surface reads bright, while still letting cards
+     register as layered objects. */
+  --color-bg: #f7f4ec;            /* soft warm-cream canvas */
+  --color-surface: #fffefb;       /* near-white card */
+  --color-surface-2: #ece5d5;     /* gently recessed sand well */
+  --color-border: #e4dccb;
+  --color-fg-strong: #2f3a32;     /* deep pine ink */
+  --color-fg: #4b554a;
+  --color-fg-muted: #7d8a7e;      /* sage-grey */
+  --color-primary: #4a6b52;       /* sage green — the lead brand color */
+  --color-primary-hover: #3b5642;
+  --color-primary-fg: #f7f4ec;
+  --color-accent: #d97a58;        /* soft coral — the warm signature */
+  --color-accent-hover: #c0613f;
+  --color-ring: #4a6b52;
 
-  /* ---- Immersive dark section (deep espresso) ---- */
-  --color-night: #221c18;
-  --color-night-2: #2e261f;
-  --color-night-border: #41362d;
-  --color-night-fg: #f0e7da;
-  --color-night-muted: #b3a595;
+  /* ---- Immersive section (soft deep pine — calm, not black) ---- */
+  --color-night: #34473a;
+  --color-night-2: #3e5244;
+  --color-night-border: #4d6253;
+  --color-night-fg: #f1f4ec;
+  --color-night-muted: #b8c5b2;
 
-  /* ---- Premium soft shadow scale (warm brown, low-alpha, layered) ---- */
-  --shadow-soft: 0 1px 2px rgba(42, 36, 32, 0.04), 0 6px 16px -10px rgba(42, 36, 32, 0.11);
-  --shadow-lift: 0 1px 2px rgba(42, 36, 32, 0.05), 0 14px 30px -18px rgba(42, 36, 32, 0.16);
+  /* ---- Premium soft shadow scale (pine-grey, low-alpha, layered) ---- */
+  --shadow-soft: 0 1px 2px rgba(47, 58, 50, 0.04), 0 6px 16px -10px rgba(47, 58, 50, 0.11);
+  --shadow-lift: 0 1px 2px rgba(47, 58, 50, 0.05), 0 14px 30px -18px rgba(47, 58, 50, 0.16);
 
   /* ---- States ---- */
-  --color-success: #5e8c5a;
-  --color-warning: #ce9038;
-  --color-error: #c0492f;
-  --color-info: #7e8e6e;
+  --color-success: #4a6b52;
+  --color-warning: #c7943c;
+  --color-error: #c8503a;
+  --color-info: #5e7d8a;
 
   /* ---- Legacy brand + admin tokens (kept for back-compat) ---- */
-  --color-brand-deep: #0d393e;
-  --color-brand-teal: #47898e;
-  --color-brand-accent: #e77d3c;
-  --color-brand-surface: #fffdf8;
+  --color-brand-deep: #2f4435;
+  --color-brand-teal: #4a6b52;
+  --color-brand-accent: #d97a58;
+  --color-brand-surface: #fffefb;
   --color-admin-bg: #0a0a0a;
   --color-admin-card: #111111;
   --color-admin-border: #1f1f1f;
 }
 
-/* ---- Dark-mode semantic overrides (indigo-tinted night) ---- */
+/* ---- Dark-mode semantic overrides (pine-tinted night) ---- */
 .dark {
-  --color-bg: #0f0f1e;
-  --color-surface: #181830;
-  --color-surface-2: #1f1f3a;
-  --color-border: #2c2c4c;
-  --color-fg-strong: #ececf6;
-  --color-fg: #c8c8db;
-  --color-fg-muted: #9494ac;
-  --color-primary: #8784ce;
-  --color-primary-hover: #aba8e0;
-  --color-primary-fg: #15142e;
-  --color-accent: #f6a871;
-  --color-accent-hover: #fbc9a0;
-  --color-ring: #8784ce;
+  --color-bg: #141d18;
+  --color-surface: #1d281f;
+  --color-surface-2: #243027;
+  --color-border: #344336;
+  --color-fg-strong: #eef3ec;
+  --color-fg: #c9d3c6;
+  --color-fg-muted: #94a08f;
+  --color-primary: #8fb487;
+  --color-primary-hover: #a9c9a1;
+  --color-primary-fg: #16201a;
+  --color-accent: #ec9a78;
+  --color-accent-hover: #f3b89b;
+  --color-ring: #8fb487;
 }
 
 body {
@@ -127,8 +133,8 @@ body {
   font-feature-settings: "cv05" 1, "cv08" 1, "ss01" 1;
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(60% 50% at 100% 0%, rgba(220, 166, 75, 0.06), transparent 60%),
-    radial-gradient(55% 45% at 0% 0%, rgba(199, 123, 80, 0.05), transparent 60%);
+    radial-gradient(60% 50% at 100% 0%, rgba(74, 107, 82, 0.06), transparent 60%),
+    radial-gradient(55% 45% at 0% 0%, rgba(217, 122, 88, 0.05), transparent 60%);
   background-attachment: fixed;
   color: var(--color-fg);
   text-rendering: optimizeLegibility;
@@ -317,6 +323,18 @@ body {
   animation: pulse 2s ease-in-out infinite;
 }
 
+/* Mood-chart line draw-in — path carries pathLength="1" + inline dash state */
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+.animate-draw { animation: drawLine 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-draw { animation: none; stroke-dashoffset: 0 !important; }
+}
+
+/* Quiet elevate-on-hover for interactive cards/buttons */
+.hover-lift { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.2s ease; }
+.hover-lift:hover { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .hover-lift:hover { transform: none; } }
+
 .animation-delay-100 { animation-delay: 100ms; }
 .animation-delay-200 { animation-delay: 200ms; }
 .animation-delay-300 { animation-delay: 300ms; }
@@ -374,19 +392,15 @@ body {
 }
 
 /* ============================================================================
-   JOURNAL — premium editorial surfaces.
-   A deliberately deeper, warmly-tinted canvas so brighter cards read as
-   genuinely elevated objects (the rest of the app's bone/cream sit too close
-   in value to create depth). Scoped by class; no global token changes.
+   Dashboard / menu-page canvas — matches the global app + landing background
+   (the same soft cream and subtle sage/coral light-pools) so the product
+   surface stays visually consistent with the marketing site.
    ============================================================================ */
-
-/* Deeper warm canvas with two soft directional light-pools */
 .journal-canvas {
-  background-color: #e9decd;
+  background-color: var(--color-bg);
   background-image:
-    radial-gradient(78% 60% at 8% -8%, rgba(199, 123, 80, 0.12), transparent 60%),
-    radial-gradient(66% 52% at 100% -4%, rgba(220, 166, 75, 0.12), transparent 58%),
-    radial-gradient(90% 70% at 50% 120%, rgba(138, 155, 110, 0.08), transparent 60%);
+    radial-gradient(60% 50% at 100% 0%, rgba(74, 107, 82, 0.06), transparent 60%),
+    radial-gradient(55% 45% at 0% 0%, rgba(217, 122, 88, 0.05), transparent 60%);
 }
 
 /* Elevated card — solid bright top, crisp hairline, layered ambient shadow.
