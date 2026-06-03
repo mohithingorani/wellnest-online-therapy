@@ -58,11 +58,11 @@ export default function ScrollSky() {
     </div>
     <div aria-hidden className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
       {/* DAWN — base layer, always present beneath */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#2E2C68_0%,#8784CE_46%,#E5E3F6_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#5e7d68_0%,#a7c0a3_46%,#eef3ea_100%)]" />
 
       {/* DAY — fades in as you descend; warms to morning at the bottom */}
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,#FAFAFC_0%,#F4F2FB_42%,#FBE9DC_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,#fbfaf3_0%,#f4f5ee_42%,#fbe9dc_100%)]"
         style={{ opacity: DAY }}
       />
 
@@ -74,7 +74,7 @@ export default function ScrollSky() {
 
       {/* NIGHT — on top, fades out to reveal the dawn/day below */}
       <div className="absolute inset-0" style={{ opacity: NIGHT }}>
-        <div className="absolute inset-0 bg-[radial-gradient(140%_120%_at_50%_-10%,#211F44_0%,#14132B_52%,#100F22_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(140%_120%_at_50%_-10%,#3c5446_0%,#314536_52%,#283a2e_100%)]" />
         {/* aurora light fields */}
         <div className="absolute left-1/2 -top-44 h-[620px] w-[820px] -translate-x-1/2 rounded-full bg-indigo-500/25 blur-[150px] animate-aurora" />
         <div className="absolute right-[8%] top-24 h-[360px] w-[360px] rounded-full bg-apricot-500/15 blur-[140px] animate-aurora" style={{ animationDelay: "5s" }} />
