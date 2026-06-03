@@ -2,69 +2,80 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { bookings as store, isUpcoming, type Booking } from "../services/bookings";
 import BookingCard from "../components/BookingCard";
+import PageShell from "../components/PageShell";
 
 type Tab = "upcoming" | "past" | "cancelled";
 
 export default function MyBookings() {
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("upcoming");
-  const [version, setVersion] = useState(0); // re-read after cancel
+  const [version, setVersion] = useState(0);
 
   const all = useMemo(() => store.list(), [version]);
   const grouped = useMemo(() => ({
-    upcoming: all.filter((b) => isUpcoming(b)),
-    past: all.filter((b) => !b.cancelled && !isUpcoming(b)),
-    cancelled: all.filter((b) => b.cancelled),
+    upcoming: all.filter(isUpcoming),
+    past:     all.filter((b) => !b.cancelled && !isUpcoming(b)),
+    cancelled:all.filter((b) => b.cancelled),
   }), [all]);
 
   const cancel = (id: string) => { store.cancel(id); setVersion((v) => v + 1); };
   const list: Booking[] = grouped[tab];
-
-  const empties: Record<Tab, { title: string; body: string }> = {
-    upcoming: { title: "No upcoming sessions", body: "Book a session and it'll show up here." },
-    past: { title: "No past sessions yet", body: "Your completed sessions will appear here." },
-    cancelled: { title: "Nothing cancelled", body: "Cancelled sessions live here." },
-  };
-
   const total = all.filter((b) => !b.cancelled).length;
 
-  return (
-    <div className="journal-canvas min-h-[calc(100vh-68px)]">
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 animate-page">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-clay-600">Your care, scheduled</p>
-            <h1 className="mt-2 font-display text-[2rem] md:text-[2.5rem] font-medium text-fg-strong tracking-[-0.03em] leading-[1.02]">Sessions</h1>
-            <p className="mt-2 text-sm text-fg-muted">{total > 0 ? `${total} session${total > 1 ? "s" : ""} booked` : "Book a session to get started."}</p>
-          </div>
-          <button onClick={() => navigate("/therapists")} className="self-start h-11 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all duration-300 shadow-[0_4px_12px_-6px_rgba(120,58,40,0.35)]">Book a session</button>
-        </div>
+  const empties: Record<Tab, { title: string; body: string }> = {
+    upcoming:  { title: "No upcoming sessions",  body: "Book a session and it'll show up here."       },
+    past:      { title: "No past sessions yet",  body: "Your completed sessions will appear here."    },
+    cancelled: { title: "Nothing cancelled",     body: "Cancelled sessions live here."                },
+  };
 
-        <div className="mt-6 inline-flex rounded-full bg-surface-2 p-1">
-          {(["upcoming", "past", "cancelled"] as Tab[]).map((t) => (
-            <button key={t} onClick={() => setTab(t)} className={`h-9 px-5 rounded-full text-sm font-semibold capitalize transition-colors ${tab === t ? "bg-surface text-fg-strong shadow-soft" : "text-fg-muted hover:text-fg-strong"}`}>
-              {t} {grouped[t].length > 0 && <span className="text-fg-muted">({grouped[t].length})</span>}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-6">
-          {list.length === 0 ? (
-            <div className="surface-raised rounded-[1.4rem] text-center py-16 px-6">
-              <div className="mx-auto w-12 h-12 rounded-2xl surface-inset grid place-items-center text-accent">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-              </div>
-              <p className="mt-4 font-semibold text-fg-strong">{empties[tab].title}</p>
-              <p className="mt-1 text-sm text-fg-muted">{empties[tab].body}</p>
-              <button onClick={() => navigate("/therapists")} className="mt-4 h-10 px-5 rounded-full bg-accent text-primary-fg text-sm font-semibold hover:bg-accent-hover transition-colors">Browse therapists</button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-              {list.map((b) => <BookingCard key={b.id} booking={b} kind={tab} onCancel={cancel} />)}
-            </div>
+  const tabBar = (
+    <div className="inline-flex rounded-xl bg-surface-2 p-1">
+      {(["upcoming", "past", "cancelled"] as Tab[]).map((t) => (
+        <button
+          key={t}
+          onClick={() => setTab(t)}
+          className={`h-9 px-5 rounded-lg text-sm font-semibold capitalize transition-all duration-200 ${tab === t ? "bg-surface text-fg-strong shadow-soft" : "text-fg-muted hover:text-fg"}`}
+        >
+          {t}
+          {grouped[t].length > 0 && (
+            <span className="ml-1.5 text-[11px] text-fg-muted">({grouped[t].length})</span>
           )}
-        </div>
-      </div>
+        </button>
+      ))}
     </div>
+  );
+
+  return (
+    <PageShell
+      eyebrow="Your care"
+      title="Sessions"
+      subtitle={total > 0 ? `${total} session${total > 1 ? "s" : ""} booked` : "Book a session to get started."}
+      action={
+        <button
+          onClick={() => navigate("/therapists")}
+          className="h-10 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-all"
+        >
+          Book a session
+        </button>
+      }
+      header={tabBar}
+    >
+      {list.length === 0 ? (
+        <div className="rounded-[1.4rem] bg-surface border border-border/60 text-center py-20 px-6">
+          <div className="mx-auto w-12 h-12 rounded-2xl surface-inset grid place-items-center text-accent">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+          </div>
+          <p className="mt-4 font-semibold text-fg-strong">{empties[tab].title}</p>
+          <p className="mt-1 text-sm text-fg-muted">{empties[tab].body}</p>
+          <button onClick={() => navigate("/therapists")} className="mt-5 h-10 px-5 rounded-full bg-accent text-primary-fg text-sm font-semibold hover:bg-accent-hover transition-colors">
+            Browse therapists
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {list.map((b) => <BookingCard key={b.id} booking={b} kind={tab} onCancel={cancel} />)}
+        </div>
+      )}
+    </PageShell>
   );
 }
