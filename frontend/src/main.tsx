@@ -10,11 +10,15 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { AdminLayout } from "./components/admin/AdminLayout";
 
 import Layout from "./components/Layout";
-import LandingPage from "./pages/App";
+const LandingPage = lazy(() => import("./pages/App"));
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 const AboutPage = lazy(() => import("./pages/About"));
 const Join = lazy(() => import("./pages/Join"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const PrivacyPage = lazy(() => import("./pages/Privacy"));
+const TermsPage = lazy(() => import("./pages/Terms"));
+const ContactPage = lazy(() => import("./pages/Contact"));
 
 const TherapistsPage = lazy(() => import("./pages/Therapists"));
 const TherapistPage = lazy(() => import("./Therapist"));
@@ -48,11 +52,15 @@ createRoot(document.getElementById("root")!).render(
           <Route path="join" element={<Join />} />
           <Route path="signin" element={<Join />} />
           <Route path="signup" element={<Join />} />
+          <Route path="reset-password" element={<ResetPassword />} />
 
           {/* Public Routes */}
           <Route element={<Layout />}>
             <Route index element={<LandingPage />} />
             <Route path="about" element={<AboutPage />} />
+            <Route path="privacy" element={<PrivacyPage />} />
+            <Route path="terms" element={<TermsPage />} />
+            <Route path="contact" element={<ContactPage />} />
             <Route path="therapists" element={<TherapistsPage />} />
             <Route path="therapists/:id" element={<TherapistPage />} />
 
