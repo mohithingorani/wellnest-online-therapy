@@ -26,7 +26,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-fg-strong font-display mb-6">Dashboard</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]">
@@ -81,7 +81,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-fg-strong font-display mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {statCards.map((stat, idx) => (
@@ -91,11 +91,11 @@ export default function Dashboard() {
 
       <div className="bg-[#fffefb] rounded-2xl border border-[#e4dccb] overflow-hidden">
         <div className="px-6 py-4 border-b border-[#e4dccb]">
-          <h2 className="text-lg font-semibold text-fg-strong font-nunito">Recent Activity</h2>
+          <h2 className="text-lg font-semibold text-fg-strong font-body">Recent Activity</h2>
         </div>
         <div className="divide-y divide-[#e4dccb]">
           {activity.length === 0 ? (
-            <div className="px-6 py-12 text-center text-fg-muted font-nunito">No recent activity</div>
+            <div className="px-6 py-12 text-center text-fg-muted font-body">No recent activity</div>
           ) : (
             activity.map((item, idx) => (
               <div key={idx} className="px-6 py-4 flex items-center gap-4">
@@ -113,12 +113,12 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm font-medium text-fg-strong font-nunito">{item.name}</div>
-                  <div className="text-xs text-fg-muted font-nunito">
+                  <div className="text-sm font-medium text-fg-strong font-body">{item.name}</div>
+                  <div className="text-xs text-fg-muted font-body">
                     {item.type === "user" && item.email}
                   </div>
                 </div>
-                <div className="text-xs text-fg-muted font-nunito">
+                <div className="text-xs text-fg-muted font-body">
                   {new Date(item.timestamp).toLocaleDateString()}
                 </div>
               </div>

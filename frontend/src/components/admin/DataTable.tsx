@@ -18,7 +18,7 @@ interface DataTableProps<T> {
 export function DataTable<T>({ columns, data, keyExtractor, onRowClick, emptyMessage = "No data available" }: DataTableProps<T>) {
   if (data.length === 0) {
     return (
-      <div className="text-center py-12 text-fg-muted dark:text-fg-muted font-nunito">{emptyMessage}</div>
+      <div className="text-center py-12 text-fg-muted dark:text-fg-muted font-body">{emptyMessage}</div>
     );
   }
 
@@ -30,7 +30,7 @@ export function DataTable<T>({ columns, data, keyExtractor, onRowClick, emptyMes
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="px-4 py-3 text-left text-xs font-semibold text-fg-muted uppercase tracking-wider font-nunito"
+                className="px-4 py-3 text-left text-xs font-semibold text-fg-muted uppercase tracking-wider font-body"
               >
                 {col.header}
               </th>
@@ -45,7 +45,7 @@ export function DataTable<T>({ columns, data, keyExtractor, onRowClick, emptyMes
               className={onRowClick ? "cursor-pointer hover:bg-[#fffefb] transition-colors" : ""}
             >
               {columns.map((col) => (
-                <td key={col.key} className="px-4 py-3.5 text-sm text-fg font-nunito">
+                <td key={col.key} className="px-4 py-3.5 text-sm text-fg font-body">
                   {col.render ? col.render(item) : (item as Record<string, unknown>)[col.key] as ReactNode}
                 </td>
               ))}

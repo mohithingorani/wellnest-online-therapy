@@ -67,23 +67,23 @@ export default function Settings() {
   };
 
   const inputClass =
-    "w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all";
+    "w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all";
   const labelClass =
-    "block text-sm font-medium text-fg mb-1 font-nunito";
+    "block text-sm font-medium text-fg mb-1 font-body";
   const cardClass =
     "bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]";
   const buttonClass =
-    "w-full px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-nunito font-medium hover:bg-[#3b5642] transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+    "w-full px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-body font-medium hover:bg-[#3b5642] transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">
+      <h1 className="text-2xl font-bold text-fg-strong font-display mb-6">
         Settings
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className={cardClass}>
-          <h2 className="text-lg font-semibold text-fg-strong font-nunito mb-6">
+          <h2 className="text-lg font-semibold text-fg-strong font-body mb-6">
             Profile Settings
           </h2>
           <div className="space-y-4">
@@ -116,7 +116,7 @@ export default function Settings() {
         </div>
 
         <div className={cardClass}>
-          <h2 className="text-lg font-semibold text-fg-strong font-nunito mb-6">
+          <h2 className="text-lg font-semibold text-fg-strong font-body mb-6">
             Change Password
           </h2>
           <div className="space-y-4">
@@ -158,16 +158,16 @@ export default function Settings() {
         </div>
 
         <div className={cardClass}>
-          <h2 className="text-lg font-semibold text-fg-strong font-nunito mb-6">
+          <h2 className="text-lg font-semibold text-fg-strong font-body mb-6">
             Preferences
           </h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-fg-strong font-nunito">
+                <div className="text-sm font-medium text-fg-strong font-body">
                   Email Notifications
                 </div>
-                <div className="text-xs text-fg-muted font-nunito">
+                <div className="text-xs text-fg-muted font-body">
                   Receive email notifications for important updates
                 </div>
               </div>
@@ -187,10 +187,10 @@ export default function Settings() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-fg-strong font-nunito">
+                <div className="text-sm font-medium text-fg-strong font-body">
                   Activity Alerts
                 </div>
-                <div className="text-xs text-fg-muted font-nunito">
+                <div className="text-xs text-fg-muted font-body">
                   Get notified about new user registrations
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function Settings() {
                 />
               </button>
             </div>
-            <p className="text-xs text-fg-muted font-nunito pt-2">
+            <p className="text-xs text-fg-muted font-body pt-2">
               Notification delivery is coming soon — these preferences are saved
               for your session.
             </p>

@@ -22,7 +22,7 @@ export default function Analytics() {
   if (loading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">
+        <h1 className="text-2xl font-bold text-fg-strong font-display mb-6">
           Analytics
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -65,7 +65,7 @@ export default function Analytics() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">
+      <h1 className="text-2xl font-bold text-fg-strong font-display mb-6">
         Analytics
       </h1>
 
@@ -77,7 +77,7 @@ export default function Analytics() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]">
-          <h3 className="text-lg font-semibold text-fg-strong font-nunito mb-4">
+          <h3 className="text-lg font-semibold text-fg-strong font-body mb-4">
             User Growth
           </h3>
           <div className="h-48 flex items-end gap-2">
@@ -91,21 +91,21 @@ export default function Analytics() {
               </div>
             ))}
           </div>
-          <div className="flex justify-between mt-2 text-xs text-fg-muted font-nunito">
+          <div className="flex justify-between mt-2 text-xs text-fg-muted font-body">
             <span>{data?.userGrowth[0]?.label}</span>
             <span>{data?.userGrowth[data.userGrowth.length - 1]?.label}</span>
           </div>
         </div>
 
         <div className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]">
-          <h3 className="text-lg font-semibold text-fg-strong font-nunito mb-4">
+          <h3 className="text-lg font-semibold text-fg-strong font-body mb-4">
             Top Specialties
           </h3>
           {data && data.topSpecialties.length > 0 ? (
             <div className="space-y-4">
               {data.topSpecialties.map((spec) => (
                 <div key={spec.name} className="flex items-center gap-4">
-                  <span className="text-sm text-fg-muted font-nunito w-32 truncate">
+                  <span className="text-sm text-fg-muted font-body w-32 truncate">
                     {spec.name}
                   </span>
                   <div className="flex-1 h-2 bg-[#e4dccb] rounded-full overflow-hidden">
@@ -114,14 +114,14 @@ export default function Analytics() {
                       style={{ width: `${(spec.count / maxSpecialty) * 100}%` }}
                     />
                   </div>
-                  <span className="text-sm font-medium text-fg-strong font-nunito w-8 text-right">
+                  <span className="text-sm font-medium text-fg-strong font-body w-8 text-right">
                     {spec.count}
                   </span>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-sm text-fg-muted font-nunito py-8 text-center">
+            <div className="text-sm text-fg-muted font-body py-8 text-center">
               No specialty data yet.
             </div>
           )}
@@ -135,10 +135,10 @@ export default function Analytics() {
               </svg>
             </div>
             <div>
-              <div className="text-sm font-semibold text-fg-strong font-nunito">
+              <div className="text-sm font-semibold text-fg-strong font-body">
                 Appointments &amp; Revenue
               </div>
-              <div className="text-xs text-fg-muted font-nunito">
+              <div className="text-xs text-fg-muted font-body">
                 Coming soon — available once booking launches.
               </div>
             </div>

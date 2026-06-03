@@ -20,7 +20,7 @@ export function SearchInput({ value, onChange, placeholder = "Search..." }: Sear
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#fffefb] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all placeholder-fg-muted"
+        className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#fffefb] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all placeholder-fg-muted"
       />
     </div>
   );

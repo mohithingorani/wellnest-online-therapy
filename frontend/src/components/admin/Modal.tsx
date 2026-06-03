@@ -37,7 +37,7 @@ export function Modal({ isOpen, onClose, title, children, size = "md" }: ModalPr
         className={`relative bg-[#fffefb] rounded-2xl shadow-2xl w-full ${sizeClasses[size]} animate-fade-in-up border border-[#e4dccb]`}
       >
         <div className="flex items-center justify-between p-5 border-b border-[#e4dccb]">
-          <h2 className="text-lg font-semibold text-fg-strong font-nunito">{title}</h2>
+          <h2 className="text-lg font-semibold text-fg-strong font-body">{title}</h2>
           <button
             onClick={onClose}
             className="p-1.5 rounded-lg text-fg-muted hover:bg-[#e4dccb] transition-colors"

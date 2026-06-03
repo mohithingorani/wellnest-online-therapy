@@ -32,13 +32,13 @@ export function ConfirmDialog({
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-white dark:bg-surface rounded-2xl shadow-2xl w-full max-w-sm animate-fade-in-up">
         <div className="p-6">
-          <h3 className="text-lg font-semibold text-fg-strong dark:text-white font-nunito mb-2">{title}</h3>
-          <p className="text-fg dark:text-fg-muted text-sm font-nunito">{message}</p>
+          <h3 className="text-lg font-semibold text-fg-strong dark:text-white font-body mb-2">{title}</h3>
+          <p className="text-fg dark:text-fg-muted text-sm font-body">{message}</p>
         </div>
         <div className="flex gap-3 p-4 border-t border-border dark:border-border">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2.5 rounded-xl border border-border dark:border-border text-fg dark:text-fg-muted font-nunito font-medium hover:bg-surface dark:hover:bg-surface-2 transition-colors"
+            className="flex-1 px-4 py-2.5 rounded-xl border border-border dark:border-border text-fg dark:text-fg-muted font-body font-medium hover:bg-surface dark:hover:bg-surface-2 transition-colors"
           >
             {cancelText}
           </button>
@@ -47,7 +47,7 @@ export function ConfirmDialog({
               onConfirm();
               onClose();
             }}
-            className={`flex-1 px-4 py-2.5 rounded-xl text-white font-nunito font-medium transition-colors ${variantStyles[variant]}`}
+            className={`flex-1 px-4 py-2.5 rounded-xl text-white font-body font-medium transition-colors ${variantStyles[variant]}`}
           >
             {confirmText}
           </button>

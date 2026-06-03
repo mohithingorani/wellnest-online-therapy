@@ -156,7 +156,7 @@ export default function UserManagement() {
   if (loading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">Users</h1>
+        <h1 className="text-2xl font-bold text-fg-strong font-display mb-6">Users</h1>
         <div className="bg-[#fffefb] rounded-2xl border border-[#e4dccb]">
           <TableSkeleton rows={8} cols={6} />
         </div>
@@ -167,14 +167,14 @@ export default function UserManagement() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-fg-strong font-playfair">Users</h1>
+        <h1 className="text-2xl font-bold text-fg-strong font-display">Users</h1>
         <div className="flex items-center gap-4">
           <div className="w-72">
             <SearchInput value={search} onChange={setSearch} placeholder="Search users..." />
           </div>
           <button
             onClick={() => setCreateMode(true)}
-            className="px-4 py-2.5 bg-[#4a6b52] text-white font-nunito font-medium rounded-xl hover:bg-[#3b5642] transition-colors flex items-center gap-2"
+            className="px-4 py-2.5 bg-[#4a6b52] text-white font-body font-medium rounded-xl hover:bg-[#3b5642] transition-colors flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -185,7 +185,7 @@ export default function UserManagement() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-xl font-nunito text-sm">
+        <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-xl font-body text-sm">
           {error}
         </div>
       )}
@@ -201,33 +201,33 @@ export default function UserManagement() {
       <Modal isOpen={editMode} onClose={() => setEditMode(false)} title="Edit User" size="md">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Name</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-body">Name</label>
             <input
               type="text"
               value={editForm.name}
               onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Email</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-body">Email</label>
             <input
               type="email"
               value={editForm.email}
               onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div className="flex gap-3 pt-4">
             <button
               onClick={() => setEditMode(false)}
-              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e4dccb] text-fg font-nunito font-medium hover:bg-[#e4dccb] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e4dccb] text-fg font-body font-medium hover:bg-[#e4dccb] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-nunito font-medium hover:bg-[#3b5642] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-body font-medium hover:bg-[#3b5642] transition-colors"
             >
               Save Changes
             </button>
@@ -248,45 +248,45 @@ export default function UserManagement() {
       <Modal isOpen={createMode} onClose={() => setCreateMode(false)} title="Add New User" size="md">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Name</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-body">Name</label>
             <input
               type="text"
               value={createForm.name}
               onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
               placeholder="John Doe"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Email</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-body">Email</label>
             <input
               type="email"
               value={createForm.email}
               onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
               placeholder="john@example.com"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Password</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-body">Password</label>
             <input
               type="password"
               value={createForm.password}
               onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
               placeholder="Enter password"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-body text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div className="flex gap-3 pt-4">
             <button
               onClick={() => setCreateMode(false)}
-              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e4dccb] text-fg font-nunito font-medium hover:bg-[#e4dccb] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e4dccb] text-fg font-body font-medium hover:bg-[#e4dccb] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleCreate}
-              className="flex-1 px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-nunito font-medium hover:bg-[#3b5642] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-body font-medium hover:bg-[#3b5642] transition-colors"
             >
               Create User
             </button>

@@ -29,8 +29,8 @@ export function StatsCard({ title, value, icon, trend, variant = "default" }: St
           </div>
         )}
       </div>
-      <div className="text-sm text-fg-muted font-nunito mb-1">{title}</div>
-      <div className="text-2xl font-bold text-fg-strong font-nunito">{value}</div>
+      <div className="text-sm text-fg-muted font-body mb-1">{title}</div>
+      <div className="text-2xl font-bold text-fg-strong font-body">{value}</div>
     </div>
   );
 }

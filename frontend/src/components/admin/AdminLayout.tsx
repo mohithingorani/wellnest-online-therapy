@@ -13,7 +13,7 @@ export function AdminLayout() {
       <div className="min-h-screen flex items-center justify-center bg-[#f7f4ec]">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-[#4a6b52] border-t-transparent rounded-full animate-spin" />
-          <span className="text-fg-muted font-nunito">Loading...</span>
+          <span className="text-fg-muted font-body">Loading...</span>
         </div>
       </div>
     );

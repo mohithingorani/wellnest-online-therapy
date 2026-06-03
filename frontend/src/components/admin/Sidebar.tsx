@@ -72,9 +72,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {!collapsed && (
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-[#4a6b52] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm font-nunito">W</span>
+              <span className="text-white font-bold text-sm font-body">W</span>
             </div>
-            <span className="font-bold text-lg text-fg-strong font-nunito">WellNest</span>
+            <span className="font-bold text-lg text-fg-strong font-body">WellNest</span>
           </div>
         )}
         <button
@@ -97,7 +97,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <div key={section.section} className="mb-6">
             {!collapsed && (
               <div className="px-4 mb-2">
-                <span className="text-xs font-semibold text-fg-muted uppercase tracking-wider font-nunito">{section.section}</span>
+                <span className="text-xs font-semibold text-fg-muted uppercase tracking-wider font-body">{section.section}</span>
               </div>
             )}
             {section.items.map((item) => (
@@ -114,7 +114,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 }
               >
                 {icons[item.icon]}
-                {!collapsed && <span className="font-medium font-nunito">{item.name}</span>}
+                {!collapsed && <span className="font-medium font-body">{item.name}</span>}
               </NavLink>
             ))}
           </div>
@@ -131,7 +131,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          {!collapsed && <span className="font-medium font-nunito">Logout</span>}
+          {!collapsed && <span className="font-medium font-body">Logout</span>}
         </button>
       </div>
     </aside>
