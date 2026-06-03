@@ -146,37 +146,7 @@ export default function Journal() {
     }
   }, [viewMode, activeEntry]);
 
-  if (loading) {
-    return (
-      <div className="journal-canvas min-h-[calc(100vh-68px)]">
-        <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 animate-pulse space-y-8">
-          <div className="flex items-end justify-between">
-            <div className="space-y-2.5">
-              <div className="h-3 w-28 rounded bg-clay-200/50" />
-              <div className="h-10 w-44 rounded-lg bg-surface-2" />
-              <div className="h-4 w-56 rounded bg-surface-2" />
-            </div>
-            <div className="h-11 w-36 rounded-full bg-surface-2" />
-          </div>
-          <div className="h-40 rounded-[1.6rem] bg-night/80" />
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 md:gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-[148px] rounded-[1.4rem] card-elevated" />
-            ))}
-          </div>
-          <div className="h-12 w-full max-w-md rounded-full card-elevated" />
-          <div className="space-y-4">
-            <div className="h-3 w-24 rounded bg-surface-2" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-4">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-44 rounded-[1.4rem] card-elevated" />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return null;
 
   if (error && entries.length === 0) {
     return (
