@@ -100,60 +100,57 @@ function Hero() {
           </Reveal>
         </div>
 
-        {/* "Your match" phone — botanical scene */}
+        {/* "Your match" card — botanical scene */}
         <Reveal delay={180} direction="left" distance={30}>
           <div className="relative mx-auto w-full max-w-[466px]">
-            {/* organic sage blob backdrop */}
-            <div aria-hidden className="absolute left-1/2 top-1/2 h-[110%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-[46%_54%_48%_52%/44%_47%_53%_56%] bg-sage-200/50" />
+            {/* canopy — decorations, only on desktop */}
+            <div aria-hidden className="hidden lg:block">
+              <div className="absolute left-1/2 top-1/2 h-[110%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-[46%_54%_48%_52%/44%_47%_53%_56%] bg-sage-200/30" />
+              <LeafBranch className="absolute top-[52%] -left-32 w-64 -translate-y-1/2 -rotate-2" />
+              <LeafBranch className="absolute top-[44%] -right-32 w-64 -translate-y-1/2 -scale-x-100 -rotate-2" />
+              <DotGrid className="absolute -top-2 -right-12 text-sage-600/35" />
+              <DotGrid className="absolute bottom-6 -left-14 text-sage-600/30" />
+            </div>
 
-            {/* eucalyptus branches peeking out at mid-height */}
-            <LeafBranch className="absolute top-[52%] -left-32 w-64 -translate-y-1/2 -rotate-2" />
-            <LeafBranch className="absolute top-[44%] -right-32 w-64 -translate-y-1/2 -scale-x-100 -rotate-2" />
+            {/* card */}
+            <div className="relative rounded-[2rem] lg:rounded-[2.7rem] lg:bg-[#efeee7] lg:p-2.5 lg:shadow-[0_44px_90px_-34px_rgba(47,58,50,0.4),0_14px_34px_-20px_rgba(47,58,50,0.22)]">
+              {/* side button — desktop only */}
+              <span aria-hidden className="hidden lg:block absolute -left-[5px] top-28 h-16 w-[5px] rounded-full bg-[#e4e2d8]" />
+              <div className="rounded-[1.3rem] border border-brand-teal/30 lg:border-0 lg:rounded-[2.15rem] bg-white/60 px-5 py-5 sm:px-6 lg:px-7 lg:py-7">
+                {/* header */}
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="text-[1.1rem] lg:text-[1.35rem] font-bold text-fg-strong leading-tight">Your match</div>
+                    <div className="text-[0.9rem] lg:text-[1.02rem] text-fg-strong/85 mt-0.5 lg:mt-1">carefully chosen for you</div>
+                  </div>
+                  <span className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-clay-50 grid place-items-center shrink-0">
+                    <svg className="w-[22px] h-[22px] lg:w-[26px] lg:h-[26px] text-accent" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.55-4.6-10.05-9.2C.55 9.02 1.4 5.6 4.3 4.6 6.45 3.86 8.6 4.8 12 8c3.4-3.2 5.55-4.14 7.7-3.4 2.9 1 3.75 4.42 2.35 7.2C19.55 16.4 12 21 12 21z" /></svg>
+                  </span>
+                </div>
 
-            {/* dotted texture */}
-            <DotGrid className="absolute -top-2 -right-12 text-sage-600/35" />
-            <DotGrid className="absolute bottom-6 -left-14 text-sage-600/30" />
-
-            {/* phone device */}
-            <div className="relative">
-              {/* side button */}
-              <span aria-hidden className="absolute -left-[5px] top-28 h-16 w-[5px] rounded-full bg-[#e4e2d8]" />
-              {/* device body + screen */}
-              <div className="relative rounded-[2.7rem] bg-[#efeee7] p-2.5 shadow-[0_44px_90px_-34px_rgba(47,58,50,0.4),0_14px_34px_-20px_rgba(47,58,50,0.22)]">
-                <div className="rounded-[2.15rem] bg-white px-6 py-7 sm:px-7">
-                  {/* header */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="text-[1.35rem] font-bold text-fg-strong leading-tight">Your match</div>
-                      <div className="text-[1.02rem] text-fg-strong/85 mt-1">carefully chosen for you</div>
-                    </div>
-                    <span className="w-12 h-12 rounded-full bg-clay-50 grid place-items-center shrink-0">
-                      <svg className="w-[26px] h-[26px] text-accent" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.55-4.6-10.05-9.2C.55 9.02 1.4 5.6 4.3 4.6 6.45 3.86 8.6 4.8 12 8c3.4-3.2 5.55-4.14 7.7-3.4 2.9 1 3.75 4.42 2.35 7.2C19.55 16.4 12 21 12 21z" /></svg>
+                {/* therapist */}
+                <div className="mt-5 lg:mt-6 flex items-start gap-4 lg:gap-5">
+                  <img src="/therapist.png" alt="Dr. Anjali Rao, Clinical Psychologist" className="w-[88px] h-[88px] lg:w-[116px] lg:h-[116px] rounded-full object-cover shrink-0" />
+                  <div className="pt-1 lg:pt-1.5">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 text-sage-700 text-[0.82rem] lg:text-[0.92rem] font-medium px-2.5 py-1 lg:px-3 lg:py-1.5">
+                      <svg className="w-[13px] h-[13px] lg:w-[15px] lg:h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}><path strokeLinejoin="round" d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.78 6.8 19.52l.99-5.8-4.21-4.1 5.82-.85L12 3.5z" /></svg>
+                      Top match
                     </span>
+                    <div className="mt-2 lg:mt-2.5 text-[1.25rem] lg:text-[1.55rem] font-bold text-fg-strong leading-[1.1]">Dr. Anjali Rao</div>
+                    <div className="text-[0.92rem] lg:text-[1.05rem] text-fg mt-1 lg:mt-1.5">Clinical Psychologist</div>
+                    <div className="hidden lg:block text-[1rem] text-fg-muted mt-1">8+ years experience</div>
                   </div>
+                </div>
 
-                  {/* therapist */}
-                  <div className="mt-6 flex items-start gap-5">
-                    <img src="/therapist.png" alt="Dr. Anjali Rao, Clinical Psychologist" className="w-[116px] h-[116px] rounded-full object-cover shrink-0" />
-                    <div className="pt-1.5">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 text-sage-700 text-[0.92rem] font-medium px-3 py-1.5">
-                        <svg className="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6}><path strokeLinejoin="round" d="M12 3.5l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.78 6.8 19.52l.99-5.8-4.21-4.1 5.82-.85L12 3.5z" /></svg>
-                        Top match
-                      </span>
-                      <div className="mt-2.5 text-[1.55rem] font-bold text-fg-strong leading-[1.1]">Dr. Anjali Rao</div>
-                      <div className="text-[1.05rem] text-fg mt-1.5">Clinical Psychologist</div>
-                      <div className="text-[1rem] text-fg-muted mt-1">8+ years experience</div>
-                    </div>
-                  </div>
+                {/* specialties */}
+                <div className="mt-4 lg:mt-5 flex flex-wrap gap-2 lg:gap-2.5">
+                  {["Anxiety", "Relationships", "Self-esteem"].map((s) => (
+                    <span key={s} className="rounded-full bg-sage-100 text-sage-700 text-[0.85rem] lg:text-[0.95rem] font-medium px-3 py-1.5 lg:px-4 lg:py-2">{s}</span>
+                  ))}
+                </div>
 
-                  {/* specialties */}
-                  <div className="mt-5 flex flex-wrap gap-2.5">
-                    {["Anxiety", "Relationships", "Self-esteem"].map((s) => (
-                      <span key={s} className="rounded-full bg-sage-100 text-sage-700 text-[0.95rem] font-medium px-4 py-2">{s}</span>
-                    ))}
-                  </div>
-
-                  {/* options */}
+                {/* options + confidential — desktop only */}
+                <div className="hidden lg:block">
                   <div className="mt-5 rounded-[1.5rem] bg-[#f6f5ee] ring-1 ring-black/[0.04] overflow-hidden">
                     <MatchOption icon="video" title="Video sessions" sub="Available this week" />
                     <div className="mx-5 h-px bg-black/[0.06]" />
@@ -162,7 +159,6 @@ function Hero() {
                     <MatchOption icon="location" title="In-person " sub="HSR Layout" />
                   </div>
 
-                  {/* confidential band */}
                   <div className="mt-5 flex items-center gap-4 rounded-[1.5rem] bg-sage-100/80 px-5 py-4">
                     <span className="shrink-0">
                       <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
@@ -385,8 +381,8 @@ function JourneyStep({ step, index }: { step: (typeof journeySteps)[number]; ind
         {/* CONTENT */}
         <div className={reversed ? "lg:order-2 lg:pl-6" : "lg:order-1 lg:pr-6"} style={slide(reversed ? 44 : -44)}>
           <div className="relative">
-            <span aria-hidden className="pointer-events-none absolute -top-14 -left-3 select-none font-display text-[7rem] font-semibold leading-none text-clay-200/90 lg:-top-[5.5rem] lg:text-[12rem]">{step.n}</span>
-            <div className="relative">
+            
+            <div className="relative pl-5 lg:pl-8">
               <span className="inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-accent">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Step {step.n}
               </span>
