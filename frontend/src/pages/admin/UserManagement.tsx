@@ -93,29 +93,29 @@ export default function UserManagement() {
     {
       key: "name",
       header: "Name",
-      render: (u: User) => <div className="font-medium text-white">{u.name}</div>,
+      render: (u: User) => <div className="font-medium text-fg-strong">{u.name}</div>,
     },
     {
       key: "email",
       header: "Email",
-      render: (u: User) => <span className="text-gray-400">{u.email}</span>,
+      render: (u: User) => <span className="text-fg-muted">{u.email}</span>,
     },
     {
       key: "sessions",
       header: "Sessions",
-      render: (u: User) => <span className="text-gray-400">{u.sessionCount}</span>,
+      render: (u: User) => <span className="text-fg-muted">{u.sessionCount}</span>,
     },
     {
       key: "createdAt",
       header: "Joined",
-      render: (u: User) => <span className="text-gray-400">{new Date(u.createdAt).toLocaleDateString()}</span>,
+      render: (u: User) => <span className="text-fg-muted">{new Date(u.createdAt).toLocaleDateString()}</span>,
     },
     {
       key: "status",
       header: "Status",
       render: (u: User) => (
         <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-          u.status === "active" ? "bg-emerald-900/30 text-emerald-400" : "bg-red-900/30 text-red-400"
+          u.status === "active" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
         }`}>
           {u.status}
         </span>
@@ -131,7 +131,7 @@ export default function UserManagement() {
               e.stopPropagation();
               handleEdit(u);
             }}
-            className="p-1.5 rounded-lg text-gray-500 hover:bg-[#1f1f1f] transition-colors"
+            className="p-1.5 rounded-lg text-fg-muted hover:bg-[#e4dccb] transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -142,7 +142,7 @@ export default function UserManagement() {
               e.stopPropagation();
               setDeleteConfirm(u);
             }}
-            className="p-1.5 rounded-lg text-red-400 hover:bg-red-900/20 transition-colors"
+            className="p-1.5 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -156,8 +156,8 @@ export default function UserManagement() {
   if (loading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-white font-playfair mb-6">Users</h1>
-        <div className="bg-[#111111] rounded-2xl border border-[#1f1f1f]">
+        <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">Users</h1>
+        <div className="bg-[#fffefb] rounded-2xl border border-[#e4dccb]">
           <TableSkeleton rows={8} cols={6} />
         </div>
       </div>
@@ -167,14 +167,14 @@ export default function UserManagement() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-white font-playfair">Users</h1>
+        <h1 className="text-2xl font-bold text-fg-strong font-playfair">Users</h1>
         <div className="flex items-center gap-4">
           <div className="w-72">
             <SearchInput value={search} onChange={setSearch} placeholder="Search users..." />
           </div>
           <button
             onClick={() => setCreateMode(true)}
-            className="px-4 py-2.5 bg-[#47898E] text-white font-nunito font-medium rounded-xl hover:bg-[#3d787d] transition-colors flex items-center gap-2"
+            className="px-4 py-2.5 bg-[#4a6b52] text-white font-nunito font-medium rounded-xl hover:bg-[#3b5642] transition-colors flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -185,12 +185,12 @@ export default function UserManagement() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-900/20 text-red-400 rounded-xl font-nunito text-sm">
+        <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-xl font-nunito text-sm">
           {error}
         </div>
       )}
 
-      <div className="bg-[#111111] rounded-2xl border border-[#1f1f1f] overflow-hidden">
+      <div className="bg-[#fffefb] rounded-2xl border border-[#e4dccb] overflow-hidden">
         {filteredUsers.length === 0 ? (
           <EmptyState icon="users" title="No users found" description={search ? "Try adjusting your search" : "Users will appear here once registered"} />
         ) : (
@@ -201,33 +201,33 @@ export default function UserManagement() {
       <Modal isOpen={editMode} onClose={() => setEditMode(false)} title="Edit User" size="md">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Name</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Name</label>
             <input
               type="text"
               value={editForm.name}
               onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Email</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Email</label>
             <input
               type="email"
               value={editForm.email}
               onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div className="flex gap-3 pt-4">
             <button
               onClick={() => setEditMode(false)}
-              className="flex-1 px-4 py-2.5 rounded-xl border border-[#1f1f1f] text-gray-300 font-nunito font-medium hover:bg-[#1f1f1f] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e4dccb] text-fg font-nunito font-medium hover:bg-[#e4dccb] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex-1 px-4 py-2.5 rounded-xl bg-[#47898E] text-white font-nunito font-medium hover:bg-[#3d787d] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-nunito font-medium hover:bg-[#3b5642] transition-colors"
             >
               Save Changes
             </button>
@@ -248,45 +248,45 @@ export default function UserManagement() {
       <Modal isOpen={createMode} onClose={() => setCreateMode(false)} title="Add New User" size="md">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Name</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Name</label>
             <input
               type="text"
               value={createForm.name}
               onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })}
               placeholder="John Doe"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Email</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Email</label>
             <input
               type="email"
               value={createForm.email}
               onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
               placeholder="john@example.com"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1 font-nunito">Password</label>
+            <label className="block text-sm font-medium text-fg mb-1 font-nunito">Password</label>
             <input
               type="password"
               value={createForm.password}
               onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
               placeholder="Enter password"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#0a0a0a] text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+              className="w-full px-4 py-2.5 rounded-xl border border-[#e4dccb] bg-[#f7f4ec] text-fg-strong font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
             />
           </div>
           <div className="flex gap-3 pt-4">
             <button
               onClick={() => setCreateMode(false)}
-              className="flex-1 px-4 py-2.5 rounded-xl border border-[#1f1f1f] text-gray-300 font-nunito font-medium hover:bg-[#1f1f1f] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e4dccb] text-fg font-nunito font-medium hover:bg-[#e4dccb] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleCreate}
-              className="flex-1 px-4 py-2.5 rounded-xl bg-[#47898E] text-white font-nunito font-medium hover:bg-[#3d787d] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-[#4a6b52] text-white font-nunito font-medium hover:bg-[#3b5642] transition-colors"
             >
               Create User
             </button>
