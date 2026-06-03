@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { getSeeds } from "../services/seeds";
+import { getLevel, getProgressPct } from "../data/levels";
 
 function firstName(name?: string) {
   const f = name?.trim().split(" ")[0] || "";
@@ -8,16 +10,28 @@ function firstName(name?: string) {
 }
 
 const NAV = [
-  { to: "/dashboard", label: "Overview", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-  { to: "/bookings", label: "Sessions", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
-  { to: "/journal", label: "Journal", icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" },
-  { to: "/breathe", label: "Breathing", icon: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" },
-  { to: "/messages", label: "Messages", icon: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" },
+  { to: "/dashboard",  label: "Overview",    icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+  { to: "/bookings",   label: "Sessions",    icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+  { to: "/journal",    label: "Journal",     icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" },
+  { to: "/breathe",    label: "Breathing",   icon: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" },
+  { to: "/assess",     label: "Assessments", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
+  { to: "/resources",  label: "Resources",   icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
+  { to: "/messages",   label: "Messages",    icon: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" },
+  { to: "/rewards",    label: "Rewards",     icon: "M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" },
 ];
 
 export default function DashboardShell() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [seeds, setSeeds] = useState<number | null>(null);
+  const [seedsPct, setSeedsPct] = useState(0);
+
+  useEffect(() => {
+    getSeeds().then((d) => {
+      setSeeds(d.total);
+      setSeedsPct(getProgressPct(d.total));
+    }).catch(() => {});
+  }, []);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -64,7 +78,23 @@ export default function DashboardShell() {
         </div>
       </nav>
 
-      <div className="p-3 border-t border-border">
+      <div className="p-3 border-t border-border space-y-2">
+        {/* Seeds mini-card */}
+        <Link to="/rewards" className="group block rounded-xl bg-night/90 hover:bg-night transition-colors duration-200 px-3 py-2.5 ring-1 ring-night-border">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[11px] font-semibold text-night-muted">
+              {seeds !== null ? getLevel(seeds).name : "Seeds"}
+            </span>
+            <span className="text-sm font-bold text-ochre-300">{seeds ?? "—"} 🌱</span>
+          </div>
+          <div className="h-1 rounded-full bg-white/10 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-ochre-300 transition-all duration-700"
+              style={{ width: `${seedsPct}%` }}
+            />
+          </div>
+        </Link>
+
         <div className="flex items-center gap-3 px-2 py-2 rounded-xl bg-white/50 ring-1 ring-border/50 shadow-soft transition-colors duration-200 hover:bg-white/70">
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-clay-400 to-clay-600 text-white grid place-items-center font-display text-sm font-semibold shrink-0 shadow-[0_4px_10px_-5px_rgba(184,88,56,0.55)] ring-1 ring-white/25">{firstName(user?.name)[0]}</div>
           <div className="min-w-0 flex-1">
