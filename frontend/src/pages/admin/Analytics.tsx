@@ -22,21 +22,21 @@ export default function Analytics() {
   if (loading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-white font-playfair mb-6">
+        <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">
           Analytics
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="bg-[#111111] rounded-2xl p-6 border border-[#1f1f1f]"
+              className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]"
             >
-              <div className="h-4 w-24 bg-[#1f1f1f] rounded animate-pulse mb-3" />
-              <div className="h-8 w-16 bg-[#1f1f1f] rounded animate-pulse" />
+              <div className="h-4 w-24 bg-[#e4dccb] rounded animate-pulse mb-3" />
+              <div className="h-8 w-16 bg-[#e4dccb] rounded animate-pulse" />
             </div>
           ))}
         </div>
-        <div className="h-64 bg-[#111111] rounded-2xl border border-[#1f1f1f] animate-pulse" />
+        <div className="h-64 bg-[#fffefb] rounded-2xl border border-[#e4dccb] animate-pulse" />
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function Analytics() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white font-playfair mb-6">
+      <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">
         Analytics
       </h1>
 
@@ -76,69 +76,69 @@ export default function Analytics() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-[#111111] rounded-2xl p-6 border border-[#1f1f1f]">
-          <h3 className="text-lg font-semibold text-white font-nunito mb-4">
+        <div className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]">
+          <h3 className="text-lg font-semibold text-fg-strong font-nunito mb-4">
             User Growth
           </h3>
           <div className="h-48 flex items-end gap-2">
             {data?.userGrowth.map((m, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
                 <div
-                  className="w-full bg-[#47898E]/30 hover:bg-[#47898E]/50 rounded-t-lg transition-colors min-h-[2px]"
+                  className="w-full bg-[#4a6b52]/30 hover:bg-[#4a6b52]/50 rounded-t-lg transition-colors min-h-[2px]"
                   style={{ height: `${(m.count / maxGrowth) * 100}%` }}
                   title={`${m.label}: ${m.count}`}
                 />
               </div>
             ))}
           </div>
-          <div className="flex justify-between mt-2 text-xs text-gray-500 font-nunito">
+          <div className="flex justify-between mt-2 text-xs text-fg-muted font-nunito">
             <span>{data?.userGrowth[0]?.label}</span>
             <span>{data?.userGrowth[data.userGrowth.length - 1]?.label}</span>
           </div>
         </div>
 
-        <div className="bg-[#111111] rounded-2xl p-6 border border-[#1f1f1f]">
-          <h3 className="text-lg font-semibold text-white font-nunito mb-4">
+        <div className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]">
+          <h3 className="text-lg font-semibold text-fg-strong font-nunito mb-4">
             Top Specialties
           </h3>
           {data && data.topSpecialties.length > 0 ? (
             <div className="space-y-4">
               {data.topSpecialties.map((spec) => (
                 <div key={spec.name} className="flex items-center gap-4">
-                  <span className="text-sm text-gray-400 font-nunito w-32 truncate">
+                  <span className="text-sm text-fg-muted font-nunito w-32 truncate">
                     {spec.name}
                   </span>
-                  <div className="flex-1 h-2 bg-[#1f1f1f] rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 bg-[#e4dccb] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#47898E] rounded-full"
+                      className="h-full bg-[#4a6b52] rounded-full"
                       style={{ width: `${(spec.count / maxSpecialty) * 100}%` }}
                     />
                   </div>
-                  <span className="text-sm font-medium text-white font-nunito w-8 text-right">
+                  <span className="text-sm font-medium text-fg-strong font-nunito w-8 text-right">
                     {spec.count}
                   </span>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-sm text-gray-500 font-nunito py-8 text-center">
+            <div className="text-sm text-fg-muted font-nunito py-8 text-center">
               No specialty data yet.
             </div>
           )}
         </div>
 
-        <div className="lg:col-span-2 bg-[#111111] rounded-2xl p-6 border border-dashed border-[#1f1f1f]">
+        <div className="lg:col-span-2 bg-[#fffefb] rounded-2xl p-6 border border-dashed border-[#e4dccb]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#E77D3C]/10 text-[#E77D3C] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-[#d97a58]/10 text-[#d97a58] flex items-center justify-center">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
             <div>
-              <div className="text-sm font-semibold text-white font-nunito">
+              <div className="text-sm font-semibold text-fg-strong font-nunito">
                 Appointments &amp; Revenue
               </div>
-              <div className="text-xs text-gray-500 font-nunito">
+              <div className="text-xs text-fg-muted font-nunito">
                 Coming soon — available once booking launches.
               </div>
             </div>
