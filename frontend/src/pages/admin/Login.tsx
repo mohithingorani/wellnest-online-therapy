@@ -13,8 +13,8 @@ export default function AdminLogin() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FFFDF8] dark:bg-slate-950">
-        <div className="w-12 h-12 border-4 border-[#47898E] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#FFFDF8] dark:bg-bg">
+        <div className="w-12 h-12 border-4 border-[#4a6b52] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -43,42 +43,42 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFFDF8] dark:bg-slate-950 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#FFFDF8] dark:bg-bg px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-[#47898E] rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-[#4a6b52] rounded-2xl flex items-center justify-center mx-auto mb-4">
             <span className="text-white font-bold text-2xl font-nunito">W</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white font-playfair">WellNest Admin</h1>
-          <p className="text-slate-500 dark:text-slate-400 font-nunito mt-2">Sign in to your admin account</p>
+          <h1 className="text-2xl font-bold text-fg-strong dark:text-white font-playfair">WellNest Admin</h1>
+          <p className="text-fg-muted dark:text-fg-muted font-nunito mt-2">Sign in to your admin account</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-800 shadow-lg">
+        <div className="bg-white dark:bg-surface rounded-2xl p-8 border border-border dark:border-border shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5 font-nunito">Email</label>
+              <label className="block text-sm font-medium text-fg dark:text-fg-muted mb-1.5 font-nunito">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@wellnest.com"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-border dark:border-border bg-white dark:bg-surface-2 text-fg-strong dark:text-white font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5 font-nunito">Password</label>
+              <label className="block text-sm font-medium text-fg dark:text-fg-muted mb-1.5 font-nunito">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-nunito text-sm focus:border-[#47898E] focus:ring-2 focus:ring-[#47898E]/20 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-border dark:border-border bg-white dark:bg-surface-2 text-fg-strong dark:text-white font-nunito text-sm focus:border-[#4a6b52] focus:ring-2 focus:ring-[#4a6b52]/20 outline-none transition-all"
               />
             </div>
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3 px-4 bg-[#47898E] text-white font-nunito font-semibold rounded-xl hover:bg-[#3d787d] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[#4a6b52] text-white font-nunito font-semibold rounded-xl hover:bg-[#3b5642] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {submitting ? (
                 <>
@@ -93,7 +93,7 @@ export default function AdminLogin() {
         </div>
 
         <div className="text-center mt-6">
-          <a href="/" className="text-sm text-slate-500 hover:text-[#47898E] font-nunito">
+          <a href="/" className="text-sm text-fg-muted hover:text-[#4a6b52] font-nunito">
             ← Back to WellNest
           </a>
         </div>
