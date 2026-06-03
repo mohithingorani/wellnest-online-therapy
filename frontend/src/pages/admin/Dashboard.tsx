@@ -26,12 +26,12 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div>
-        <h1 className="text-2xl font-bold text-white font-playfair mb-6">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">Dashboard</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="bg-[#111111] rounded-2xl p-6 border border-[#1f1f1f]">
-              <div className="h-4 w-24 bg-[#1f1f1f] rounded animate-pulse mb-3" />
-              <div className="h-8 w-16 bg-[#1f1f1f] rounded animate-pulse" />
+            <div key={i} className="bg-[#fffefb] rounded-2xl p-6 border border-[#e4dccb]">
+              <div className="h-4 w-24 bg-[#e4dccb] rounded animate-pulse mb-3" />
+              <div className="h-8 w-16 bg-[#e4dccb] rounded animate-pulse" />
             </div>
           ))}
         </div>
@@ -81,7 +81,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white font-playfair mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-fg-strong font-playfair mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {statCards.map((stat, idx) => (
@@ -89,18 +89,18 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="bg-[#111111] rounded-2xl border border-[#1f1f1f] overflow-hidden">
-        <div className="px-6 py-4 border-b border-[#1f1f1f]">
-          <h2 className="text-lg font-semibold text-white font-nunito">Recent Activity</h2>
+      <div className="bg-[#fffefb] rounded-2xl border border-[#e4dccb] overflow-hidden">
+        <div className="px-6 py-4 border-b border-[#e4dccb]">
+          <h2 className="text-lg font-semibold text-fg-strong font-nunito">Recent Activity</h2>
         </div>
-        <div className="divide-y divide-[#1f1f1f]">
+        <div className="divide-y divide-[#e4dccb]">
           {activity.length === 0 ? (
-            <div className="px-6 py-12 text-center text-gray-500 font-nunito">No recent activity</div>
+            <div className="px-6 py-12 text-center text-fg-muted font-nunito">No recent activity</div>
           ) : (
             activity.map((item, idx) => (
               <div key={idx} className="px-6 py-4 flex items-center gap-4">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  item.type === "therapist" ? "bg-[#47898E]/10 text-[#47898E]" : "bg-[#E77D3C]/10 text-[#E77D3C]"
+                  item.type === "therapist" ? "bg-[#4a6b52]/10 text-[#4a6b52]" : "bg-[#d97a58]/10 text-[#d97a58]"
                 }`}>
                   {item.type === "therapist" ? (
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,12 +113,12 @@ export default function Dashboard() {
                   )}
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm font-medium text-white font-nunito">{item.name}</div>
-                  <div className="text-xs text-gray-500 font-nunito">
+                  <div className="text-sm font-medium text-fg-strong font-nunito">{item.name}</div>
+                  <div className="text-xs text-fg-muted font-nunito">
                     {item.type === "user" && item.email}
                   </div>
                 </div>
-                <div className="text-xs text-gray-500 font-nunito">
+                <div className="text-xs text-fg-muted font-nunito">
                   {new Date(item.timestamp).toLocaleDateString()}
                 </div>
               </div>
