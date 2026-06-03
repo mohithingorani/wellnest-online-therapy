@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-/* Guards authenticated routes. Redirects to /signin (remembering where the user
+/* Guards authenticated routes. Redirects to /join (remembering where the user
    was headed) when not logged in. Waits out the auth-restore loading state. */
 export default function ProtectedRoute() {
   const { user, loading } = useAuth();
@@ -16,7 +16,7 @@ export default function ProtectedRoute() {
   }
 
   if (!user) {
-    return <Navigate to="/signin" replace state={{ from: location.pathname }} />;
+    return <Navigate to="/join" replace state={{ from: location.pathname }} />;
   }
 
   return <Outlet />;

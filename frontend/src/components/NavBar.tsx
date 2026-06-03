@@ -120,8 +120,8 @@ export default function NavBar() {
             </div>
           ) : (
             <>
-              <Link to="/signin" className={btnGhost}>Log in</Link>
-              <Link to="/signup" className={btnMaterial}>Get started</Link>
+              <Link to="/join" className={btnGhost}>Log in</Link>
+              <Link to="/join" className={btnMaterial}>Get started</Link>
             </>
           )}
         </div>
@@ -156,8 +156,8 @@ export default function NavBar() {
                 </>
               ) : (
                 <>
-                  <Link to="/signin" onClick={() => setMobileMenuOpen(false)} className="h-12 flex items-center justify-center rounded-full font-semibold text-sm ring-1 ring-border text-fg-strong hover:bg-surface transition-colors">Log in</Link>
-                  <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="h-12 flex items-center justify-center rounded-full font-semibold text-sm bg-accent text-primary-fg">Get started</Link>
+                  <Link to="/join" onClick={() => setMobileMenuOpen(false)} className="h-12 flex items-center justify-center rounded-full font-semibold text-sm ring-1 ring-border text-fg-strong hover:bg-surface transition-colors">Log in</Link>
+                  <Link to="/join" onClick={() => setMobileMenuOpen(false)} className="h-12 flex items-center justify-center rounded-full font-semibold text-sm bg-accent text-primary-fg">Get started</Link>
                 </>
               )}
             </div>
@@ -171,7 +171,7 @@ export default function NavBar() {
 export function LoginButton({ onClick }: { onClick?: () => void }) {
   const navigate = useNavigate();
   return (
-    <button onClick={() => { onClick?.(); navigate("/signin"); }} className="inline-flex items-center justify-center h-10 px-4 rounded-full font-semibold text-sm text-fg-strong hover:bg-surface transition-colors">
+    <button onClick={() => { onClick?.(); navigate("/join"); }} className="inline-flex items-center justify-center h-10 px-4 rounded-full font-semibold text-sm text-fg-strong hover:bg-surface transition-colors">
       Log in
     </button>
   );
