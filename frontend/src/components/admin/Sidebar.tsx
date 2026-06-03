@@ -64,22 +64,22 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-screen bg-[#0a0a0a] border-r border-[#1f1f1f] flex flex-col transition-all duration-300 z-40 ${
+      className={`fixed left-0 top-0 h-screen bg-[#f7f4ec] border-r border-[#e4dccb] flex flex-col transition-all duration-300 z-40 ${
         collapsed ? "w-[72px]" : "w-[280px]"
       }`}
     >
-      <div className="flex items-center justify-between p-4 border-b border-[#1f1f1f]">
+      <div className="flex items-center justify-between p-4 border-b border-[#e4dccb]">
         {!collapsed && (
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#47898E] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#4a6b52] rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm font-nunito">W</span>
             </div>
-            <span className="font-bold text-lg text-white font-nunito">WellNest</span>
+            <span className="font-bold text-lg text-fg-strong font-nunito">WellNest</span>
           </div>
         )}
         <button
           onClick={onToggle}
-          className="p-2 rounded-lg text-gray-500 hover:bg-[#1f1f1f] transition-colors"
+          className="p-2 rounded-lg text-fg-muted hover:bg-[#e4dccb] transition-colors"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -97,7 +97,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <div key={section.section} className="mb-6">
             {!collapsed && (
               <div className="px-4 mb-2">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider font-nunito">{section.section}</span>
+                <span className="text-xs font-semibold text-fg-muted uppercase tracking-wider font-nunito">{section.section}</span>
               </div>
             )}
             {section.items.map((item) => (
@@ -108,8 +108,8 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2.5 mx-2 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? "bg-[#47898E] text-white"
-                      : "text-gray-400 hover:text-white hover:bg-[#1f1f1f]"
+                      ? "bg-[#4a6b52] text-white"
+                      : "text-fg-muted hover:text-fg-strong hover:bg-[#e4dccb]"
                   }`
                 }
               >
@@ -121,10 +121,10 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-[#1f1f1f]">
+      <div className="p-4 border-t border-[#e4dccb]">
         <button
           onClick={logout}
-          className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-gray-400 hover:bg-red-900/20 hover:text-red-400 transition-colors ${
+          className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-xl text-fg-muted hover:bg-red-50 hover:text-red-600 transition-colors ${
             collapsed ? "justify-center" : ""
           }`}
         >

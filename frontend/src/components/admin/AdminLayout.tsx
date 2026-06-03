@@ -10,10 +10,10 @@ export function AdminLayout() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
+      <div className="min-h-screen flex items-center justify-center bg-[#f7f4ec]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-[#47898E] border-t-transparent rounded-full animate-spin" />
-          <span className="text-gray-400 font-nunito">Loading...</span>
+          <div className="w-12 h-12 border-4 border-[#4a6b52] border-t-transparent rounded-full animate-spin" />
+          <span className="text-fg-muted font-nunito">Loading...</span>
         </div>
       </div>
     );
@@ -24,7 +24,7 @@ export function AdminLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[#f7f4ec]">
       <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <Navbar sidebarCollapsed={sidebarCollapsed} />
       <main
