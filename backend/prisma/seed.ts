@@ -50,13 +50,14 @@ async function main() {
   }
 
   const admins = [
-    { email: 'admin@wellnest.com', password: 'hashed_admin_pw', name: 'Super Admin', role: 'super_admin' },
-    { email: 'rahul@wellnest.com', password: 'hashed_rahul_pw', name: 'Rahul Verma', role: 'admin' },
-    { email: 'priya@wellnest.com', password: 'hashed_priya_pw', name: 'Priya Kapoor', role: 'moderator' },
+    { email: 'admin@wellnest.com', name: 'Super Admin', role: 'super_admin' },
+    { email: 'rahul@wellnest.com', name: 'Rahul Verma', role: 'admin' },
+    { email: 'priya@wellnest.com', name: 'Priya Kapoor', role: 'moderator' },
   ];
 
   for (const admin of admins) {
-    await prisma.admin.create({ data: admin });
+    const passwordHash = await argon2.hash('password123');
+    await prisma.admin.create({ data: { ...admin, password: passwordHash } });
   }
 
   const sessionTypes = [

@@ -13,6 +13,10 @@ import therapistAuthRoutes from "./routes/therapistAuth";
 import messageRoutes from "./routes/messages";
 import journalRoutes from "./routes/journal";
 import authRoutes from "./routes/auth";
+import seedRoutes from "./routes/seeds";
+import assessmentRoutes from "./routes/assessments";
+import referralRoutes from "./routes/referrals";
+import waitlistRoutes from "./routes/waitlist";
 import { openApiSpec } from "./swagger";
 import { createSocketServer } from "./socket";
 
@@ -21,7 +25,7 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:5173","https://wellnest.mohit.systems"],
+    origin: ["http://localhost:5173","http://localhost:5174","https://wellnest.mohit.systems"],
     credentials: true,
   }),
 );
@@ -40,6 +44,10 @@ app.use("/api/therapists/auth", therapistAuthRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/journal", journalRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/seeds", seedRoutes);
+app.use("/api/assessments", assessmentRoutes);
+app.use("/api/referrals", referralRoutes);
+app.use("/api/waitlist", waitlistRoutes);
 
 const PORT = process.env.PORT || 3000;
 
