@@ -20,9 +20,82 @@ model User {
   sessions       Session[]
   conversations  Conversation[]
   journalEntries JournalEntry[]
+  seeds          UserSeeds?
+  seedTransactions SeedTransaction[]
+  achievements   Achievement[]
+  assessments    Assessment[]
+  referralCode   ReferralCode?
+  referredBy     Int?
 
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+}
+
+model UserSeeds {
+  id             Int      @id @default(autoincrement())
+  userId         Int      @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  total          Int      @default(0)
+  lifetimeEarned Int      @default(0)
+  updatedAt      DateTime @updatedAt
+}
+
+model SeedTransaction {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount    Int
+  reason    String
+  meta      String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, createdAt])
+}
+
+model Achievement {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug     String
+  earnedAt DateTime @default(now())
+
+  @@unique([userId, slug])
+  @@index([userId])
+}
+
+model Assessment {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  score     Int
+  band      String
+  answers   Json
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, type])
+}
+
+model ReferralCode {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code      String   @unique
+  uses      Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model WaitlistEntry {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  email     String
+  city      String?
+  concern   String?
+  createdAt DateTime @default(now())
+
+  @@index([email])
 }
 
 model Session {
