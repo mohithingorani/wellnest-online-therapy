@@ -16,6 +16,7 @@ model User {
   email        String    @unique
   name         String
   passwordHash String
+  googleId     String?   @unique
   sessions       Session[]
   conversations  Conversation[]
   journalEntries JournalEntry[]

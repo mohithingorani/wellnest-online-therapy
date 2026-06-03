@@ -12,6 +12,7 @@ import adminRoutes from "./routes/admin";
 import therapistAuthRoutes from "./routes/therapistAuth";
 import messageRoutes from "./routes/messages";
 import journalRoutes from "./routes/journal";
+import authRoutes from "./routes/auth";
 import { openApiSpec } from "./swagger";
 import { createSocketServer } from "./socket";
 
@@ -38,6 +39,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/therapists/auth", therapistAuthRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/journal", journalRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 
