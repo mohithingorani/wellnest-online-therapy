@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import type { ReactNode } from "react";
 import { adminApi } from "../services/adminApi";
 import type { Admin } from "../services/adminApi";
@@ -28,28 +28,31 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
     const res = await adminApi.login(email, password);
     if (res.success) {
       setAdmin(res.data);
     } else {
       throw new Error("Login failed");
     }
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     await adminApi.logout();
     setAdmin(null);
-  };
+  }, []);
 
-  const updateAdmin = (next: Admin) => {
+  const updateAdmin = useCallback((next: Admin) => {
     setAdmin(next);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ admin, loading, login, logout, updateAdmin }),
+    [admin, loading, login, logout, updateAdmin]
+  );
 
   return (
-    <AdminAuthContext.Provider
-      value={{ admin, loading, login, logout, updateAdmin }}
-    >
+    <AdminAuthContext.Provider value={value}>
       {children}
     </AdminAuthContext.Provider>
   );

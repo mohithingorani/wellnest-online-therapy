@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import type { ReactNode } from "react";
 import { authService, setAuthUser, getAuthUser, clearAuthUser } from "../services/auth";
 
@@ -86,8 +86,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
+  const value = useMemo(
+    () => ({ user, loading, login, signup, googleAuth, logout }),
+    [user, loading, login, signup, googleAuth, logout]
+  );
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, googleAuth, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
