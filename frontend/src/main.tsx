@@ -14,9 +14,8 @@ import LandingPage from "./pages/App";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 const AboutPage = lazy(() => import("./pages/About"));
-const Signin = lazy(() => import("./pages/Signin"));
-const SignUp = lazy(() => import("./pages/SignUp"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const Join = lazy(() => import("./pages/Join"));
+
 const TherapistsPage = lazy(() => import("./pages/Therapists"));
 const TherapistPage = lazy(() => import("./Therapist"));
 const Booking = lazy(() => import("./pages/Booking"));
@@ -45,13 +44,15 @@ createRoot(document.getElementById("root")!).render(
       <Suspense fallback={null}>
         <AuthProvider>
         <Routes>
+          {/* Auth pages — no nav/footer */}
+          <Route path="join" element={<Join />} />
+          <Route path="signin" element={<Join />} />
+          <Route path="signup" element={<Join />} />
+
           {/* Public Routes */}
           <Route element={<Layout />}>
             <Route index element={<LandingPage />} />
             <Route path="about" element={<AboutPage />} />
-            <Route path="signin" element={<Signin />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="reset-password" element={<ResetPassword />} />
             <Route path="therapists" element={<TherapistsPage />} />
             <Route path="therapists/:id" element={<TherapistPage />} />
 
