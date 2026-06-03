@@ -2,7 +2,7 @@ import SupportCard from "./SupportCard";
 
 export default function SupportBox() {
   return (
-    <div className="text-[#0D393E] font-nunito flex flex-col lg:flex-row xl:gap-16">
+    <div className="text-fg-strong font-nunito flex flex-col lg:flex-row xl:gap-16">
       
       {/* LEFT */}
       <div className="flex flex-col gap-4 max-w-60">
@@ -14,15 +14,15 @@ export default function SupportBox() {
           Support, made simple
         </div>
 
-        <div className="text-sm text-[#3A5F63]">
+        <div className="text-sm text-fg-muted">
           Take the first step toward feeling like yourself again.
         </div>
       </div>
 
       {/* RIGHT */}
-      <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full items-center justify-between lg:border-l-3 border-[#CDD7D9] p-6 md:p-2 xl:pl-12">
+      <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full items-center justify-between lg:border-l-3 border-border p-6 md:p-2 xl:pl-12">
         <SupportCard
-          className="bg-[#235C61]"
+          className="bg-sage-600"
           image="person"
           number={1}
           heading="Share how you feel"
@@ -30,7 +30,7 @@ export default function SupportBox() {
         />
 
         <SupportCard
-          className="bg-[#E77D3C]"
+          className="bg-clay-400"
           image="search"
           number={2}
           heading="Find your match"
@@ -38,7 +38,7 @@ export default function SupportBox() {
         />
 
         <SupportCard
-          className="bg-[#B5D6E2]"
+          className="bg-ochre-400"
           image="calender"
           number={3}
           heading="Book a session"
@@ -46,7 +46,7 @@ export default function SupportBox() {
         />
 
         <SupportCard
-          className="bg-[#A3BFA9]"
+          className="bg-sage-400"
           image="heart"
           number={4}
           heading="Feel better together"

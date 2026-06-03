@@ -26,7 +26,7 @@ export default function SupportCard({
         <div className="text-sm font-semibold leading-tight">{heading}</div>
 
         {/* SUBTEXT */}
-        <div className="text-xs text-[#3A5F63] leading-relaxed max-w-40">
+        <div className="text-xs text-fg-muted leading-relaxed max-w-40">
           {subtext}
         </div>
       </div>
