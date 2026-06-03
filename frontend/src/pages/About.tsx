@@ -89,17 +89,21 @@ export default function AboutPage() {
       {/* ========================================================= VALUES === */}
       <Section>
         <SectionHead eyebrow="Why WellNest" title="Designed for trust, clarity, and accessibility." />
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="divide-y divide-border border-y border-border">
           {[
-            { title: "Verified Professionals", desc: "Every therapist on the platform is reviewed and verified before onboarding." },
-            { title: "Flexible Sessions", desc: "Book video, chat, or voice sessions that fit your schedule and comfort." },
-            { title: "Privacy First", desc: "Your conversations and personal data stay secure and confidential." },
-            { title: "Built for Young Adults", desc: "Designed specifically around the challenges students and young professionals face." },
+            { n: "01", title: "Verified Professionals", desc: "Every therapist on the platform is reviewed and verified before onboarding — license, credentials, standing.", tag: "100% verified" },
+            { n: "02", title: "Flexible Sessions", desc: "Book video, chat, or voice sessions that fit your schedule and comfort. Switch formats anytime.", tag: "Your way" },
+            { n: "03", title: "Privacy First", desc: "Your conversations and personal data stay secure and confidential. We never sell your information.", tag: "Encrypted" },
+            { n: "04", title: "Built for Young Adults", desc: "Designed specifically around the challenges students and young professionals face — accessible and human.", tag: "For you" },
           ].map((v, i) => (
-            <Reveal key={v.title} delay={i * 100}>
-              <div className="h-full rounded-2xl surface-raised p-7">
-                <h3 className="font-display text-xl text-fg-strong">{v.title}</h3>
-                <p className="mt-2 text-fg-muted leading-relaxed text-sm">{v.desc}</p>
+            <Reveal key={v.n} delay={i * 70}>
+              <div className="grid grid-cols-[auto_1fr_auto] items-center gap-6 md:gap-12 py-7 md:py-9">
+                <span aria-hidden className="font-display font-semibold leading-none text-fg-muted/15 text-[4.5rem] md:text-[7rem] select-none w-20 md:w-36 text-right">{v.n}</span>
+                <div>
+                  <h3 className="font-display text-xl md:text-2xl text-fg-strong">{v.title}</h3>
+                  <p className="mt-2 text-fg-muted leading-relaxed max-w-lg">{v.desc}</p>
+                </div>
+                <span className="hidden md:inline-flex rounded-full ring-1 ring-border px-3.5 py-1.5 text-xs font-medium text-fg-muted whitespace-nowrap">{v.tag}</span>
               </div>
             </Reveal>
           ))}
@@ -109,21 +113,45 @@ export default function AboutPage() {
       {/* ====================================================== HOW IT WORKS === */}
       <Section id="how-it-works">
         <SectionHead eyebrow="How It Works" title="Getting support should feel simple." />
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { n: "01", t: "Browse Therapists", d: "Explore verified professionals based on specialties, experience, and preferences." },
-            { n: "02", t: "Book a Session", d: "Choose a time and format that works best for you — quickly and securely." },
-            { n: "03", t: "Start Your Journey", d: "Connect with the right therapist and begin getting the support you need." },
-          ].map((s, i) => (
-            <Reveal key={s.n} delay={i * 110}>
-              <div className="h-full rounded-[1.5rem] surface-raised p-7 transition-transform duration-300">
-                <span className="font-display text-sm font-semibold text-accent">{s.n}</span>
-                <span className="block h-px w-full bg-border mt-3" />
-                <h3 className="mt-4 font-display text-xl text-fg-strong">{s.t}</h3>
-                <p className="mt-2 text-sm text-fg-muted leading-relaxed">{s.d}</p>
-              </div>
-            </Reveal>
-          ))}
+
+        {/* desktop: horizontal zigzag timeline; mobile: vertical left-line */}
+        <div className="relative mt-4">
+          {/* horizontal connector (desktop) */}
+          <div aria-hidden className="hidden md:block absolute top-[3.25rem] left-[calc(16.66%+1.5rem)] right-[calc(16.66%+1.5rem)] h-px border-t-2 border-dashed border-border/60" />
+
+          <div className="grid md:grid-cols-3 gap-0 md:gap-8">
+            {[
+              { n: "1", t: "Browse Therapists", d: "Explore verified professionals filtered by specialty, language, and how you'd like to meet.", above: true },
+              { n: "2", t: "Book a Session", d: "Choose a time and format that works for you — quickly, securely, no phone calls required.", above: false },
+              { n: "3", t: "Start Your Journey", d: "Connect with the right therapist and begin getting the support you actually need.", above: true },
+            ].map((s, i) => (
+              <Reveal key={s.n} delay={i * 120}>
+                {/* mobile: left-border vertical layout */}
+                <div className="md:hidden border-l-2 border-border pl-6 pb-10 last:pb-0 relative">
+                  <div className="absolute -left-[1.1rem] top-0 w-9 h-9 rounded-full bg-accent text-primary-fg grid place-items-center font-display font-semibold text-base shadow-soft">{s.n}</div>
+                  <h3 className="font-display text-xl text-fg-strong pt-1">{s.t}</h3>
+                  <p className="mt-2 text-fg-muted leading-relaxed text-sm">{s.d}</p>
+                </div>
+
+                {/* desktop: zigzag — content above/below the timeline */}
+                <div className={`hidden md:flex flex-col items-center text-center gap-0 ${s.above ? "" : "pt-28"}`}>
+                  {s.above && (
+                    <div className="pb-8 px-4">
+                      <h3 className="font-display text-xl text-fg-strong">{s.t}</h3>
+                      <p className="mt-2 text-sm text-fg-muted leading-relaxed">{s.d}</p>
+                    </div>
+                  )}
+                  <div className="w-12 h-12 rounded-full bg-accent text-primary-fg grid place-items-center font-display font-semibold text-lg shadow-[0_8px_20px_-6px_rgba(192,97,63,0.5)] z-10 shrink-0">{s.n}</div>
+                  {!s.above && (
+                    <div className="pt-8 px-4">
+                      <h3 className="font-display text-xl text-fg-strong">{s.t}</h3>
+                      <p className="mt-2 text-sm text-fg-muted leading-relaxed">{s.d}</p>
+                    </div>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </Section>
 
