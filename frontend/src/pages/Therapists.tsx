@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import FiltersSidebar, { type FiltersState } from "../components/FilterSideBar";
 import SecureButton from "../components/SecureButton";
@@ -119,22 +119,26 @@ export default function TherapistsPage() {
     });
   }, [therapists, filters, topFilters, search]);
 
-  // Removable active-filter chips
-  const activeChips: { label: string; clear: () => void }[] = [];
-  if (search) activeChips.push({ label: `"${search}"`, clear: () => setSearch("") });
-  (["concern", "therapyType", "sessionType", "language"] as const).forEach((k) => {
-    if (topFilters[k]) activeChips.push({ label: topFilters[k], clear: () => setTopFilters((p) => ({ ...p, [k]: "" })) });
-  });
-  filters.concerns.forEach((c) => activeChips.push({ label: c, clear: () => setFilters((p) => ({ ...p, concerns: p.concerns.filter((x) => x !== c) })) }));
-  filters.therapyApproaches.forEach((a) => activeChips.push({ label: a, clear: () => setFilters((p) => ({ ...p, therapyApproaches: p.therapyApproaches.filter((x) => x !== a) })) }));
-  if (filters.gender) activeChips.push({ label: filters.gender, clear: () => setFilters((p) => ({ ...p, gender: "" })) });
-  if (filters.sessionType) activeChips.push({ label: filters.sessionType, clear: () => setFilters((p) => ({ ...p, sessionType: "" })) });
-
-  const clearAll = () => {
+  // Stable clear-all handler
+  const clearAll = useCallback(() => {
     setSearch("");
     setTopFilters({ concern: "", therapyType: "", sessionType: "", language: "", location: "" });
     setFilters({ concerns: [], therapyApproaches: [], sessionType: "", gender: "" });
-  };
+  }, []);
+
+  // Removable active-filter chips — memoized so children don't re-render on unrelated state changes
+  const activeChips = useMemo(() => {
+    const chips: { label: string; clear: () => void }[] = [];
+    if (search) chips.push({ label: `"${search}"`, clear: () => setSearch("") });
+    (["concern", "therapyType", "sessionType", "language"] as const).forEach((k) => {
+      if (topFilters[k]) chips.push({ label: topFilters[k], clear: () => setTopFilters((p) => ({ ...p, [k]: "" })) });
+    });
+    filters.concerns.forEach((c) => chips.push({ label: c, clear: () => setFilters((p) => ({ ...p, concerns: p.concerns.filter((x) => x !== c) })) }));
+    filters.therapyApproaches.forEach((a) => chips.push({ label: a, clear: () => setFilters((p) => ({ ...p, therapyApproaches: p.therapyApproaches.filter((x) => x !== a) })) }));
+    if (filters.gender) chips.push({ label: filters.gender, clear: () => setFilters((p) => ({ ...p, gender: "" })) });
+    if (filters.sessionType) chips.push({ label: filters.sessionType, clear: () => setFilters((p) => ({ ...p, sessionType: "" })) });
+    return chips;
+  }, [search, topFilters, filters]);
 
   const hasActiveFilters =
     Object.values(topFilters).some(Boolean) ||
@@ -151,19 +155,19 @@ export default function TherapistsPage() {
             <div className="mb-4 opacity-0 animate-fade-in-up">
               <SecureButton />
             </div>
-            <div className="font-playfair text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2 opacity-0 animate-fade-in-up animation-delay-100">
+            <div className="font-display text-center md:text-start text-4xl md:text-6xl xl:text-7xl flex flex-col gap-2 opacity-0 animate-fade-in-up animation-delay-100">
               <div className="text-fg-strong font-medium">
                 Find the right
               </div>
               <div className="text-accent font-semibold italic">therapist for you.</div>
             </div>
-            <div className="font-nunito text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-fg opacity-0 animate-fade-in-up animation-delay-200">
+            <div className="font-body text-center md:text-start text-sm md:text-xl 2xl:text-2xl mt-6 text-fg opacity-0 animate-fade-in-up animation-delay-200">
               <div>Browse verified therapists and find the perfect</div>
               <div>match for your needs.</div>
             </div>
           </div>
           <div className=" hidden xl:inline-block justify-end">
-            <img className=" w-xl" src="/sofa.png" alt="sofa"/>
+            <img className="w-xl" src="/sofa.png" alt="" loading="lazy" decoding="async" />
           </div>
         </section>
         
@@ -171,7 +175,7 @@ export default function TherapistsPage() {
           <div className="bg-surface-2 border border-border rounded-2xl p-4 md:p-6 shadow-sm">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 items-end">
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-fg-muted font-nunito">
+                <label className="text-xs text-fg-muted font-body">
                   What can we help you with?
                 </label>
                 <select
@@ -198,7 +202,7 @@ export default function TherapistsPage() {
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-fg-muted font-nunito">
+                <label className="text-xs text-fg-muted font-body">
                   Therapy type
                 </label>
                 <select
@@ -215,7 +219,7 @@ export default function TherapistsPage() {
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-fg-muted font-nunito">
+                <label className="text-xs text-fg-muted font-body">
                   Session type
                 </label>
                 <select
@@ -232,7 +236,7 @@ export default function TherapistsPage() {
                 </select>
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs text-fg-muted font-nunito">
+                <label className="text-xs text-fg-muted font-body">
                   Language
                 </label>
                 <select
@@ -256,7 +260,7 @@ export default function TherapistsPage() {
               <div className="flex items-end">
                 <button
                   disabled={!hasActiveFilters}
-                  className="w-full h-12 rounded-lg font-nunito border border-fg-strong text-fg-strong font-medium flex items-center justify-center gap-2 hover:bg-fg-strong/5 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="w-full h-12 rounded-lg font-body border border-fg-strong text-fg-strong font-medium flex items-center justify-center gap-2 hover:bg-fg-strong/5 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
                   onClick={() => {
                     setTopFilters({ concern: "", therapyType: "", sessionType: "", language: "", location: "" });
                     setFilters({ concerns: [], therapyApproaches: [], sessionType: "", gender: "" });
