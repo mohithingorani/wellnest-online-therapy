@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
@@ -7,16 +7,21 @@ const columns = [
     title: "Explore",
     links: [
       { label: "Find a therapist", to: "/therapists" },
-      { label: "How it works", to: "/#how" },
-      { label: "Pricing", to: "/#pricing" },
+      { label: "How it works", to: "/#journey" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", to: "/about" },
-      { label: "Privacy", to: "/about" },
-      { label: "Contact", to: "/about" },
+      { label: "Contact", to: "/contact" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", to: "/privacy" },
+      { label: "Terms of Service", to: "/terms" },
     ],
   },
   {
@@ -28,33 +33,8 @@ const columns = [
   },
 ];
 
-const socials = [
-  {
-    label: "X",
-    href: "#",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.05l12.03 15.64Z" /></svg>
-    ),
-  },
-  {
-    label: "Instagram",
-    href: "#",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth={1.7}>
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: "LinkedIn",
-    href: "#",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C20.4 8.75 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2-3.3-2 0-2.3 1.57-2.3 3.2V21H9z" /></svg>
-    ),
-  },
-];
+// TODO: Add real social profile URLs before launch
+const socials: { label: string; href: string; icon: ReactNode }[] = [];
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -76,7 +56,7 @@ export default function Footer() {
 
       <div className="relative mx-auto flex min-h-[60vh] max-w-[1280px] flex-col px-5 md:px-8 lg:px-12">
         {/* ── top: brand + minimal nav ── */}
-        <div className="grid gap-12 pt-16 md:pt-24 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 pt-16 md:pt-24 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           {/* brand + newsletter + socials */}
           <div className="max-w-sm">
             <Logo onDark />
@@ -115,18 +95,20 @@ export default function Footer() {
               )}
             </div>
 
-            <div className="mt-8 flex items-center gap-2.5">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  aria-label={s.label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-night-border text-night-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-night-fg/40 hover:text-night-fg"
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </div>
+            {socials.length > 0 && (
+              <div className="mt-8 flex items-center gap-2.5">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    aria-label={s.label}
+                    className="grid h-9 w-9 place-items-center rounded-full border border-night-border text-night-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-night-fg/40 hover:text-night-fg"
+                  >
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* link columns */}
@@ -149,7 +131,11 @@ export default function Footer() {
 
         {/* ── legal row ── */}
         <div className="mt-16 flex flex-col gap-3 border-t border-night-border/60 pt-6 text-sm text-night-muted md:flex-row md:items-center md:justify-between">
-          <div>© {new Date().getFullYear()} WellNest — therapy that fits.</div>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <span>© {new Date().getFullYear()} WellNest</span>
+            <Link to="/privacy" className="hover:text-night-fg transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-night-fg transition-colors">Terms of Service</Link>
+          </div>
           <div className="flex items-center gap-2">
             <svg className="w-4 h-4 text-night-fg/60" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
