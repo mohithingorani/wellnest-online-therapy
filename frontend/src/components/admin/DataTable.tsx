@@ -18,7 +18,7 @@ interface DataTableProps<T> {
 export function DataTable<T>({ columns, data, keyExtractor, onRowClick, emptyMessage = "No data available" }: DataTableProps<T>) {
   if (data.length === 0) {
     return (
-      <div className="text-center py-12 text-slate-500 dark:text-slate-400 font-nunito">{emptyMessage}</div>
+      <div className="text-center py-12 text-fg-muted dark:text-fg-muted font-nunito">{emptyMessage}</div>
     );
   }
 
@@ -26,26 +26,26 @@ export function DataTable<T>({ columns, data, keyExtractor, onRowClick, emptyMes
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-[#1f1f1f]">
+          <tr className="border-b border-[#e4dccb]">
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider font-nunito"
+                className="px-4 py-3 text-left text-xs font-semibold text-fg-muted uppercase tracking-wider font-nunito"
               >
                 {col.header}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#1f1f1f]">
+        <tbody className="divide-y divide-[#e4dccb]">
           {data.map((item) => (
             <tr
               key={keyExtractor(item)}
               onClick={() => onRowClick?.(item)}
-              className={onRowClick ? "cursor-pointer hover:bg-[#1a1a1a] transition-colors" : ""}
+              className={onRowClick ? "cursor-pointer hover:bg-[#fffefb] transition-colors" : ""}
             >
               {columns.map((col) => (
-                <td key={col.key} className="px-4 py-3.5 text-sm text-gray-300 font-nunito">
+                <td key={col.key} className="px-4 py-3.5 text-sm text-fg font-nunito">
                   {col.render ? col.render(item) : (item as Record<string, unknown>)[col.key] as ReactNode}
                 </td>
               ))}
