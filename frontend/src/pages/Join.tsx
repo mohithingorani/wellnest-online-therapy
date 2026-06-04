@@ -117,9 +117,9 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
       // One Tap suppression, dismissed state, or third-party cookie blocks.
       google.accounts.id.renderButton(googleBtnRef.current!, {
         type: "standard",
-        theme: "outline",
+        theme: "filled_black",
         size: "large",
-        shape: "pill",
+        shape: "rectangular",
         width: googleBtnRef.current!.getBoundingClientRect().width || 360,
         text: isLogin ? "signin_with" : "signup_with",
       });
@@ -151,11 +151,6 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
           <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#1e1a14]/70 via-[#1e1a14]/10 to-transparent" />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-[#1e1a14]/20 to-transparent" />
 
-          {/* logo */}
-          <div className="absolute top-8 left-8">
-            <Logo onDark />
-          </div>
-
           {/* headline */}
           <div className="absolute bottom-12 left-8 right-8">
             <h2 className="font-display font-medium text-white leading-[1.05] tracking-[-0.025em] text-[2.4rem]">
@@ -173,13 +168,14 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
         </div>
 
         {/* ── RIGHT form panel ── */}
-        {/* overflow-y-auto + no justify-center on mobile: form scrolls on short screens */}
-        <div className="flex flex-1 flex-col bg-white overflow-y-auto lg:justify-center lg:min-h-0 px-5 sm:px-8 lg:px-12 xl:px-16"
-          style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom, 2rem))" }}>
-          <div className="mx-auto w-full max-w-[380px]">
+        {/* overflow-y-auto scrolls naturally from top — no justify-center (causes flex overflow
+            to push content above the viewport where it can't be scrolled back to) */}
+        <div className="flex flex-1 flex-col bg-white overflow-y-auto lg:min-h-0 px-5 sm:px-8 lg:px-12 xl:px-16">
+          <div className="mx-auto w-full max-w-[380px] py-8 lg:py-10"
+            style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom, 2rem))" }}>
 
-            {/* logo — mobile only, with top space that clears the fixed Back button */}
-            <div className="pt-16 pb-8 flex justify-center lg:hidden">
+            {/* logo — mobile top padding clears the fixed Back button */}
+            <div className="pt-10 pb-6 sm:pt-12 lg:pt-0 lg:pb-6 flex items-center">
               <Logo />
             </div>
 
@@ -299,11 +295,14 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
             </div>
 
             {/* Google sign-in — rendered as a real iframe button by GSI.
-                The [&>div]:w-full trick makes Google's wrapper div fill the container. */}
-            <div
-              ref={googleBtnRef}
-              className="w-full flex justify-center [&>div]:!w-full [&_iframe]:!w-full"
-            />
+                filled_black theme gives a solid dark bg that stands out from the white form.
+                The wrapper clips the iframe to rounded-xl corners. */}
+            <div className="overflow-hidden rounded-lg border border-[#e2ddd6]">
+              <div
+                ref={googleBtnRef}
+                className="w-full [&>div]:!w-full [&_iframe]:!w-full [&_iframe]:!rounded-none"
+              />
+            </div>
 
             {/* bottom — already have account / create */}
             <p className="mt-7 text-center text-[0.82rem] text-fg-muted">
