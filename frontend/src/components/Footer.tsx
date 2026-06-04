@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { subscribeToNewsletter } from "../services/newsletter";
 
 const columns = [
   {
@@ -39,12 +40,22 @@ const socials: { label: string; href: string; icon: ReactNode }[] = [];
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    setSubscribed(true);
-    setEmail("");
+    setLoading(true);
+    setError("");
+    const res = await subscribeToNewsletter(email);
+    setLoading(false);
+    if (res.success) {
+      setSubscribed(true);
+      setEmail("");
+    } else {
+      setError(res.message ?? "Something went wrong. Try again.");
+    }
   };
 
   return (
@@ -80,18 +91,26 @@ export default function Footer() {
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
                     placeholder="Your email"
                     className="h-full min-w-0 flex-1 bg-transparent text-sm text-night-fg placeholder-night-muted outline-none"
                   />
                   <button
                     type="submit"
+                    disabled={loading}
                     aria-label="Subscribe"
-                    className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent text-primary-fg transition-all duration-300 hover:bg-accent-hover hover:scale-105 active:scale-95"
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent text-primary-fg transition-all duration-300 hover:bg-accent-hover hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
+                    {loading ? (
+                      <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" /></svg>
+                    ) : (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
+                    )}
                   </button>
                 </form>
+              )}
+              {error && (
+                <p className="mt-2 text-xs text-ochre-400">{error}</p>
               )}
             </div>
 

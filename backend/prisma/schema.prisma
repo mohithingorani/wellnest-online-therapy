@@ -215,3 +215,12 @@ model Language {
 
   createdAt   DateTime  @default(now())
 }
+
+model NewsletterSubscriber {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String?
+  subscribedAt DateTime @default(now())
+
+  @@index([email])
+}

@@ -17,6 +17,7 @@ import seedRoutes from "./routes/seeds";
 import assessmentRoutes from "./routes/assessments";
 import referralRoutes from "./routes/referrals";
 import waitlistRoutes from "./routes/waitlist";
+import newsletterRoutes from "./routes/newsletter";
 import { openApiSpec } from "./swagger";
 import { createSocketServer } from "./socket";
 
@@ -48,6 +49,7 @@ app.use("/api/seeds", seedRoutes);
 app.use("/api/assessments", assessmentRoutes);
 app.use("/api/referrals", referralRoutes);
 app.use("/api/waitlist", waitlistRoutes);
+app.use("/api/newsletter", newsletterRoutes);
 
 const PORT = process.env.PORT || 3000;
 

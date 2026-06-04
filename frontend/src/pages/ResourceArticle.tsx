@@ -9,12 +9,12 @@ import { useSeedsCelebration } from "../components/SeedsCelebration";
 function renderBody(body: string) {
   return body.split("\n\n").map((block, i) => {
     if (block.startsWith("## ")) {
-      return <h2 key={i} className="font-display text-[1.35rem] font-medium text-fg-strong mt-8 mb-3 tracking-[-0.01em]">{block.slice(3)}</h2>;
+      return <h2 key={i} className="font-display text-[1.35rem] font-medium text-fg-strong mt-10 mb-3 tracking-[-0.01em]">{block.slice(3)}</h2>;
     }
     if (block.startsWith("- ")) {
       const items = block.split("\n").filter(Boolean);
       return (
-        <ul key={i} className="space-y-2 my-4 pl-1">
+        <ul key={i} className="space-y-2 my-5 pl-1">
           {items.map((item, j) => (
             <li key={j} className="flex items-start gap-2.5 text-fg leading-relaxed">
               <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0 mt-[0.45rem]" />
@@ -23,6 +23,30 @@ function renderBody(body: string) {
           ))}
         </ul>
       );
+    }
+    /* numbered list (e.g. "1. foo\n2. bar") */
+    const lines = block.split("\n").filter(Boolean);
+    const numberedStart = lines.findIndex((l) => /^\d+\.\s/.test(l.trim()));
+    if (numberedStart >= 0) {
+      const listLines = lines.slice(numberedStart);
+      if (listLines.length > 1 && listLines.every((l) => /^\d+\.\s/.test(l.trim()))) {
+        return (
+          <div key={i}>
+            {numberedStart > 0 && (
+              <p className="text-fg leading-[1.75] my-4"
+                dangerouslySetInnerHTML={{ __html: lines.slice(0, numberedStart).join(" ").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") }}
+              />
+            )}
+            <ol className="space-y-2 my-5 pl-1 list-decimal list-inside marker:text-accent">
+              {listLines.map((item, j) => (
+                <li key={j} className="text-fg leading-relaxed pl-1"
+                  dangerouslySetInnerHTML={{ __html: item.replace(/^\d+\.\s+/, "").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") }}
+                />
+              ))}
+            </ol>
+          </div>
+        );
+      }
     }
     return (
       <p key={i} className="text-fg leading-[1.75] my-4"
