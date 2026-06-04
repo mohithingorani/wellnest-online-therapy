@@ -28,8 +28,23 @@ const inp =
 export default function Join({ mode: initialMode = "login" }: { mode?: "login" | "signup" }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: string } | null)?.from || "/dashboard";
+  const locState = location.state as { from?: string; resultState?: Record<string, unknown> } | null;
+  const from = locState?.from || "/dashboard";
+  const resultState = locState?.resultState;
   const { login, signup, googleAuth } = useAuth();
+
+  /* If the user came from an assessment result page, return there after auth
+     so the unlocked content is immediately visible and the assessment is saved. */
+  const afterAuth = (isNewAccount: boolean) => {
+    const isResultFrom = from.includes("/assess/") && from.includes("/result") && resultState;
+    if (isNewAccount && isResultFrom) {
+      navigate(from, { state: { ...resultState, justSignedUp: true }, replace: true });
+    } else if (isNewAccount) {
+      navigate("/dashboard?welcome=1", { replace: true });
+    } else {
+      navigate(from, { replace: true });
+    }
+  };
 
   const [mode, setMode] = useState<"login" | "signup">(initialMode);
   const isLogin = mode === "login";
@@ -57,10 +72,10 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
     try {
       if (isLogin) {
         await login(email, password);
-        navigate(from, { replace: true });
+        afterAuth(false);
       } else {
         await signup(name, email, password);
-        navigate("/dashboard?welcome=1", { replace: true });
+        afterAuth(true);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : isLogin ? "Incorrect email or password." : "Something went wrong. Please try again.");
@@ -90,7 +105,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
           setError("");
           try {
             await googleAuth(credential);
-            navigate(isLogin ? from : "/dashboard?welcome=1", { replace: true });
+            afterAuth(!isLogin);
           } catch (err) {
             setError(err instanceof Error ? err.message : "Google sign-in failed.");
           } finally {
@@ -117,13 +132,17 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
   return (
     <div className="min-h-dvh bg-[#f5f1eb] flex items-stretch lg:items-center lg:justify-center lg:p-6">
 
-      {/* back link */}
-      <Link to="/" className="fixed left-5 top-5 z-50 inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-white/80 px-3 py-1.5 text-xs font-medium text-fg-muted backdrop-blur-sm transition-all hover:bg-white hover:text-fg-strong hover:shadow-soft">
+      {/* back link — safe-area aware so it clears notch on iOS */}
+      <Link
+        to="/"
+        className="fixed left-4 z-50 inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-white/80 px-3 py-1.5 text-xs font-medium text-fg-muted backdrop-blur-sm transition-all hover:bg-white hover:text-fg-strong hover:shadow-soft"
+        style={{ top: "max(16px, env(safe-area-inset-top, 16px))" }}
+      >
         <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
         Back
       </Link>
 
-      <div className="w-full max-w-[1180px] lg:flex lg:rounded-2xl lg:overflow-hidden lg:shadow-[0_20px_60px_-30px_rgba(47,58,50,0.35)]">
+      <div className="flex flex-col w-full max-w-[1180px] lg:flex-row lg:h-[min(740px,88vh)] lg:rounded-2xl lg:overflow-hidden lg:shadow-[0_20px_60px_-30px_rgba(47,58,50,0.35)]">
 
         {/* ── LEFT image panel ── */}
         <div className="relative hidden lg:block lg:w-[46%] shrink-0">
@@ -154,11 +173,13 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
         </div>
 
         {/* ── RIGHT form panel ── */}
-        <div className="flex flex-1 flex-col justify-center bg-white px-6 py-12 sm:px-10 lg:px-12 xl:px-16 lg:min-h-0">
+        {/* overflow-y-auto + no justify-center on mobile: form scrolls on short screens */}
+        <div className="flex flex-1 flex-col bg-white overflow-y-auto lg:justify-center lg:min-h-0 px-5 sm:px-8 lg:px-12 xl:px-16"
+          style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom, 2rem))" }}>
           <div className="mx-auto w-full max-w-[380px]">
 
-            {/* logo — mobile only */}
-            <div className="mb-8 flex justify-center lg:hidden">
+            {/* logo — mobile only, with top space that clears the fixed Back button */}
+            <div className="pt-16 pb-8 flex justify-center lg:hidden">
               <Logo />
             </div>
 
@@ -263,7 +284,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
               <button
                 type="submit"
                 disabled={loading}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-accent text-sm font-semibold text-primary-fg transition-all duration-200 hover:bg-accent-hover active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent text-sm font-semibold text-primary-fg transition-all duration-200 hover:bg-accent-hover active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {loading && <span className="h-3.5 w-3.5 rounded-full border-2 border-white/30 border-t-white animate-spin" />}
                 {loading ? (isLogin ? "Signing in…" : "Creating account…") : isLogin ? "Sign in" : "Create account"}

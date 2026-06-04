@@ -27,8 +27,8 @@ export default function ResetPassword() {
     "w-full rounded-xl border border-border/70 bg-[#f5f2ec] px-4 py-3.5 text-[0.95rem] text-fg-strong placeholder:text-fg-muted/50 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 focus:bg-surface transition-all duration-200";
 
   return (
-    <div className="min-h-screen bg-[#efece4] grain flex items-stretch justify-center lg:items-center lg:p-5">
-      <div className="relative w-full overflow-hidden lg:max-w-[1360px] lg:h-[min(900px,92vh)] lg:flex lg:rounded-[2.4rem]">
+    <div className="min-h-dvh bg-[#efece4] grain flex items-stretch justify-center lg:items-center lg:p-5">
+      <div className="relative w-full overflow-hidden lg:max-w-[1360px] lg:h-[min(900px,92vh)] lg:flex lg:rounded-[2.4rem] lg:shadow-[0_40px_100px_-30px_rgba(47,58,50,0.32)]">
 
         {/* ── LEFT: image panel ── */}
         <div className="relative hidden lg:block lg:flex-1">
@@ -48,10 +48,21 @@ export default function ResetPassword() {
         </div>
 
         {/* ── RIGHT: form panel ── */}
-        <div className="relative flex min-h-screen w-full flex-col justify-center bg-surface px-6 py-10 sm:px-10 lg:min-h-0 lg:w-[46%] lg:rounded-[2.4rem] lg:shadow-[0_30px_80px_-40px_rgba(47,58,50,0.4)] xl:px-16">
+        {/* overflow-y-auto lets the form scroll on very short screens without clipping */}
+        <div
+          className="relative flex min-h-dvh w-full flex-col bg-surface overflow-y-auto px-6 sm:px-10 lg:min-h-0 lg:w-[46%] lg:justify-center lg:rounded-r-[2.4rem] xl:px-16"
+          style={{ paddingBottom: "max(2.5rem, env(safe-area-inset-bottom, 2.5rem))" }}
+        >
           <div className="mx-auto w-full max-w-[400px]">
 
-            <div className="mb-8 flex justify-center lg:hidden"><Logo /></div>
+            {/* logo (mobile only) + back nav — single block, no duplication */}
+            <div className="mb-8" style={{ paddingTop: "max(2.5rem, env(safe-area-inset-top, 2.5rem))" }}>
+              <div className="flex justify-center mb-6 lg:hidden"><Logo /></div>
+              <Link to="/join" className="inline-flex items-center gap-1.5 text-sm text-fg-muted hover:text-fg-strong transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                Back to sign in
+              </Link>
+            </div>
 
             {sent ? (
               <div className="text-center">
@@ -91,6 +102,7 @@ export default function ResetPassword() {
                         id="rp-email"
                         type="email"
                         required
+                        autoFocus
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="you@example.com"
@@ -104,7 +116,7 @@ export default function ResetPassword() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-accent text-base font-semibold text-primary-fg shadow-lift transition-all duration-300 hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent text-base font-semibold text-primary-fg shadow-lift transition-all duration-300 hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {loading && <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />}
                     {loading ? "Sending…" : "Send reset link"}
@@ -113,10 +125,12 @@ export default function ResetPassword() {
               </>
             )}
 
-            <p className="mt-8 text-center text-sm text-fg-muted">
-              Remember your password?{" "}
-              <Link to="/join" className="font-semibold text-accent transition-colors hover:text-accent-hover">Log in</Link>
-            </p>
+            {!sent && (
+              <p className="mt-8 text-center text-sm text-fg-muted">
+                Remember it?{" "}
+                <Link to="/join" className="font-semibold text-accent transition-colors hover:text-accent-hover">Sign in</Link>
+              </p>
+            )}
           </div>
         </div>
       </div>
