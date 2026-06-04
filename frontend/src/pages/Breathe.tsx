@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { awardClientSeeds } from "../services/seeds";
 
 type Technique = "478" | "box" | "simple";
@@ -80,49 +81,68 @@ function playChime(freq: number) {
   } catch {}
 }
 
-/* ── Breathing ring ── */
+/* ── Breathing ring — framer-motion powered ── */
 function BreathingRing({
   phase, progress, size = 320,
 }: { phase: AppPhase; progress: number; size?: number }) {
   const meta = PHASE_META[phase];
-  const r = size / 2 - 12;
+  const r = size / 2 - 14;
   const cx = size / 2, cy = size / 2;
   const circ = 2 * Math.PI * r;
-  const scale = phase === "inhale" ? 1 + 0.14 * progress
-               : phase === "exhale" ? 1.14 - 0.14 * progress
-               : phase === "hold"   ? 1.14
+  const scale = phase === "inhale" ? 1 + 0.16 * progress
+               : phase === "exhale" ? 1.16 - 0.16 * progress
+               : phase === "hold"   ? 1.16
                : 1;
 
   return (
     <div className="relative" style={{ width: size, height: size }}>
-      {/* glow */}
-      <div className="absolute inset-0 rounded-full transition-all duration-700"
-        style={{ background: `radial-gradient(circle, ${meta.glowColor} 0%, transparent 70%)`, transform: `scale(${scale * 1.2})` }} />
+      {/* outer ambient pulse */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        animate={{ scale: scale * 1.28, opacity: phase === "idle" ? 0.15 : 0.35 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+        style={{ background: `radial-gradient(circle, ${meta.glowColor} 0%, transparent 65%)` }}
+      />
+      {/* secondary pulse ring */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        animate={{ scale: scale * 1.1, opacity: phase === "idle" ? 0.1 : 0.2 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+        style={{ background: `radial-gradient(circle, ${meta.glowColor} 0%, transparent 55%)` }}
+      />
 
-      {/* progress arc */}
+      {/* progress arc svg */}
       <svg className="absolute inset-0 -rotate-90" width={size} height={size}>
         <circle cx={cx} cy={cy} r={r} fill="none"
-          stroke="rgba(255,255,255,0.04)" strokeWidth="2" />
-        <circle cx={cx} cy={cy} r={r} fill="none"
-          stroke={meta.ringColor} strokeWidth="2" strokeLinecap="round"
+          stroke="rgba(255,255,255,0.05)" strokeWidth="2.5" />
+        <motion.circle
+          cx={cx} cy={cy} r={r} fill="none"
+          stroke={meta.ringColor} strokeWidth="2.5" strokeLinecap="round"
           strokeDasharray={circ}
-          strokeDashoffset={circ * (1 - progress)}
-          className="transition-all duration-300" />
+          animate={{ strokeDashoffset: circ * (1 - progress), stroke: meta.ringColor }}
+          transition={{ duration: 0.3, ease: "linear" }}
+          style={{ strokeDashoffset: circ * (1 - progress) }}
+        />
       </svg>
 
-      {/* main circle */}
-      <div
-        className="absolute inset-4 rounded-full transition-all duration-700 ease-in-out grid place-items-center"
+      {/* main breathing circle */}
+      <motion.div
+        className="absolute inset-4 rounded-full"
+        animate={{ scale, borderColor: `${meta.ringColor}35`, boxShadow: `0 0 70px -20px ${meta.glowColor}` }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
         style={{
-          background: `radial-gradient(circle at 38% 35%, ${meta.ringColor}30 0%, ${meta.ringColor}12 60%, transparent 100%)`,
+          background: `radial-gradient(circle at 38% 32%, ${meta.ringColor}35 0%, ${meta.ringColor}14 55%, transparent 100%)`,
           border: `1.5px solid ${meta.ringColor}30`,
-          transform: `scale(${scale})`,
-          boxShadow: `0 0 50px -16px ${meta.glowColor}`,
         }}
-      >
-        <div className="rounded-full border border-white/[0.05]"
-          style={{ width: size * 0.45, height: size * 0.45 }} />
-      </div>
+      />
+
+      {/* inner subtle ring */}
+      <motion.div
+        className="absolute rounded-full border border-white/[0.04]"
+        animate={{ scale: scale * 0.58 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+        style={{ inset: size * 0.12, width: size * 0.76, height: size * 0.76, top: size * 0.12, left: size * 0.12, position: 'absolute' }}
+      />
     </div>
   );
 }
@@ -222,24 +242,47 @@ export default function Breathe() {
   const reset  = () => { setStatus("idle"); setElapsed(0); setCurrentPhase("idle"); setPhaseProgress(0); };
 
   const meta = PHASE_META[currentPhase];
+  const prefersReduced = useReducedMotion();
 
   return (
     <div className="bg-night min-h-[calc(100vh-68px)] flex flex-col overflow-hidden relative">
-      {/* ambient atmosphere */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute top-[10%] left-[20%] h-80 w-80 rounded-full blur-[120px] transition-all duration-1000"
-          style={{ background: meta.glowColor, opacity: status === "running" ? 0.8 : 0.3 }} />
-        <div className="absolute bottom-[15%] right-[15%] h-64 w-64 rounded-full bg-sage-500/8 blur-[100px]" />
-      </div>
+      {/* ambient atmosphere — transitions with phase color */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+      >
+        <motion.div
+          className="absolute top-[8%] left-[15%] h-96 w-96 rounded-full blur-[130px]"
+          animate={prefersReduced ? {} : { background: meta.glowColor, opacity: status === "running" ? 0.9 : 0.25 }}
+          style={{ background: meta.glowColor, opacity: 0.25 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[10%] right-[10%] h-72 w-72 rounded-full blur-[110px]"
+          animate={prefersReduced ? {} : { background: `rgba(88,122,79,${status === "running" ? 0.12 : 0.05})` }}
+          style={{ background: "rgba(88,122,79,0.05)" }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        />
+      </motion.div>
 
       {/* complete state */}
       {status === "complete" ? (
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center gap-6 px-6">
-          <div className="w-20 h-20 rounded-full bg-sage-500/20 border border-sage-400/30 grid place-items-center">
-            <svg className="w-9 h-9 text-sage-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+        <motion.div
+          className="relative z-10 flex-1 flex flex-col items-center justify-center gap-6 px-6"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.div
+            className="w-24 h-24 rounded-full bg-sage-500/20 border border-sage-400/30 grid place-items-center"
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.15, duration: 0.5, type: "spring", bounce: 0.4 }}
+          >
+            <svg className="w-10 h-10 text-sage-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
-          </div>
+          </motion.div>
           <div className="text-center">
             <h2 className="font-display text-3xl font-medium text-night-fg">Well done.</h2>
             <p className="mt-2 text-night-muted">{duration} minute{duration > 1 ? "s" : ""} of intentional breathing. +8 Seeds earned.</p>
@@ -252,7 +295,7 @@ export default function Breathe() {
               Dashboard
             </button>
           </div>
-        </div>
+        </motion.div>
       ) : (
         <div className="relative z-10 flex-1 flex flex-col items-center justify-between py-6 px-4">
 
@@ -294,32 +337,42 @@ export default function Breathe() {
           </div>
 
           {/* ── CENTER: breathing visualization ── */}
-          <div className="flex flex-col items-center gap-6 flex-1 justify-center">
-            <div className="flex flex-col items-center">
-              <BreathingRing
-                phase={status === "idle" ? "idle" : status === "paused" ? "hold" : currentPhase}
-                progress={phaseProgress}
-                size={280}
-              />
+          <div className="flex flex-col items-center gap-5 flex-1 justify-center">
+            <BreathingRing
+              phase={status === "idle" ? "idle" : status === "paused" ? "hold" : currentPhase}
+              progress={phaseProgress}
+              size={320}
+            />
 
-              <div className="text-center -mt-2">
-                  <div className={`font-display text-[1.8rem] font-medium tracking-[0.08em] uppercase transition-all duration-500 ${meta.color}`}>
+            {/* Phase label + countdown — AnimatePresence for smooth swap */}
+            <div className="text-center h-24 flex flex-col items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={status === "running" ? currentPhase : status}
+                  initial={{ opacity: 0, y: 6, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -6, filter: "blur(4px)" }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex flex-col items-center gap-1"
+                >
+                  <span className={`font-display text-[1.6rem] font-medium tracking-[0.1em] uppercase ${meta.color}`}>
                     {status === "idle" ? "Ready" : status === "paused" ? "Paused" : PHASE_META[currentPhase].label}
-                  </div>
+                  </span>
                   {status === "running" && currentPhase !== "idle" && (
-                    <div className="font-display text-[3rem] font-light text-night-fg leading-none tabular-nums mt-1">
+                    <span className="font-display text-[3.5rem] font-light text-night-fg leading-none tabular-nums">
                       {phaseSecondsLeft}
-                    </div>
+                    </span>
                   )}
                   {status === "idle" && (
-                    <p className="text-night-muted text-sm mt-1">{config.phases.map(p => `${p.duration}s`).join(" · ")}</p>
+                    <span className="text-night-muted text-sm">{config.phases.map(p => `${p.duration}s`).join(" · ")}</span>
                   )}
                   {status === "paused" && (
-                    <p className="text-night-muted text-sm mt-1">Tap to resume</p>
+                    <span className="text-night-muted text-sm">Tap to resume</span>
                   )}
-                </div>
-              </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
+          </div>
 
           {/* ── BOTTOM: controls ── */}
           <div className="flex flex-col items-center gap-4 w-full max-w-xs">
