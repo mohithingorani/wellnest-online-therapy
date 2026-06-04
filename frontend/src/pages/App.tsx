@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from "react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
+import { websiteSchema, organizationSchema, faqSchema } from "../lib/jsonld";
 
 
 
@@ -12,6 +14,17 @@ const btnOutline =
 export default function LandingPage() {
   return (
     <div className="grain relative text-fg bg-bg overflow-x-clip">
+      <SEO
+        title="WellNest — Online Therapy & Mental Wellness Platform"
+        description="Connect with verified, licensed therapists in India. Take free mental health assessments, track your wellbeing, and start your journey to better mental health with WellNest."
+        canonical="/"
+        jsonLd={[websiteSchema(), organizationSchema(), faqSchema([
+          { q: "How does WellNest match me with a therapist?", a: "WellNest uses your preferences, goals, and assessment results to match you with verified therapists who specialise in your areas of concern." },
+          { q: "Are the assessments on WellNest free?", a: "Yes. All self-assessments — including burnout, anxiety, stress, and mood checks — are completely free and require no account." },
+          { q: "Is my data confidential?", a: "Yes. Your sessions and data are encrypted and never shared with third parties or used for advertising." },
+          { q: "How quickly can I see a therapist?", a: "WellNest therapists are being onboarded. Join the waitlist to be matched when they go live." },
+        ])]}
+      />
       <ScrollProgress />
       <Hero />
       <Marquee />
