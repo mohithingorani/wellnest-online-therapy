@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { type ReactNode, type CSSProperties } from "react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 const btnAccent =
   "group relative inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-semibold text-base bg-accent text-primary-fg shadow-lift hover:bg-accent-hover transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
@@ -13,6 +14,7 @@ export default function AboutPage() {
 
   return (
     <div className="grain relative text-fg bg-bg overflow-x-clip">
+      <SEO title="About" description="Learn about WellNest — our mission to make quality mental health support accessible, compassionate, and personal for everyone in India." canonical="/about" />
       {/* ============================================================ HERO === */}
       <section className="relative overflow-hidden pt-[68px]">
         <Blob className="absolute top-1/3 -right-44 h-[500px] w-[500px] bg-gradient-to-br from-sage-300/40 to-clay-500/15 blur-2xl opacity-60" style={{ animationDelay: "6s" }} />

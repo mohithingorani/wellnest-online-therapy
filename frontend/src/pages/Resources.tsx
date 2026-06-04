@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RESOURCES, TOPIC_META, type Resource } from "../data/resources";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 const ALL_TOPICS = ["all", "anxiety", "burnout", "stress", "relationships", "sleep", "therapy"] as const;
 
@@ -44,6 +45,8 @@ export default function Resources() {
   );
 
   return (
+    <>
+    <SEO title="Mental Health Library" description="Evidence-informed mental health guides written in plain language — covering anxiety, burnout, stress, sleep, and more. Free to read, no account needed." canonical="/resources" />
     <PageShell eyebrow="Free resources" title="Mental Health Library" subtitle="Evidence-informed guides written in plain language. Reading each article earns you +3 Seeds." header={filterBar}>
         {/* grid — first card is featured wide, rest are standard */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
@@ -115,5 +118,6 @@ export default function Resources() {
           })}
         </div>
     </PageShell>
+    </>
   );
 }

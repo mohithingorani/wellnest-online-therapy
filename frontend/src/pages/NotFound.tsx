@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import SEO from "../components/SEO";
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   return (
     <div className="grain relative bg-bg min-h-screen flex flex-col">
+      <SEO title="Page Not Found" description="The page you're looking for doesn't exist on WellNest." noIndex />
       <NavBar />
 
       <main className="relative flex-1 flex items-center justify-center px-4 md:px-8 overflow-hidden py-20">

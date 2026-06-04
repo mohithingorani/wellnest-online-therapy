@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { type ReactNode } from "react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -24,6 +25,7 @@ export default function ContactPage() {
 
   return (
     <div className="grain relative text-fg bg-bg overflow-x-clip">
+      <SEO title="Contact Us" description="Get in touch with the WellNest team. We're here to help with questions about therapy matching, your account, or mental wellness resources." canonical="/contact" />
       <section className="relative pt-[68px]">
         <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-16 md:py-24">
           <Reveal>
