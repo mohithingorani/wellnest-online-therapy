@@ -2,14 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="mobile-web-app-capable" content="no">
-    <meta name="apple-mobile-web-app-capable" content="no">
-    <meta name="apple-touch-fullscreen" content="no">
+
+    <!-- Favicon & icons -->
+    <link rel="icon"             type="image/svg+xml"       href="/wellnest-logo.svg" />
+    <link rel="apple-touch-icon"                            href="/wellnest-logo.svg" />
+    <link rel="manifest"                                    href="/manifest.webmanifest" />
+    <meta name="theme-color"     content="#4a6b52" />
+    <meta name="msapplication-TileColor" content="#4a6b52" />
+
+    <!-- Default SEO — overridden per-page by react-helmet-async -->
+    <title>WellNest — Online Therapy &amp; Mental Wellness</title>
+    <meta name="description"
+      content="Find your matched therapist, take free mental health assessments, and build lasting wellbeing with WellNest. Compassionate, confidential, and accessible care." />
+    <meta name="robots"      content="index,follow" />
+    <meta name="author"      content="WellNest" />
+    <link rel="canonical"    href="https://wellnest.mohit.systems/" />
+
+    <!-- Open Graph defaults -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:site_name"   content="WellNest" />
+    <meta property="og:title"       content="WellNest — Online Therapy &amp; Mental Wellness" />
+    <meta property="og:description" content="Find your matched therapist, take free mental health assessments, and build lasting wellbeing with WellNest." />
+    <meta property="og:image"       content="https://wellnest.mohit.systems/og-default.svg" />
+    <meta property="og:url"         content="https://wellnest.mohit.systems/" />
+
+    <!-- Twitter Card defaults -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content="@wellnestin" />
+    <meta name="twitter:title"       content="WellNest — Online Therapy &amp; Mental Wellness" />
+    <meta name="twitter:description" content="Find your matched therapist, take free mental health assessments, and build lasting wellbeing with WellNest." />
+    <meta name="twitter:image"       content="https://wellnest.mohit.systems/og-default.svg" />
 
     <!-- Fonts -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,10 +42,25 @@
       rel="stylesheet"
     />
 
-    <title>WellNest - Online Therapy Platform</title>
-
     <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Google Analytics 4 — set VITE_GA_MEASUREMENT_ID in .env to activate -->
+    <script>
+      (function() {
+        var id = '%VITE_GA_ID%';
+        if (!id || id === '%VITE_GA_ID%' || id === 'undefined') return;
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', id, { anonymize_ip: true, send_page_view: true });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
