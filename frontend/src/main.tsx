@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import "./index.css";
 
@@ -59,6 +60,7 @@ function PageLoader() {
 }
 
 createRoot(document.getElementById("root")!).render(
+  <HelmetProvider>
   <BrowserRouter>
     <ScrollToTop />
     <ToastProvider>
@@ -146,4 +148,5 @@ createRoot(document.getElementById("root")!).render(
       </Suspense>
     </ToastProvider>
   </BrowserRouter>
+  </HelmetProvider>
 );
