@@ -179,7 +179,7 @@ export default function AssessmentFlow() {
           </button>
 
           <p className="mt-4 text-center text-[11px] text-white/25">
-            Press 1 – {total} on keyboard to answer
+            Press 1 – 4 on keyboard to answer
           </p>
         </div>
       </div>
@@ -262,7 +262,7 @@ export default function AssessmentFlow() {
                   key={opt.value}
                   onClick={() => handleAnswer(opt.value)}
                   disabled={selected !== null}
-                  className={`group relative w-full flex items-center gap-4 rounded-2xl px-5 py-4 text-left transition-all duration-200 border outline-none focus-visible:ring-2 focus-visible:ring-offset-2`}
+                  className={`group relative w-full flex items-center gap-4 rounded-2xl px-5 py-4 text-left transition-all duration-200 border outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-${def.accentFill.replace(/[^a-zA-Z]+/g, "")} ${active ? "border-transparent" : "border-border hover:border-border/80"} ${active ? `${def.accentFill}10` : "bg-surface"}`}
                   style={{
                     borderColor: active ? def.accentFill : "var(--color-border)",
                     background: active ? `${def.accentFill}12` : "var(--color-surface)",
