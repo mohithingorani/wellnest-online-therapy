@@ -172,29 +172,37 @@ router.get("/me", async (req, res) => {
   }
 });
 
-router.get("/stats", async (req, res) => {
+router.get("/stats", async (_req, res) => {
   try {
-    const [userCount, therapistCount, sessionCount] = await Promise.all([
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const [
+      totalUsers, totalTherapists, activeSessions,
+      waitlistCount, assessmentCount, journalCount,
+      todaySignups, seedsRow,
+    ] = await Promise.all([
       prisma.user.count(),
       prisma.therapist.count(),
-      prisma.session.count(),
+      prisma.session.count({ where: { expiresAt: { gt: new Date() } } }),
+      prisma.waitlistEntry.count(),
+      prisma.assessment.count(),
+      prisma.journalEntry.count(),
+      prisma.user.count({ where: { createdAt: { gte: todayStart } } }),
+      prisma.userSeeds.aggregate({ _sum: { total: true } }),
     ]);
 
     res.json({
       success: true,
       data: {
-        totalUsers: userCount,
-        totalTherapists: therapistCount,
-        activeSessions: sessionCount,
-        pendingApprovals: 0,
+        totalUsers, totalTherapists, activeSessions, pendingApprovals: 0,
+        waitlistCount, assessmentCount, journalCount, todaySignups,
+        totalSeedsDistributed: seedsRow._sum.total ?? 0,
       },
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to fetch stats",
-    });
+    return res.status(500).json({ success: false, message: "Failed to fetch stats" });
   }
 });
 
@@ -573,6 +581,65 @@ router.get("/analytics", requireAdmin, async (_req, res) => {
       success: false,
       message: "Failed to fetch analytics",
     });
+  }
+});
+
+/* ── Waitlist ── */
+router.get("/waitlist", requireAdmin, async (_req, res) => {
+  try {
+    const entries = await prisma.waitlistEntry.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    res.json({ success: true, data: entries });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to fetch waitlist" });
+  }
+});
+
+router.delete("/waitlist/:id", requireAdmin, async (req, res) => {
+  try {
+    const id = parseInt(String(req.params.id));
+    if (isNaN(id)) return res.status(400).json({ success: false, message: "Invalid ID" });
+    await prisma.waitlistEntry.delete({ where: { id } });
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to delete entry" });
+  }
+});
+
+/* ── User detail ── */
+router.get("/users/:id/detail", requireAdmin, async (req, res) => {
+  try {
+    const id = parseInt(String(req.params.id));
+    if (isNaN(id)) return res.status(400).json({ success: false, message: "Invalid ID" });
+
+    const [user, assessments, seeds, journalCount, achievements] = await Promise.all([
+      prisma.user.findUnique({
+        where: { id },
+        select: { id: true, name: true, email: true, createdAt: true },
+      }),
+      prisma.assessment.findMany({
+        where: { userId: id },
+        orderBy: { createdAt: "desc" },
+        take: 20,
+        select: { id: true, type: true, score: true, band: true, createdAt: true },
+      }),
+      prisma.userSeeds.findUnique({ where: { userId: id } }),
+      prisma.journalEntry.count({ where: { userId: id } }),
+      prisma.achievement.findMany({
+        where: { userId: id },
+        select: { id: true, slug: true, earnedAt: true },
+      }),
+    ]);
+
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+    res.json({ success: true, data: { user, assessments, seeds, journalCount, achievements } });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Failed to fetch user detail" });
   }
 });
 
