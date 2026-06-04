@@ -5,7 +5,6 @@ import Logo from "./Logo";
 
 const paths = [
   { name: "Therapists", path: "/therapists" },
-  { name: "About", path: "/about" },
 ];
 
 
@@ -57,11 +56,11 @@ export default function NavBar() {
   };
 
   const linkBase =
-    "relative py-1 text-[0.95rem] font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-accent after:transition-all after:duration-300";
+    "relative py-1 text-[0.95rem] font-medium transition-colors duration-[180ms] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-accent after:transition-all after:duration-[180ms] after:ease-[cubic-bezier(0.22,1,0.36,1)]";
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-colors duration-300 ${
+      className={`sticky top-0 z-40 transition-colors duration-[260ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
         transparent ? "bg-transparent" : "bg-bg md:bg-bg/80 md:backdrop-blur-xl border-b border-border"
       }`}
     >
@@ -103,7 +102,7 @@ export default function NavBar() {
             <div className="relative group flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full bg-gradient-to-b from-clay-400 to-clay-600 text-white flex items-center justify-center text-sm font-semibold shadow-soft">{initial(user.name)}</div>
               <span className="font-medium text-sm cursor-pointer text-fg-strong">{firstName(user.name)}</span>
-              <div className="absolute right-0 top-full mt-2 w-44 surface-raised rounded-xl p-1 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+              <div className="absolute right-0 top-full mt-2 w-44 surface-raised rounded-xl p-1 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-[180ms] ease-[cubic-bezier(0.22,1,0.36,1)]">
                 <Link to="/dashboard" className="flex items-center gap-2.5 px-3 py-2 text-sm text-fg hover:bg-surface-2 rounded-lg transition-colors">
                   <svg className="w-4 h-4 text-fg-muted" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h10" /></svg>
                   Dashboard

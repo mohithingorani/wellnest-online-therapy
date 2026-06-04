@@ -79,10 +79,10 @@ export default function Reveal({
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "none" : OFFSETS[direction](distance),
-        filter: visible ? "blur(0px)" : "blur(8px)",
-        transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s cubic-bezier(0.16,1,0.3,1)`,
+        // No blur filter — GPU-expensive and adds smear lag on lower-end devices
+        transition: `opacity 0.42s cubic-bezier(0.22,1,0.36,1), transform 0.42s cubic-bezier(0.22,1,0.36,1)`,
         transitionDelay: `${delay}ms`,
-        willChange: "opacity, transform, filter",
+        willChange: "opacity, transform",
       }}
     >
       {children}

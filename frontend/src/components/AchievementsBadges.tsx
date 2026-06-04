@@ -33,7 +33,7 @@ export default function AchievementsBadges() {
       {/* progress strip */}
       <div className="h-1 rounded-full bg-border/50 overflow-hidden mb-5">
         <div
-          className="h-full rounded-full bg-sage-500 transition-all duration-700"
+          className="h-full rounded-full bg-sage-500 transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{ width: `${(earnedCount / ALL_SLUGS.length) * 100}%` }}
         />
       </div>

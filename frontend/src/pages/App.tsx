@@ -242,7 +242,7 @@ function Marquee() {
   );
   return (
     <section aria-hidden className="relative bg-night py-6 overflow-hidden">
-      <div className="flex w-max animate-marquee">{row}{row}</div>
+      <div className="flex w-max animate-marquee [will-change:transform]">{row}{row}</div>
     </section>
   );
 }

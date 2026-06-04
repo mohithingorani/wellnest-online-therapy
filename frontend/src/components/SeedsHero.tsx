@@ -19,7 +19,7 @@ function ProgressRing({ pct, color, level }: { pct: number; color: string; level
         strokeDasharray={circ}
         strokeDashoffset={offset}
         transform="rotate(-90 48 48)"
-        className="animate-ring-fill transition-all duration-700"
+        className="animate-ring-fill transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{ strokeDashoffset: offset }}
       />
       {/* level number */}
@@ -38,7 +38,7 @@ const EARN_OPS: { reason: string; label: string; seeds: number; route: string }[
 
 export default function SeedsHero() {
   const navigate = useNavigate();
-  const { total, todayEarned, weekEarned, currentLevel, progressPct, seedsToNext, nextLevel, transactions, loading } = useSeeds();
+  const { total, todayEarned, weekEarned, currentLevel, progressPct, seedsToNext, nextLevel, transactions } = useSeeds();
 
   /* Which earn-ops are already done today */
   const today = new Date().toISOString().slice(0, 10);
@@ -51,12 +51,6 @@ export default function SeedsHero() {
     return d.toISOString().slice(0, 10);
   });
   const activeDays = new Set(transactions.filter((t) => t.amount > 0).map((t) => t.createdAt.slice(0, 10)));
-
-  if (loading) {
-    return (
-      <div className="lg:col-span-3 card-feature rounded-[1.4rem] p-6 md:p-8 animate-pulse h-44" />
-    );
-  }
 
   return (
     <div className="lg:col-span-3 card-feature rounded-[1.4rem] overflow-hidden relative">

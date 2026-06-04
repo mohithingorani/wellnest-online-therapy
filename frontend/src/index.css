@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* ── Motion system tokens ─────────────────────────────────────────
+   Single source of truth for all animation/transition values.
+   Spring: all UI interactions. Organic: ambient/breathing only.   */
+:root {
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-organic: ease-in-out;
+  --dur-snap:   120ms;
+  --dur-fast:   180ms;
+  --dur-normal: 260ms;
+  --dur-enter:  420ms;
+}
+
 /* Class-based dark mode (infrastructure only — not auto-activated yet).
    Add `class="dark"` to <html> once components are migrated off hardcoded hex. */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -281,11 +293,11 @@ body {
 /* Unified page entrance — every dashboard menu page fades + rises in
    as one block, with the same easing/duration. Use on the page root. */
 @keyframes pageEnter {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .animate-page {
-  animation: pageEnter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: pageEnter var(--dur-enter) var(--ease-spring) both;
 }
 @media (prefers-reduced-motion: reduce) {
   .animate-page { animation: none; }
@@ -355,7 +367,7 @@ body {
 }
 
 /* Quiet elevate-on-hover for interactive cards/buttons */
-.hover-lift { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.2s ease; }
+.hover-lift { transition: transform var(--dur-normal) var(--ease-spring), box-shadow var(--dur-normal) var(--ease-spring), border-color var(--dur-fast) var(--ease-spring); }
 .hover-lift:hover { transform: translateY(-2px); }
 @media (prefers-reduced-motion: reduce) { .hover-lift:hover { transform: none; } }
 
@@ -369,15 +381,15 @@ body {
 .animation-delay-800 { animation-delay: 800ms; }
 
 .transition-all-300 {
-  transition: all 0.3s ease;
+  transition: all var(--dur-normal) var(--ease-spring);
 }
 
 .transition-transform-300 {
-  transition: transform 0.3s ease;
+  transition: transform var(--dur-normal) var(--ease-spring);
 }
 
 .transition-colors-300 {
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  transition: color var(--dur-fast) var(--ease-spring), background-color var(--dur-fast) var(--ease-spring), border-color var(--dur-fast) var(--ease-spring);
 }
 
 /* ============================================================================
@@ -476,7 +488,7 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
     0 1px 2px rgba(42, 36, 32, 0.25),
     0 12px 22px -10px rgba(120, 58, 40, 0.5);
-  transition: box-shadow 0.3s ease, transform 0.15s ease, filter 0.3s ease;
+  transition: box-shadow var(--dur-normal) var(--ease-spring), transform var(--dur-snap) var(--ease-spring), filter var(--dur-normal) var(--ease-spring);
 }
 .btn-material:hover {
   filter: brightness(1.06);
