@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./index.css";
 
@@ -47,6 +47,7 @@ const TherapistManagement = lazy(() => import("./pages/admin/TherapistManagement
 const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
 const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const Settings = lazy(() => import("./pages/admin/Settings"));
+const AdminWaitlist = lazy(() => import("./pages/admin/Waitlist"));
 
 /* Minimal fallback — matches page bg, no layout shift */
 function PageLoader() {
@@ -79,8 +80,15 @@ createRoot(document.getElementById("root")!).render(
             <Route path="contact" element={<ContactPage />} />
             <Route path="therapists" element={<TherapistsPage />} />
             <Route path="therapists/:id" element={<TherapistPage />} />
-            {/* NOTE: /assess and /resources live only inside DashboardShell to avoid
-                duplicate-route inconsistency. Unauthenticated users are redirected to login. */}
+            {/* Public assessments — anyone can take without logging in */}
+            <Route path="assess" element={<AssessHub />} />
+            <Route path="assess/:type" element={<AssessFlow />} />
+            <Route path="assess/:type/result" element={<AssessResult />} />
+            {/* Short shareable URLs → assessment redirects */}
+            <Route path="burnout-test" element={<Navigate to="/assess/burnout" replace />} />
+            <Route path="anxiety-test" element={<Navigate to="/assess/gad7" replace />} />
+            <Route path="stress-test" element={<Navigate to="/assess/stress" replace />} />
+            <Route path="mood-check" element={<Navigate to="/assess/mood" replace />} />
 
             {/* Authenticated, marketing-chrome transactional routes */}
             <Route element={<ProtectedRoute />}>
@@ -128,6 +136,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="users" element={<UserManagement />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="waitlist" element={<AdminWaitlist />} />
           </Route>
 
           {/* 404 */}
