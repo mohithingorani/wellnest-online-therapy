@@ -60,8 +60,8 @@ export default function NavBar() {
 
   return (
     <header
-      className={`sticky top-0 z-40 transition-colors duration-[260ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        transparent ? "bg-transparent" : "bg-bg md:bg-bg/80 md:backdrop-blur-xl border-b border-border"
+      className={`sticky top-0 z-40 transition-colors duration-[260ms] ease-[cubic-bezier(0.22,1,0.32,1)] ${
+        transparent ? "bg-transparent" : "bg-bg md:bg-bg/60 md:backdrop-blur-xl border-b border-border"
       }`}
     >
       <nav className="grid grid-cols-[1fr_auto_1fr] md:flex md:justify-between items-center min-h-[68px] px-4 py-3 md:px-8 lg:px-12 mx-auto max-w-[1180px]">
