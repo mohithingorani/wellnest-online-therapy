@@ -12,6 +12,27 @@ export interface Stats {
   totalTherapists: number;
   activeSessions: number;
   pendingApprovals: number;
+  waitlistCount: number;
+  assessmentCount: number;
+  journalCount: number;
+  todaySignups: number;
+  totalSeedsDistributed: number;
+}
+
+export interface WaitlistEntry {
+  id: number;
+  email: string;
+  city?: string;
+  concern?: string;
+  createdAt: string;
+}
+
+export interface UserDetail {
+  user: { id: number; name: string; email: string; createdAt: string };
+  assessments: { id: number; type: string; score: number; band: string; createdAt: string }[];
+  seeds: { total: number; lifetimeEarned: number } | null;
+  journalCount: number;
+  achievements: { id: number; slug: string; earnedAt: string }[];
 }
 
 export interface Therapist {
@@ -156,4 +177,13 @@ export const adminApi = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }),
+
+  getWaitlist: () =>
+    fetchApi<{ success: boolean; data: WaitlistEntry[] }>("/admin/waitlist"),
+
+  deleteWaitlistEntry: (id: number) =>
+    fetchApi<{ success: boolean }>(`/admin/waitlist/${id}`, { method: "DELETE" }),
+
+  getUserDetail: (id: number) =>
+    fetchApi<{ success: boolean; data: UserDetail }>(`/admin/users/${id}/detail`),
 };
