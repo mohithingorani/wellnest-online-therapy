@@ -124,16 +124,14 @@ export default function DashboardShell() {
         </div>
       )}
 
-      {/* content with framer-motion page transitions */}
-      {/* overflow visible — overflow-hidden clips drop shadows on cards */}
+      {/* content — crossfade only, no exit animation (mode="wait" caused blank gap) */}
       <div className="flex-1 min-w-0">
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="sync" initial={false}>
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
           >
             <Outlet />
           </motion.div>
