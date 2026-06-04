@@ -85,50 +85,46 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
     }
   };
 
-  // Google sign-in — renderButton() is reliable for button-click flows.
-  // prompt() is One Tap only and silently suppresses itself; renderButton()
-  // renders a real iframe button that always works.
-  const googleBtnRef = useRef<HTMLDivElement>(null);
+  // Google sign-in — initialize GSI once and use a custom button + One Tap.
+  const googleInitRef = useRef(false);
+  const googleLoading = useRef(false);
+  const modeRef = useRef(mode);
+  useEffect(() => { modeRef.current = mode; }, [mode]);
+
+  const handleGoogleCredential = async (credential: string) => {
+    if (googleLoading.current) return;
+    googleLoading.current = true;
+    setLoading(true);
+    setError("");
+    try {
+      await googleAuth(credential);
+      afterAuth(modeRef.current === "signup");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Google sign-in failed.");
+    } finally {
+      setLoading(false);
+      googleLoading.current = false;
+    }
+  };
 
   useEffect(() => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    if (!clientId) return;
+    if (!clientId || googleInitRef.current) return;
+    googleInitRef.current = true;
 
-    const render = () => {
-      if (!window.google || !googleBtnRef.current) {
-        setTimeout(render, 200);
-        return;
-      }
+    const poll = () => {
+      if (!window.google) { setTimeout(poll, 200); return; }
       google.accounts.id.initialize({
         client_id: clientId,
-        callback: async ({ credential }: { credential: string }) => {
-          setLoading(true);
-          setError("");
-          try {
-            await googleAuth(credential);
-            afterAuth(!isLogin);
-          } catch (err) {
-            setError(err instanceof Error ? err.message : "Google sign-in failed.");
-          } finally {
-            setLoading(false);
-          }
-        },
+        callback: ({ credential }) => { handleGoogleCredential(credential); },
       });
-      // renderButton() embeds a real iframe button — works regardless of
-      // One Tap suppression, dismissed state, or third-party cookie blocks.
-      google.accounts.id.renderButton(googleBtnRef.current!, {
-        type: "standard",
-        theme: "filled_black",
-        size: "large",
-        shape: "rectangular",
-        width: googleBtnRef.current!.getBoundingClientRect().width || 360,
-        text: isLogin ? "signin_with" : "signup_with",
-      });
+      // One Tap — silently prompts returning users with an active Google session.
+      // The browser may suppress it; that's fine — the custom button always works.
+      google.accounts.id.prompt();
     };
-    render();
-  // Re-render when mode changes so button text updates (sign in vs sign up)
+    poll();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin]);
+  }, []);
 
   return (
     <div className="min-h-dvh bg-[#f5f1eb] flex items-stretch lg:items-center lg:justify-center lg:p-6">
@@ -222,6 +218,33 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
               </div>
             )}
 
+            {/* Google sign-in — primary action, above the fold.
+                Uses a custom button that calls GSI prompt(). One Tap also fires
+                automatically on mount for returning users. */}
+            <button
+              type="button"
+              onClick={() => google.accounts.id.prompt()}
+              disabled={loading}
+              className="flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-[#e2ddd6] bg-white text-sm font-semibold text-fg-strong transition-all duration-200 hover:bg-[#faf8f5] hover:border-[#d4cfc7] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 group"
+            >
+              <svg className="h-5 w-5 shrink-0" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+              </svg>
+              <span className="transition-all group-hover:translate-x-[1px]">
+                {isLogin ? "Continue with Google" : "Sign up with Google"}
+              </span>
+            </button>
+
+            {/* divider */}
+            <div className="my-5 flex items-center gap-3">
+              <span className="h-px flex-1 bg-border/50" />
+              <span className="text-[0.78rem] text-fg-muted">or continue with email</span>
+              <span className="h-px flex-1 bg-border/50" />
+            </div>
+
             {/* form — fields animate via grid-rows trick to avoid height jumps */}
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* name — signup only, collapses smoothly */}
@@ -293,23 +316,6 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
                 {loading ? (isLogin ? "Signing in…" : "Creating account…") : isLogin ? "Sign in" : "Create account"}
               </button>
             </form>
-
-            {/* divider */}
-            <div className="my-5 flex items-center gap-3">
-              <span className="h-px flex-1 bg-border/50" />
-              <span className="text-[0.78rem] text-fg-muted">or</span>
-              <span className="h-px flex-1 bg-border/50" />
-            </div>
-
-            {/* Google sign-in — rendered as a real iframe button by GSI.
-                filled_black theme gives a solid dark bg that stands out from the white form.
-                The wrapper clips the iframe to rounded-xl corners. */}
-            <div className="overflow-hidden rounded-lg border border-[#e2ddd6]">
-              <div
-                ref={googleBtnRef}
-                className="w-full [&>div]:!w-full [&_iframe]:!w-full [&_iframe]:!rounded-none"
-              />
-            </div>
 
             {/* bottom — already have account / create */}
             <p className="mt-7 text-center text-[0.82rem] text-fg-muted">
