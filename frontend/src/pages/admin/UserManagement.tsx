@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { adminApi } from "../../services/adminApi";
-import type { User } from "../../services/adminApi";
+import type { User, UserDetail } from "../../services/adminApi";
 import { DataTable } from "../../components/admin/DataTable";
 import { SearchInput } from "../../components/admin/SearchInput";
 import { Modal } from "../../components/admin/Modal";
@@ -20,6 +20,9 @@ export default function UserManagement() {
   const [deleteConfirm, setDeleteConfirm] = useState<User | null>(null);
   const [createMode, setCreateMode] = useState(false);
   const [createForm, setCreateForm] = useState({ name: "", email: "", password: "" });
+  const [detailUserId, setDetailUserId] = useState<number | null>(null);
+  const [userDetail, setUserDetail] = useState<UserDetail | null>(null);
+  const [detailLoading, setDetailLoading] = useState(false);
   const { addToast } = useToast();
 
   useEffect(() => {
@@ -85,6 +88,16 @@ export default function UserManagement() {
     }
   };
 
+  const openDetail = (id: number) => {
+    setDetailUserId(id);
+    setUserDetail(null);
+    setDetailLoading(true);
+    adminApi.getUserDetail(id)
+      .then((r) => { if (r.success) setUserDetail(r.data); })
+      .catch(() => addToast("Failed to load user details", "error"))
+      .finally(() => setDetailLoading(false));
+  };
+
   const filteredUsers = users.filter(
     (u) => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase())
   );
@@ -125,28 +138,27 @@ export default function UserManagement() {
       key: "actions",
       header: "Actions",
       render: (u: User) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleEdit(u);
-            }}
-            className="p-1.5 rounded-lg text-fg-muted hover:bg-[#e4dccb] transition-colors"
+            onClick={(e) => { e.stopPropagation(); openDetail(u.id); }}
+            className="p-1.5 rounded-lg text-[#4a6b52] hover:bg-[#4a6b52]/10 transition-colors"
+            title="View profile"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-12.458 0C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
           </button>
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setDeleteConfirm(u);
-            }}
-            className="p-1.5 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+            onClick={(e) => { e.stopPropagation(); handleEdit(u); }}
+            className="p-1.5 rounded-lg text-fg-muted hover:bg-[#e4dccb] transition-colors"
+            title="Edit"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); setDeleteConfirm(u); }}
+            className="p-1.5 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+            title="Delete"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
           </button>
         </div>
       ),
@@ -244,6 +256,98 @@ export default function UserManagement() {
         confirmText="Delete"
         variant="danger"
       />
+
+      {/* ── User detail modal ── */}
+      <Modal isOpen={detailUserId !== null} onClose={() => { setDetailUserId(null); setUserDetail(null); }} title="User Profile" size="lg">
+        {detailLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="w-6 h-6 rounded-full border-2 border-[#e4dccb] border-t-[#4a6b52] animate-spin" />
+          </div>
+        ) : userDetail ? (
+          <div className="space-y-6">
+            {/* header */}
+            <div className="flex items-center gap-4 pb-5 border-b border-[#e4dccb]">
+              <div className="w-12 h-12 rounded-full bg-[#4a6b52]/15 text-[#4a6b52] grid place-items-center font-bold text-lg font-display">
+                {userDetail.user.name.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <div className="font-semibold text-fg-strong">{userDetail.user.name}</div>
+                <div className="text-sm text-fg-muted">{userDetail.user.email}</div>
+                <div className="text-xs text-fg-muted/60 mt-0.5">Joined {new Date(userDetail.user.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</div>
+              </div>
+            </div>
+
+            {/* stats row */}
+            <div className="grid grid-cols-4 gap-3">
+              {[
+                { label: "Seeds",         value: userDetail.seeds?.total ?? 0 },
+                { label: "Lifetime Seeds", value: userDetail.seeds?.lifetimeEarned ?? 0 },
+                { label: "Journal",        value: userDetail.journalCount },
+                { label: "Achievements",   value: userDetail.achievements.length },
+              ].map((s) => (
+                <div key={s.label} className="rounded-xl bg-[#f7f4ec] p-3 text-center">
+                  <div className="font-display font-semibold text-xl text-fg-strong">{s.value}</div>
+                  <div className="text-[11px] text-fg-muted mt-0.5">{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* assessments */}
+            {userDetail.assessments.length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-fg-strong mb-3">Assessment History</h3>
+                <div className="rounded-xl border border-[#e4dccb] overflow-hidden">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-[#f7f4ec] border-b border-[#e4dccb]">
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-fg-muted">Type</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-fg-muted">Score</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-fg-muted">Band</th>
+                        <th className="text-left px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-fg-muted">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#e4dccb]">
+                      {userDetail.assessments.map((a) => (
+                        <tr key={a.id}>
+                          <td className="px-4 py-2.5 font-medium text-fg-strong capitalize">{a.type === "gad7" ? "Anxiety" : a.type}</td>
+                          <td className="px-4 py-2.5 text-fg-muted">{a.score}</td>
+                          <td className="px-4 py-2.5">
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                              a.band === "minimal" ? "bg-green-50 text-green-600" :
+                              a.band === "mild"    ? "bg-yellow-50 text-yellow-600" :
+                              a.band === "moderate" ? "bg-orange-50 text-orange-600" :
+                              "bg-red-50 text-red-600"
+                            }`}>{a.band}</span>
+                          </td>
+                          <td className="px-4 py-2.5 text-fg-muted text-xs">{new Date(a.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* achievements */}
+            {userDetail.achievements.length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-fg-strong mb-3">Achievements ({userDetail.achievements.length})</h3>
+                <div className="flex flex-wrap gap-2">
+                  {userDetail.achievements.map((a) => (
+                    <span key={a.id} className="px-3 py-1.5 rounded-full bg-[#4a6b52]/10 text-[#4a6b52] text-xs font-semibold capitalize">
+                      {a.slug.replace(/_/g, " ")}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {userDetail.assessments.length === 0 && userDetail.journalCount === 0 && (
+              <p className="text-sm text-fg-muted text-center py-4">This user hasn't used any features yet.</p>
+            )}
+          </div>
+        ) : null}
+      </Modal>
 
       <Modal isOpen={createMode} onClose={() => setCreateMode(false)} title="Add New User" size="md">
         <div className="space-y-4">
