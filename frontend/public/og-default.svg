@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1510"/>
+      <stop offset="100%" stop-color="#1a2620"/>
+    </linearGradient>
+    <!-- Glow blobs -->
+    <radialGradient id="g1" cx="75%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#4a6b52" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4a6b52" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="15%" cy="80%" r="40%">
+      <stop offset="0%" stop-color="#c9795a" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#c9795a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Atmospheric glows -->
+  <rect width="1200" height="630" fill="url(#g1)"/>
+  <rect width="1200" height="630" fill="url(#g2)"/>
+
+  <!-- Subtle grid texture (very faint) -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="0.5"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- WellNest logo mark (the SVG paths from wellnest-logo.svg, scaled down) -->
+  <g transform="translate(80, 80) scale(0.12)">
+    <path d="M409.335 220.674C431.574 219.235 424.079 275.579 421.024 288.775C408.631 342.204 373.307 389.309 327.059 418.32C243.933 470.464 119.849 464.635 52.0856 389.48C45.052 381.673 39.627 373.548 34.0667 364.7C26.8072 351.793 16.5603 330.05 20.0437 315.189C24.7039 296.888 46.6783 298.878 60.2611 304.076C89.3217 315.202 108.917 341.69 133.672 359.924C148.558 371.038 165.32 379.383 183.159 384.564C196.62 388.427 209.717 389.407 223.488 389.095C302.083 387.3 350.131 318.9 382.424 255.79C388.1 244.701 397.542 227.115 408.582 221.078L409.335 220.674Z" fill="#536453"/>
+    <path d="M109.351 182.267C114.579 184.971 123.189 191.01 128.502 194.391C139.029 201.196 149.956 207.363 161.223 212.858C197.686 230.575 236.157 229.736 262.339 267.675C282.073 296.275 281.786 322.164 276.55 354.634C267.641 330.503 248.727 312.41 224.78 303.543C209.638 297.935 194.875 294.726 180.395 286.864C172.032 282.321 165.934 276.816 158.59 270.932C160.008 272.83 161.572 274.722 163.062 276.571C175.82 290.611 188.464 299.992 206.429 306.329C234.957 316.402 254.256 331.36 262.284 361.749C239.751 371.846 209.766 372.17 186.254 365.313C155.53 356.569 129.583 335.891 114.198 307.897C92.3997 267.607 96.9032 224.487 109.351 182.267Z" fill="#A8B5A0"/>
+    <path d="M212.032 0.591008C234.528 -1.15039 272.485 0.48387 292.109 11.9419C298.354 15.5913 301.091 20.6336 302.61 27.4198C296.726 50.5741 268.321 45.2207 248.997 46.261C142.693 51.9836 55.9945 116.274 19.5599 215.957C12.0941 240.978 8.42209 262.715 9.51934 288.909C5.47384 278.292 1.96289 257.063 0.887687 245.907C-4.77919 187.107 17.0752 122.983 55.3228 78.1927C96.0117 30.5431 150.065 5.59599 212.032 0.591008Z" fill="#F0C19F"/>
+    <path d="M302.286 83.3631C341.259 77.401 377.648 104.282 383.397 143.287C389.153 182.293 362.077 218.534 323.043 224.077C284.302 229.577 248.39 202.75 242.684 164.04C236.977 125.331 263.606 89.2804 302.286 83.3631Z" fill="#DC926F"/>
+  </g>
+
+  <!-- Brand name -->
+  <text x="80" y="168" font-family="Georgia, serif" font-size="28" font-weight="400" fill="rgba(255,255,255,0.90)" letter-spacing="1">WellNest</text>
+
+  <!-- Divider line -->
+  <line x1="80" y1="190" x2="320" y2="190" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+  <!-- Main headline -->
+  <text x="80" y="290" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#ffffff" letter-spacing="-1">Somewhere soft</text>
+  <text x="80" y="368" font-family="Georgia, serif" font-size="64" font-weight="700" fill="rgba(255,255,255,0.55)" letter-spacing="-1">to land.</text>
+
+  <!-- Sub-copy -->
+  <text x="80" y="438" font-family="-apple-system, Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.50)" font-weight="400">
+    Free mental health assessments · Therapist matching · Daily wellness tools
+  </text>
+
+  <!-- CTA pill -->
+  <rect x="80" y="490" width="280" height="50" rx="25" fill="#4a6b52"/>
+  <text x="220" y="521" font-family="-apple-system, Arial, sans-serif" font-size="18" font-weight="600" fill="white" text-anchor="middle">Take the free burnout test</text>
+
+  <!-- URL -->
+  <text x="1120" y="595" font-family="-apple-system, Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.30)" text-anchor="end" font-weight="400">wellnest.mohit.systems</text>
+
+  <!-- Decorative score element top right -->
+  <text x="1100" y="480" font-family="Georgia, serif" font-size="260" font-weight="700" fill="rgba(255,255,255,0.025)" text-anchor="middle">68</text>
+
+  <!-- Right side decorative card -->
+  <rect x="750" y="90" width="380" height="420" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <!-- Card content -->
+  <text x="790" y="145" font-family="-apple-system, Arial, sans-serif" font-size="12" fill="rgba(255,255,255,0.35)" font-weight="600" letter-spacing="2">BURNOUT ASSESSMENT</text>
+  <!-- Band pills -->
+  <rect x="790" y="162" width="72" height="26" rx="13" fill="rgba(74,107,82,0.25)" stroke="rgba(74,107,82,0.4)" stroke-width="1"/>
+  <text x="826" y="180" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="#7ab888" text-anchor="middle" font-weight="600">Minimal</text>
+  <rect x="874" y="162" width="50" height="26" rx="13" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="899" y="180" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="rgba(255,255,255,0.25)" text-anchor="middle">Mild</text>
+  <rect x="936" y="162" width="90" height="26" rx="13" fill="rgba(201,121,90,0.3)" stroke="rgba(201,121,90,0.5)" stroke-width="1"/>
+  <text x="981" y="180" font-family="-apple-system, Arial, sans-serif" font-size="11" fill="#e8a07a" text-anchor="middle" font-weight="600">Moderate</text>
+  <!-- Headline -->
+  <text x="790" y="240" font-family="Georgia, serif" font-size="38" font-weight="700" fill="white">Moderate</text>
+  <text x="790" y="285" font-family="Georgia, serif" font-size="38" font-weight="700" fill="white">burnout.</text>
+  <!-- Score bar -->
+  <text x="790" y="330" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.40)">Your score</text>
+  <rect x="790" y="342" width="300" height="6" rx="3" fill="rgba(255,255,255,0.08)"/>
+  <rect x="790" y="342" width="174" height="6" rx="3" fill="#c9795a"/>
+  <text x="1100" y="351" font-family="-apple-system, Arial, sans-serif" font-size="13" fill="rgba(201,121,90,0.9)" text-anchor="end" font-weight="600">58%</text>
+  <!-- Divider -->
+  <line x1="790" y1="374" x2="1100" y2="374" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <!-- Insight rows -->
+  <circle cx="802" cy="400" r="4" fill="rgba(201,121,90,0.5)"/>
+  <text x="816" y="404" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.55)">78% of your report is locked</text>
+  <circle cx="802" cy="430" r="4" fill="rgba(74,107,82,0.5)"/>
+  <text x="816" y="434" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.55)">7-day recovery plan ready</text>
+  <circle cx="802" cy="460" r="4" fill="rgba(255,255,255,0.2)"/>
+  <text x="816" y="464" font-family="-apple-system, Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.55)">Free · No credit card</text>
+  <!-- Unlock button in card -->
+  <rect x="790" y="482" width="300" height="44" rx="22" fill="#c9795a"/>
+  <text x="940" y="509" font-family="-apple-system, Arial, sans-serif" font-size="15" font-weight="600" fill="white" text-anchor="middle">Unlock full report →</text>
+</svg>

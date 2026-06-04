@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Block private/authenticated routes
+Disallow: /dashboard
+Disallow: /journal
+Disallow: /messages
+Disallow: /bookings
+Disallow: /breathe
+Disallow: /invite
+Disallow: /rewards
+Disallow: /checkout
+Disallow: /booking/
+
+# Block admin routes
+Disallow: /admin/
+
+# Block auth flows
+Disallow: /join
+Disallow: /signin
+Disallow: /signup
+Disallow: /reset-password
+
+# Allow assessment hub and public assessments
+Allow: /assess
+Allow: /burnout-test
+Allow: /anxiety-test
+Allow: /stress-test
+Allow: /mood-check
+
+Sitemap: https://wellnest.mohit.systems/sitemap.xml

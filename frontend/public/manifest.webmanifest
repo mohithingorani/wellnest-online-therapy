@@ -1,0 +1,22 @@
+{
+  "name": "WellNest",
+  "short_name": "WellNest",
+  "description": "Online therapy and mental wellness — connect with licensed therapists and access free wellbeing tools.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#efece4",
+  "theme_color": "#4a6b52",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["health", "medical", "lifestyle"],
+  "icons": [
+    {
+      "src": "/wellnest-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": []
+}
