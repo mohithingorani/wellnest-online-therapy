@@ -25,19 +25,19 @@ export const ACHIEVEMENT_META: Record<string, { label: string; desc: string; emo
 };
 
 export async function getSeeds(): Promise<SeedsData> {
-  const res = await authFetch("/api/seeds/me");
+  const res = await authFetch("/seeds/me");
   const json = await res.json();
   return json.data;
 }
 
 export async function getAchievements(): Promise<Achievement[]> {
-  const res = await authFetch("/api/seeds/achievements");
+  const res = await authFetch("/seeds/achievements");
   const json = await res.json();
   return json.data;
 }
 
 export async function awardClientSeeds(reason: "breathing_session" | "resource_read" | "daily_checkin") {
-  const res = await authFetch("/api/seeds/award", {
+  const res = await authFetch("/seeds/award", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ reason }),

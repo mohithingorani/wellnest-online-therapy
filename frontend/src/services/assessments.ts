@@ -9,7 +9,7 @@ export interface AssessmentResult {
 export async function saveAssessment(
   type: string, score: number, band: string, answers: Record<string, number>
 ): Promise<{ assessment: AssessmentResult; seedsAwarded: boolean }> {
-  const res = await authFetch("/api/assessments", {
+  const res = await authFetch("/assessments", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ type, score, band, answers }),
@@ -19,25 +19,25 @@ export async function saveAssessment(
 }
 
 export async function getAssessmentHistory(): Promise<AssessmentResult[]> {
-  const res = await authFetch("/api/assessments/history");
+  const res = await authFetch("/assessments/history");
   const json = await res.json();
   return json.data ?? [];
 }
 
 export async function getLatestAssessments(): Promise<Record<string, AssessmentResult | null>> {
-  const res = await authFetch("/api/assessments/latest");
+  const res = await authFetch("/assessments/latest");
   const json = await res.json();
   return json.data ?? {};
 }
 
 export async function getReferralCode(): Promise<{ code: string; uses: number }> {
-  const res = await authFetch("/api/referrals/me");
+  const res = await authFetch("/referrals/me");
   const json = await res.json();
   return json.data;
 }
 
 export async function getReferralStats(): Promise<{ code: string | null; uses: number; referredCount: number }> {
-  const res = await authFetch("/api/referrals/stats");
+  const res = await authFetch("/referrals/stats");
   const json = await res.json();
   return json.data;
 }
