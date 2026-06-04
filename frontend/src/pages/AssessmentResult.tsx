@@ -238,11 +238,11 @@ export default function AssessmentResult() {
 
           {/* score headline */}
           <h1 className="font-display font-semibold text-white leading-[0.92] tracking-[-0.035em]"
-            style={{ fontSize: "clamp(3rem, 10vw, 5.6rem)" }}>
+            style={{ fontSize: "clamp(3.4rem, 11vw, 6.4rem)" }}>
             {result.headline}.
           </h1>
 
-          <p className="mt-5 leading-relaxed text-white/70 font-medium" style={{ fontSize: "clamp(0.95rem, 2.2vw, 1.1rem)" }}>
+          <p className="mt-6 leading-relaxed text-white/70 font-medium" style={{ fontSize: "clamp(1.05rem, 2.5vw, 1.2rem)" }}>
             {rep.scoreContext(band, pct)}
           </p>
 
@@ -257,8 +257,8 @@ export default function AssessmentResult() {
               <div className="h-2 rounded-full bg-white/10 overflow-hidden mb-4">
                 <div className="h-full rounded-full transition-all duration-700" style={{ width: `${unlockedPct}%`, background: tone.hex }} />
               </div>
-              <p className="text-[12px] text-white/50 mb-4 leading-relaxed">
-                Your personalised recovery report has been generated. <strong className="text-white/70">{100 - unlockedPct}% is locked</strong> — including your trigger analysis, recovery timeline, and personalized action plan.
+              <p className="text-sm text-white/55 mb-4 leading-relaxed">
+                Your personalised recovery report has been generated. <strong className="text-white/75">{100 - unlockedPct}% is locked</strong> — including your trigger analysis, recovery timeline, and personalized action plan.
               </p>
               <button onClick={goSignup}
                 className="w-full h-12 flex items-center justify-center rounded-full font-semibold text-[0.9rem] text-white transition-all hover:opacity-90 active:scale-[0.99]"
@@ -313,7 +313,7 @@ export default function AssessmentResult() {
           REPORT BODY
       ══════════════════════════════════════════════════════════ */}
       <div className="bg-bg">
-        <div className="mx-auto max-w-[640px] px-5 md:px-8 py-10 md:py-14 space-y-3">
+        <div className="mx-auto max-w-[800px] px-5 md:px-8 py-10 md:py-14 space-y-3">
 
           {/* ── SECTION 1: What this score means (visible) ── */}
           <div className="rounded-[1.5rem] border border-border/60 bg-surface overflow-hidden">
@@ -322,8 +322,8 @@ export default function AssessmentResult() {
                 <div className="w-5 h-5 rounded-full grid place-items-center" style={{ background: `${tone.hex}20` }}>
                   <svg className="w-3 h-3" style={{ color: tone.hex }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                 </div>
-                <span className="text-[11.5px] font-bold text-fg-strong/70">
-                  <span className="hidden xs:inline text-fg-muted">§1 · </span>Score Summary
+                <span className="text-[13px] font-bold text-fg-strong/80">
+                  <span className="hidden xs:inline text-fg-muted/70">§1 · </span>Score Summary
                 </span>
               </div>
               <span className="text-[10px] font-bold text-success bg-success/12 px-2 py-0.5 rounded-full shrink-0">Unlocked</span>
@@ -334,12 +334,12 @@ export default function AssessmentResult() {
                   {pct}
                 </div>
                 <div>
-                  <p className="font-semibold text-fg-strong text-[0.95rem]">{result.headline}</p>
-                  <p className="text-sm text-fg-muted mt-1 leading-relaxed">{result.body}</p>
+                  <p className="font-semibold text-fg-strong text-base">{result.headline}</p>
+                  <p className="text-[0.95rem] text-fg-muted mt-1.5 leading-relaxed">{result.body}</p>
                 </div>
               </div>
               <div className="rounded-xl bg-[#f5f2ec] px-4 py-3">
-                <p className="text-[12.5px] text-fg-strong leading-relaxed">
+                <p className="text-sm text-fg-strong leading-relaxed">
                   <span className="font-semibold" style={{ color: tone.hex }}>Next step: </span>
                   {rep.visibleStep}
                 </p>
@@ -516,9 +516,9 @@ export default function AssessmentResult() {
       <div className="relative bg-night overflow-hidden border-t border-night-border">
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-50" style={{ background: tone.glow }} />
         <div className="relative mx-auto max-w-[640px] px-5 md:px-8 py-12 md:py-16">
-          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/30 mb-2">Recovery journey</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/40 mb-2">Recovery journey</p>
           <h2 className="font-display font-semibold text-white leading-tight tracking-[-0.02em] mb-10"
-            style={{ fontSize: "clamp(1.3rem, 4vw, 1.6rem)" }}>
+            style={{ fontSize: "clamp(1.5rem, 4.5vw, 1.9rem)" }}>
             Where this goes with support
           </h2>
 
@@ -543,7 +543,7 @@ export default function AssessmentResult() {
                         : <svg className="w-3 h-3 text-white/60" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
                       }
                     </div>
-                    <p className="text-[10px] font-semibold text-center leading-tight" style={{ color: i === 0 ? "rgba(255,255,255,0.85)" : locked ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.5)" }}>
+                    <p className="text-[11px] font-semibold text-center leading-tight" style={{ color: i === 0 ? "rgba(255,255,255,0.85)" : locked ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.5)" }}>
                       {label}
                     </p>
                   </div>
@@ -553,8 +553,8 @@ export default function AssessmentResult() {
           </div>
 
           <div className="mt-10 rounded-2xl bg-white/[0.05] border border-white/[0.08] px-5 py-4">
-            <p className="text-[12.5px] text-white/55 leading-relaxed">
-              <span className="font-semibold text-white/75">{rep.urgencyLine(band)}</span>{" "}
+            <p className="text-sm text-white/60 leading-relaxed">
+              <span className="font-semibold text-white/80">{rep.urgencyLine(band)}</span>{" "}
               {isGuest && "Your full recovery plan is waiting."}
             </p>
           </div>
@@ -577,13 +577,13 @@ export default function AssessmentResult() {
           <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(55% 70% at 50% 105%, ${tone.heroGlow.replace("rgba", "rgba").replace(/[\d.]+\)$/, "0.2)")} 0%, transparent 60%)` }} />
           <div className="relative mx-auto max-w-[640px] px-5 md:px-8 py-14 md:py-20">
 
-            <h2 className="font-display font-semibold text-white leading-[1.06] tracking-[-0.025em] mb-3"
-              style={{ fontSize: "clamp(1.65rem, 5vw, 2.2rem)" }}>
+            <h2 className="font-display font-semibold text-white leading-[1.06] tracking-[-0.025em] mb-4"
+              style={{ fontSize: "clamp(1.85rem, 5.5vw, 2.5rem)" }}>
               Your recovery report is ready.<br />
               <span className="text-white/45 font-medium">78% is waiting for you.</span>
             </h2>
 
-            <p className="text-white/58 text-[0.95rem] leading-relaxed mb-8 max-w-lg font-medium">
+            <p className="text-white/62 text-[1rem] leading-relaxed mb-8 max-w-lg font-medium">
               Create a free account to unlock your complete report — including what's driving your {rep.label.toLowerCase()}, how long recovery will take, and the exact actions that will help most.
             </p>
 
@@ -593,13 +593,13 @@ export default function AssessmentResult() {
                 "Your top 3 triggers identified",
                 `Recovery timeline: ${rep.timelineRange(band)}`,
                 "Complete 7-day action plan",
-                "3 matched therapists",
                 "8-week score forecast",
                 "Progress tracking over time",
+                "Retake every 2 weeks to measure change",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2.5 rounded-xl bg-white/[0.05] border border-white/[0.07] px-3.5 py-3">
                   <svg className="w-3.5 h-3.5 mt-0.5 shrink-0" style={{ color: tone.hex }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                  <p className="text-[12px] text-white/65 font-medium leading-snug">{item}</p>
+                  <p className="text-[13px] text-white/70 font-medium leading-snug">{item}</p>
                 </div>
               ))}
             </div>
@@ -613,8 +613,8 @@ export default function AssessmentResult() {
 
             {/* waitlist */}
             <div className="mt-12 pt-8 border-t border-night-border/40">
-              <p className="text-[13px] font-semibold text-white/70 mb-1">Want to speak to a therapist who specialises in {rep.therapistSpec}?</p>
-              <p className="text-[11px] text-white/35 mb-4">Join the waitlist — we'll match you when therapists go live. No commitment.</p>
+              <p className="text-sm font-semibold text-white/75 mb-1">Want to speak to a therapist who specialises in {rep.therapistSpec}?</p>
+              <p className="text-[12.5px] text-white/40 mb-4">Join the waitlist — we'll match you when therapists go live. No commitment.</p>
               {waitlistDone ? (
                 <div className="flex items-center gap-2 text-sm font-medium" style={{ color: tone.hex }}>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -659,9 +659,8 @@ function SectionHeader({ number, label, hex, locked }: { number: number; label: 
           ? <div className="w-5 h-5 rounded-full bg-fg-muted/8 grid place-items-center shrink-0"><LockIcon size="w-3 h-3" className="text-fg-muted/50" /></div>
           : <div className="w-5 h-5 rounded-full grid place-items-center shrink-0" style={{ background: `${hex}20` }}><svg className="w-3 h-3" style={{ color: hex }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg></div>
         }
-        <span className="text-[11.5px] font-bold text-fg-strong/70 truncate">
-          {/* number prefix hidden on very small screens to avoid overflow */}
-          <span className="hidden xs:inline text-fg-muted">§{number} · </span>
+        <span className="text-[13px] font-bold text-fg-strong/80 truncate">
+          <span className="hidden xs:inline text-fg-muted/70">§{number} · </span>
           {label}
         </span>
       </div>
@@ -680,7 +679,7 @@ function LockedSection({ number, label, hex, preview, children, onUnlock, ctaLab
     <div className="rounded-[1.5rem] border border-border/60 bg-surface overflow-hidden">
       <SectionHeader number={number} label={label} hex={hex} locked />
       <div className="p-5">
-        <p className="text-[12.5px] text-fg-muted mb-3 leading-relaxed">{preview}</p>
+        <p className="text-sm text-fg-muted mb-3 leading-relaxed">{preview}</p>
         {children}
         <button onClick={onUnlock}
           className="mt-4 w-full h-10 flex items-center justify-center rounded-full font-semibold text-[0.85rem] text-white transition-all hover:opacity-90"
