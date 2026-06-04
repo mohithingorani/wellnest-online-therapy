@@ -329,64 +329,101 @@ export default function Rewards() {
           </div>
 
           {/* ══════════════════ ACHIEVEMENTS ══════════════════════════════ */}
-          <div className="bg-surface border border-border/60 rounded-[1.4rem] p-5">
-            <div className="flex items-center justify-between mb-5">
+          <div className="bg-surface border border-border/60 rounded-[1.4rem] p-5 md:p-6">
+
+            {/* header */}
+            <div className="flex items-start justify-between gap-4 mb-5">
               <div>
-                <h2 className="text-[0.95rem] font-semibold text-fg-strong">Achievements</h2>
-                <p className="text-[11px] text-fg-muted mt-0.5">{earned.size} of {Object.keys(ACH).length} collected</p>
+                <h2 className="text-base font-semibold text-fg-strong">Achievements</h2>
+                <p className="text-xs text-fg-muted mt-0.5">
+                  {earned.size} of {Object.keys(ACH).length} earned
+                </p>
               </div>
-              {/* rarity legend */}
-              <div className="hidden sm:flex items-center gap-3 text-[10px] text-fg-muted">
-                {(["common","uncommon","rare","epic"] as Rarity[]).map((r) => (
-                  <span key={r} className={`rounded-full px-2 py-0.5 border ${RARITY_STYLES[r].badge} border-current/30`}>{r}</span>
-                ))}
+              {/* progress count + bar */}
+              <div className="flex-1 max-w-[220px] mt-1">
+                <div className="flex justify-between text-[11px] text-fg-muted mb-1.5">
+                  <span>Progress</span>
+                  <span className="font-semibold text-fg-strong">{earned.size}/{Object.keys(ACH).length}</span>
+                </div>
+                <div className="h-1.5 rounded-full bg-border/40 overflow-hidden">
+                  <div className="h-full rounded-full bg-gradient-to-r from-sage-400 to-ochre-400 transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                    style={{ width: `${(earned.size / Object.keys(ACH).length) * 100}%` }} />
+                </div>
               </div>
             </div>
 
-            {/* progress bar */}
-            <div className="h-1 rounded-full bg-border/40 overflow-hidden mb-5">
-              <div className="h-full rounded-full bg-gradient-to-r from-sage-400 to-ochre-400 transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{ width: `${(earned.size / Object.keys(ACH).length) * 100}%` }} />
-            </div>
-
-            {/* 7 achievements: 4-col mobile → 7-col desktop so no orphan */}
-            <div className="grid grid-cols-4 lg:grid-cols-7 gap-3">
+            {/* grid — 2 col mobile, 3 col sm, 4 col lg */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {Object.entries(ACH).map(([slug, def], idx) => {
                 const got = earned.has(slug);
                 const earnedAt = achievements.find((a) => a.slug === slug)?.earnedAt;
                 const rs = RARITY_STYLES[def.rarity];
+
+                /* icon fill color per rarity */
+                const iconColor = got
+                  ? def.rarity === "epic"     ? "var(--color-accent)"
+                  : def.rarity === "rare"     ? "#b87e2a"
+                  : def.rarity === "uncommon" ? "#4a6b52"
+                  : "#6b7c6b"
+                  : undefined;
+
                 return (
-                  <div key={slug}
+                  <div
+                    key={slug}
                     title={got ? `${def.label} — ${def.desc}` : `Locked: ${def.unlockHint}`}
-                    className={`relative rounded-2xl border p-4 flex flex-col items-center text-center transition-all duration-300 ${
+                    className={`relative rounded-2xl border p-4 flex flex-col transition-all duration-300 ${
                       got
-                        ? `${rs.bg} ${rs.border} ${rs.glow} animate-pop-in`
-                        : "bg-surface-2/50 border-border/40"
+                        ? `${rs.bg} ${rs.border} ${rs.glow}`
+                        : "bg-surface-2/40 border-border/40"
                     }`}
-                    style={{ animationDelay: `${idx * 50}ms` }}
+                    style={{ animationDelay: `${idx * 40}ms` }}
                   >
-                    {/* rarity badge */}
+                    {/* rarity pill — top right, only when earned */}
                     {got && (
-                      <span className={`absolute top-2 right-2 text-[8px] font-bold uppercase tracking-wide rounded-full px-1.5 py-0.5 border ${rs.badge} border-current/20`}>
+                      <span className={`absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wide rounded-full px-2 py-0.5 ${rs.badge}`}>
                         {def.rarity}
                       </span>
                     )}
 
-                    {/* icon container */}
-                    <div className={`relative w-12 h-12 rounded-2xl grid place-items-center mb-3 transition-all duration-300 ${
-                      got ? `bg-gradient-to-br ${def.rarity === "epic" ? "from-accent/20 to-accent/10" : def.rarity === "rare" ? "from-ochre-200/60 to-ochre-100/40" : def.rarity === "uncommon" ? "from-sage-200/60 to-sage-100/40" : "from-surface to-surface-2"} border ${rs.border}` : "bg-border/20 border border-border/30"
+                    {/* icon */}
+                    <div className={`w-14 h-14 rounded-2xl grid place-items-center mb-3.5 transition-all duration-300 ${
+                      got
+                        ? `border ${rs.border} ${
+                            def.rarity === "epic"     ? "bg-accent/10"
+                          : def.rarity === "rare"     ? "bg-ochre-100/70"
+                          : def.rarity === "uncommon" ? "bg-sage-100/70"
+                          : "bg-surface border-border/50"
+                          }`
+                        : "bg-border/15 border border-border/25"
                     }`}>
                       {got ? (
-                        <Ic d={ICONS[def.icon]} className="w-5 h-5" style={{ color: def.rarity === "epic" ? "var(--color-accent)" : def.rarity === "rare" ? "#c7943c" : def.rarity === "uncommon" ? "#587a4f" : "#7d8a7e" } as React.CSSProperties} />
+                        <Ic
+                          d={ICONS[def.icon]}
+                          className="w-6 h-6"
+                          style={{ color: iconColor } as React.CSSProperties}
+                          strokeWidth={1.6}
+                        />
                       ) : (
-                        <Ic d={ICONS.lock} className="w-4 h-4 text-fg-muted/30" />
+                        <Ic d={ICONS.lock} className="w-5 h-5 text-fg-muted/25" strokeWidth={1.6} />
                       )}
                     </div>
 
-                    <div className={`text-xs font-semibold leading-tight ${got ? rs.text : "text-fg-muted/40"}`}>{def.label}</div>
-                    <div className={`text-[10px] mt-1 leading-snug ${got ? "text-fg-muted" : "text-fg-muted/30"}`}>
-                      {got ? (earnedAt ? relTime(earnedAt) : "Earned") : def.unlockHint}
-                    </div>
+                    {/* label */}
+                    <p className={`text-sm font-semibold leading-tight ${got ? rs.text : "text-fg-muted/40"}`}>
+                      {def.label}
+                    </p>
+
+                    {/* desc / hint */}
+                    <p className={`text-xs mt-1 leading-snug ${got ? "text-fg-muted" : "text-fg-muted/30"}`}>
+                      {got ? def.desc : def.unlockHint}
+                    </p>
+
+                    {/* earned date */}
+                    {got && earnedAt && (
+                      <p className="text-[10px] text-fg-muted/50 mt-2 font-medium">
+                        {relTime(earnedAt)}
+                      </p>
+                    )}
                   </div>
                 );
               })}
