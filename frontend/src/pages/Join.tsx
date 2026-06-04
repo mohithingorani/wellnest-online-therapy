@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Logo from "../components/Logo";
+import SEO from "../components/SEO";
 
 
 function passwordStrength(pw: string) {
@@ -131,6 +132,12 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
 
   return (
     <div className="min-h-dvh bg-[#f5f1eb] flex items-stretch lg:items-center lg:justify-center lg:p-6">
+      <SEO
+        title={isLogin ? "Sign In" : "Create Account"}
+        description={isLogin ? "Sign in to your WellNest account to access your therapy sessions, self-assessments, journal, and wellness tools." : "Create your free WellNest account to unlock your full recovery report, track your progress over time, and connect with licensed therapists."}
+        canonical={isLogin ? "/join" : "/join"}
+        noIndex
+      />
 
       {/* back link — safe-area aware so it clears notch on iOS */}
       <Link

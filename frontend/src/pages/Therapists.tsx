@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import SEO from "../components/SEO";
+import { medicalBusinessSchema } from "../lib/jsonld";
 import FiltersSidebar, { type FiltersState } from "../components/FilterSideBar";
 import SecureButton from "../components/SecureButton";
 import TherapistCard2 from "../components/TherapistCard2";
@@ -149,6 +151,7 @@ export default function TherapistsPage() {
 
   return (
     <div className="bg-bg min-h-screen pt-4">
+      <SEO title="Find a Therapist" description="Browse verified, licensed therapists on WellNest. Filter by specialty, language, session type, and availability to find your perfect match." canonical="/therapists" jsonLd={[medicalBusinessSchema()]} />
       <main className="px-4 md:px-8 lg:px-16 2xl:px-24">
         <section className="flex mt-6 justify-between gap-8">
           <div className=" flex-1 ">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
+import SEO from "../components/SEO";
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ export default function ResetPassword() {
 
   return (
     <div className="min-h-dvh bg-[#efece4] grain flex items-stretch justify-center lg:items-center lg:p-5">
+      <SEO title="Reset Password" description="Reset your WellNest account password. Enter your email and we'll send you a secure reset link." canonical="/reset-password" noIndex />
       <div className="relative w-full overflow-hidden lg:max-w-[1360px] lg:h-[min(900px,92vh)] lg:flex lg:rounded-[2.4rem] lg:shadow-[0_40px_100px_-30px_rgba(47,58,50,0.32)]">
 
         {/* ── LEFT: image panel ── */}
