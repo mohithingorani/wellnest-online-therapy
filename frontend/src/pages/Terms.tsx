@@ -1,9 +1,11 @@
 import { type ReactNode } from "react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 export default function TermsPage() {
   return (
     <div className="grain relative text-fg bg-bg overflow-x-clip">
+      <SEO title="Terms of Service" description="Review WellNest's terms of service governing the use of our therapy matching platform and mental wellness tools." canonical="/terms" />
       <section className="relative pt-[68px]">
         <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-16 md:py-24">
           <Reveal>

@@ -1,9 +1,11 @@
 import { type ReactNode } from "react";
 import Reveal from "../components/Reveal";
+import SEO from "../components/SEO";
 
 export default function PrivacyPage() {
   return (
     <div className="grain relative text-fg bg-bg overflow-x-clip">
+      <SEO title="Privacy Policy" description="Read WellNest's privacy policy to understand how we collect, use, and protect your personal data. Your privacy is fundamental to our service." canonical="/privacy" />
       <section className="relative pt-[68px]">
         <div className="mx-auto max-w-[1080px] px-5 md:px-8 py-16 md:py-24">
           <Reveal>
