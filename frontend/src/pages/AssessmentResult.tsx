@@ -453,60 +453,10 @@ export default function AssessmentResult() {
             </div>
           )}
 
-          {/* ── SECTION 5: Therapist matches (locked) ── */}
+          {/* ── SECTION 5: Progress forecast (locked) ── */}
           {isGuest ? (
             <LockedSection
-              number={5} label={`Therapist Matches for Your Score`} hex={tone.hex}
-              preview={`3 therapists who specialise in ${rep.therapistSpec} matched to your profile:`}
-              onUnlock={goSignup} ctaLabel={rep.cta}>
-              <div className="space-y-2 mt-2">
-                {[
-                  { init: "A", years: "8 yrs", match: "98%" },
-                  { init: "M", years: "6 yrs", match: "94%" },
-                  { init: "R", years: "10 yrs", match: "91%" },
-                ].map((t, i) => (
-                  <div key={i} className="flex items-center gap-3 rounded-xl bg-[#f5f2ec] px-4 py-3">
-                    <div className="w-9 h-9 rounded-full bg-fg-muted/12 grid place-items-center shrink-0 font-bold text-fg-muted/30">{t.init}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="h-2.5 rounded-full bg-fg-muted/12 w-28 mb-1.5" />
-                      <div className="h-2 rounded-full bg-fg-muted/8 w-36" />
-                    </div>
-                    <div className="text-right shrink-0">
-                      <div className="text-[11px] font-bold text-fg-muted/25">{t.match} match</div>
-                      <div className="text-[10px] text-fg-muted/20">{t.years}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </LockedSection>
-          ) : (
-            <div className="rounded-[1.5rem] border border-border/60 bg-surface overflow-hidden">
-              <SectionHeader number={5} label="Therapist Matches for Your Score" hex={tone.hex} locked={false} />
-              <div className="p-5 space-y-2">
-                {[
-                  { init: "A", name: "Dr. Anjali R.", years: "8 years", match: "98% match" },
-                  { init: "M", name: "Dr. Maya S.",   years: "6 years", match: "94% match" },
-                  { init: "R", name: "Dr. Rahul K.", years: "10 years", match: "91% match" },
-                ].map((t) => (
-                  <div key={t.init} className="flex items-center gap-3 rounded-xl bg-[#f5f2ec] px-4 py-3.5">
-                    <div className="w-10 h-10 rounded-full grid place-items-center shrink-0 font-display font-bold text-base text-white" style={{ background: tone.hex }}>{t.init}</div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-fg-strong text-sm">{t.name}</p>
-                      <p className="text-xs text-fg-muted capitalize">{rep.therapistSpec} · {t.years}</p>
-                    </div>
-                    <div className="shrink-0 text-right">
-                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full" style={{ background: `${tone.hex}15`, color: tone.hex }}>{t.match}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ── SECTION 6: Progress forecast (locked) ── */}
-          {isGuest ? (
-            <LockedSection
-              number={6} label="Your Progress Forecast" hex={tone.hex}
+              number={5} label="Your Progress Forecast" hex={tone.hex}
               preview="Predicted score trajectory over 8 weeks with structured support:"
               onUnlock={goSignup} ctaLabel={rep.cta}>
               <div className="mt-3 h-24 rounded-xl bg-[#f5f2ec] flex items-end gap-1.5 px-4 pb-3 pt-4">
@@ -521,7 +471,7 @@ export default function AssessmentResult() {
             </LockedSection>
           ) : (
             <div className="rounded-[1.5rem] border border-border/60 bg-surface overflow-hidden">
-              <SectionHeader number={6} label="Your Progress Forecast" hex={tone.hex} locked={false} />
+              <SectionHeader number={5} label="Your Progress Forecast" hex={tone.hex} locked={false} />
               <div className="p-5">
                 <div className="h-28 rounded-xl bg-[#f5f2ec] flex items-end gap-1.5 px-4 pb-3 pt-4">
                   {[pct, Math.max(pct - 8, 5), Math.max(pct - 18, 5), Math.max(pct - 28, 5), Math.max(pct - 36, 5), Math.max(pct - 42, 5), Math.max(pct - 47, 5), Math.max(pct - 50, 5)].map((h, i) => (
@@ -546,7 +496,7 @@ export default function AssessmentResult() {
                 </div>
                 <div>
                   <p className="font-semibold text-night-fg text-sm">Your report is 78% locked</p>
-                  <p className="text-night-muted text-xs mt-0.5 leading-relaxed">Sections 2–6 contain your triggers, recovery timeline, personalised 7-day plan, therapist matches, and score trajectory. Free to unlock.</p>
+                  <p className="text-night-muted text-xs mt-0.5 leading-relaxed">Sections 2–5 contain your triggers, recovery timeline, personalised 7-day plan, and score trajectory. Free to unlock.</p>
                 </div>
               </div>
               <button onClick={goSignup}
