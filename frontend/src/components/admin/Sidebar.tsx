@@ -76,11 +76,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
     >
       <div className="flex items-center justify-between p-4 border-b border-[#e4dccb]">
         {!collapsed && (
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#4a6b52] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm font-body">W</span>
-            </div>
-            <span className="font-bold text-lg text-fg-strong font-body">WellNest</span>
+          <div className="flex items-center gap-2.5">
+            <img src="/wellnest-logo.svg" alt="" aria-hidden="true" className="h-7 w-auto" />
+            <span className="font-semibold text-[1.15rem] text-fg-strong font-body tracking-[-0.02em]">WellNest</span>
           </div>
         )}
         <button
