@@ -1,9 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { getAssessment } from "../data/assessments";
 import { useAuth } from "../contexts/AuthContext";
 import { joinWaitlist } from "../services/seeds";
 import { saveAssessment } from "../services/assessments";
+import SEO from "../components/SEO";
+
+type ResultState = {
+  score: number; band: string; answers: Record<string, number>;
+  seedsAwarded?: boolean; justSignedUp?: boolean;
+};
+
+const SESSION_KEY = (type: string) => `wn_result_${type}`;
 
 /* ── atmospheric tones ──────────────────────────────────────────── */
 const TONE: Record<string, { glow: string; hex: string; heroGlow: string }> = {
@@ -142,10 +150,17 @@ export default function AssessmentResult() {
   const navigate   = useNavigate();
   const { user }   = useAuth();
   const def        = getAssessment(type ?? "");
-  const state      = location.state as {
-    score: number; band: string; answers: Record<string, number>;
-    seedsAwarded?: boolean; justSignedUp?: boolean;
-  } | null;
+
+  /* Prefer router location.state; fall back to sessionStorage for page refreshes */
+  const routeState = location.state as ResultState | null;
+  const storedState = (() => {
+    if (routeState) return null; // don't read storage if we have fresh state
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY(type ?? ""));
+      return raw ? (JSON.parse(raw) as ResultState) : null;
+    } catch { return null; }
+  })();
+  const state = routeState ?? storedState;
 
   const [email, setEmail]               = useState("");
   const [waitlistDone, setWaitlistDone] = useState(false);
@@ -167,7 +182,9 @@ export default function AssessmentResult() {
       .finally(() => setSaving(false));
   }, [user, state, def]);
 
-  if (!def || !state) { navigate("/assess", { replace: true }); return null; }
+  /* Use <Navigate> not navigate() — calling navigate() during render
+     causes a brief blank flash before navigation fires in production. */
+  if (!def || !state) return <Navigate to="/assess" replace />;
 
   const typeKey  = type ?? "gad7";
   const band     = state.band as Band;
@@ -190,8 +207,13 @@ export default function AssessmentResult() {
   const unlockedPct = isGuest ? 22 : 100;
 
   /* ── Render ─────────────────────────────────────────────────── */
+  const seoTitle = `${result.headline} — ${rep.label} Results`;
+  const seoDesc  = `${rep.scoreContext(band, pct)} ${rep.urgencyLine(band)}`.slice(0, 155);
+  const seoPath  = `/assess/${typeKey}/result`;
+
   return (
     <div className="bg-bg">
+      <SEO title={seoTitle} description={seoDesc} canonical={seoPath} noIndex={isGuest} />
 
       {/* ══════════════════════════════════════════════════════════
           HERO — score + CTA above the fold

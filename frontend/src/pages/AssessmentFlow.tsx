@@ -3,6 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getAssessment } from "../data/assessments";
 import { saveAssessment } from "../services/assessments";
 import { useAuth } from "../contexts/AuthContext";
+import SEO from "../components/SEO";
+import { assessmentSchema } from "../lib/jsonld";
+import { SITE } from "../components/SEO";
+
+const TYPE_SEO: Record<string, { title: string; description: string; path: string }> = {
+  gad7:    { title: "Free Anxiety Test (GAD-7)", description: "Take the clinically-validated GAD-7 anxiety assessment — 7 questions, 2 minutes, free, no account required. Understand your anxiety level and get personalised guidance.", path: "/assess/gad7" },
+  burnout: { title: "Free Burnout Assessment", description: "Take a free burnout screen based on the Maslach Burnout Inventory. 8 questions, 2 minutes. Find out if you're showing signs of burnout and what to do about it.", path: "/assess/burnout" },
+  stress:  { title: "Free Stress Level Test (PSS-4)", description: "Check your stress level with the Perceived Stress Scale (PSS-4) — the most widely used stress measurement tool. 4 questions, 1 minute, completely free.", path: "/assess/stress" },
+  mood:    { title: "Free Mood Check", description: "Get a quick snapshot of your emotional wellbeing — energy, sleep, connection, and hope. 5 questions, 1 minute, no account needed.", path: "/assess/mood" },
+};
 
 /* ── per-type atmosphere (matches result page) ─────────────────── */
 const TYPE_GLOW: Record<string, string> = {
@@ -76,7 +86,10 @@ export default function AssessmentFlow() {
         seedsAwarded = saved?.seedsAwarded ?? false;
       }
     } catch { /* non-fatal */ }
-    navigate(`/assess/${def.id}/result`, { state: { score, band, answers: newAnswers, seedsAwarded } });
+    const resultState = { score, band, answers: newAnswers, seedsAwarded };
+    /* Persist to sessionStorage so the result page survives a browser refresh */
+    try { sessionStorage.setItem(`wn_result_${def.id}`, JSON.stringify(resultState)); } catch { /* quota exceeded or private mode */ }
+    navigate(`/assess/${def.id}/result`, { state: resultState });
   }, [def, current, answers, user, navigate]);
 
   const handleAnswer = (value: number) => {
@@ -115,12 +128,16 @@ export default function AssessmentFlow() {
   }
 
   const total = def.questions.length;
-  const glow = TYPE_GLOW[type ?? "burnout"] ?? TYPE_GLOW.burnout;
+  const typeKey = type ?? "burnout";
+  const glow = TYPE_GLOW[typeKey] ?? TYPE_GLOW.burnout;
+  const typeSeo = TYPE_SEO[typeKey] ?? TYPE_SEO.gad7;
 
   /* ── INTRO ─────────────────────────────────────────────────────── */
   if (phase === "intro") {
     return (
       <div className="relative min-h-[calc(100vh-68px)] bg-night overflow-hidden flex flex-col">
+        <SEO title={typeSeo.title} description={typeSeo.description} canonical={typeSeo.path}
+          jsonLd={[assessmentSchema(typeSeo.title, typeSeo.description, `${SITE.url}${typeSeo.path}`)]} />
         <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: glow }} />
 
         <div className="relative mx-auto w-full max-w-[560px] px-5 md:px-8 flex flex-col flex-1 py-8 md:py-12">

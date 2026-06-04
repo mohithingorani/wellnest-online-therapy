@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ASSESSMENTS } from "../data/assessments";
 import Reveal from "../components/Reveal";
 import PageShell from "../components/PageShell";
+import SEO from "../components/SEO";
 
 /* Each assessment gets its own color identity — content drives the design */
 const CARD_STYLES: Record<string, {
@@ -26,6 +27,8 @@ export default function Assess() {
   const navigate = useNavigate();
 
   return (
+    <>
+    <SEO title="Free Mental Health Assessments" description="Take clinically-validated self-assessments for anxiety (GAD-7), burnout, stress (PSS-4), and mood — free, no account required. Know where you stand in under 2 minutes." canonical="/assess" />
     <PageShell
       eyebrow="Free tools"
       title="Self-Assessments"
@@ -84,5 +87,6 @@ export default function Assess() {
           </p>
         </Reveal>
     </PageShell>
+    </>
   );
 }
