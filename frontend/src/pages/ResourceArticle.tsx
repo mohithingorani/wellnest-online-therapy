@@ -68,7 +68,7 @@ export default function ResourceArticle() {
   return (
     <div className="journal-canvas min-h-[calc(100vh-68px)]">
       {celebrationEl}
-      <div className="mx-auto max-w-[720px] px-5 md:px-8 py-8 md:py-12 animate-page">
+      <div className="mx-auto max-w-[720px] px-5 md:px-8 py-8 md:py-12">
 
         {/* back */}
         <button onClick={() => navigate("/resources")} className="flex items-center gap-1.5 text-sm text-fg-muted hover:text-fg-strong transition-colors mb-7">

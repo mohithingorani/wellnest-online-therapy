@@ -20,7 +20,7 @@ interface PageShellProps {
 export default function PageShell({ eyebrow, title, subtitle, action, header, children }: PageShellProps) {
   return (
     <div className="bg-bg min-h-[calc(100vh-68px)]">
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-10 animate-page">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-10">
 
         {/* ── page header ── */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">

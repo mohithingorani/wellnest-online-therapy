@@ -27,7 +27,7 @@ export default function AssessmentResult() {
 
   return (
     <div className="journal-canvas min-h-[calc(100vh-68px)]">
-      <div className="mx-auto max-w-[680px] px-5 md:px-8 py-10 md:py-16 animate-page space-y-6">
+      <div className="mx-auto max-w-[680px] px-5 md:px-8 py-10 md:py-16 space-y-6">
 
         {/* result card */}
         <div className="surface-raised rounded-[1.6rem] p-7 md:p-8">

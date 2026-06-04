@@ -48,11 +48,20 @@ const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
 const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const Settings = lazy(() => import("./pages/admin/Settings"));
 
+/* Minimal fallback — matches page bg, no layout shift */
+function PageLoader() {
+  return (
+    <div className="min-h-screen bg-bg flex items-center justify-center">
+      <div className="w-6 h-6 rounded-full border-2 border-border border-t-accent animate-spin" />
+    </div>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ScrollToTop />
     <ToastProvider>
-      <Suspense fallback={null}>
+      <Suspense fallback={<PageLoader />}>
         <AuthProvider>
         <Routes>
           {/* Auth pages — no nav/footer */}

@@ -39,7 +39,8 @@ export default function Dashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
-  const [loading, setLoading] = useState(true);
+
+  const [_loading, setLoading] = useState(false);
   const [showVerify, setShowVerify] = useState(params.get("welcome") === "1");
   const [series, setSeries] = useState<MoodEntry[]>([]);
   const [todayMood, setTodayMood] = useState<number | null>(null);
@@ -66,7 +67,7 @@ export default function Dashboard() {
   const logMood = (v: number) => { setSeries(mStore.log(v)); setTodayMood(v); };
   const dismissVerify = () => { setShowVerify(false); params.delete("welcome"); setParams(params, { replace: true }); };
 
-  if (loading) return <Skeleton />;
+
 
   const affirmation = getDailyAffirmation();
   const todayLabel = new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
@@ -131,7 +132,7 @@ export default function Dashboard() {
             </div>
 
             {/* Seeds level pill — shrinks on mobile */}
-            {!seeds.loading && (
+            {(
               <button
                 onClick={() => navigate("/rewards")}
                 className="group flex items-center gap-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.10] border border-white/10 px-3.5 py-3 transition-all duration-300 self-start shrink-0"
@@ -157,7 +158,7 @@ export default function Dashboard() {
       </div>
 
       {/* ══════════════════════════ CONTENT ════════════════════════════ */}
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 space-y-6 animate-page">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 md:py-9 space-y-6">
 
         {/* verify banner */}
         {showVerify && (
@@ -407,7 +408,7 @@ export default function Dashboard() {
 
               {/* progress bar */}
               <div className="h-1 rounded-full bg-border/50 overflow-hidden mb-4">
-                <div className="h-full rounded-full bg-sage-500 transition-all duration-700"
+                <div className="h-full rounded-full bg-sage-500 transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                   style={{ width: `${(earnedSlugs.size / Object.keys(ACHIEVEMENT_META).length) * 100}%` }} />
               </div>
 
@@ -459,22 +460,3 @@ export default function Dashboard() {
   );
 }
 
-/* ── skeleton ─────────────────────────────────────────────────── */
-function Skeleton() {
-  return (
-    <div className="bg-bg min-h-[calc(100vh-68px)]">
-      <div className="bg-night h-48 animate-pulse" />
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-7 space-y-5 animate-pulse">
-        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-5">
-          <div className="h-56 rounded-[1.6rem] bg-surface-2" />
-          <div className="h-56 rounded-[1.6rem] bg-surface-2" />
-        </div>
-        <div className="h-72 rounded-[1.6rem] bg-surface-2" />
-        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-5">
-          <div className="h-64 rounded-[1.6rem] bg-surface-2" />
-          <div className="h-64 rounded-[1.6rem] bg-surface-2" />
-        </div>
-      </div>
-    </div>
-  );
-}

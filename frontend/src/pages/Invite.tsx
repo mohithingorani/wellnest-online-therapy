@@ -18,15 +18,10 @@ export default function Invite() {
     navigator.clipboard.writeText(link).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
   };
 
-  if (!stats) return (
-    <div className="bg-bg min-h-[calc(100vh-68px)] grid place-items-center">
-      <div className="w-8 h-8 rounded-full border-2 border-border border-t-accent animate-spin" />
-    </div>
-  );
 
   return (
     <div className="bg-bg min-h-[calc(100vh-68px)]">
-      <div className="mx-auto max-w-[680px] px-5 md:px-8 py-10 md:py-14 animate-page space-y-6">
+      <div className="mx-auto max-w-[680px] px-5 md:px-8 py-10 md:py-14 space-y-6">
 
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-fg-muted">Referrals</p>
@@ -37,11 +32,11 @@ export default function Invite() {
         {/* stat */}
         <div className="grid grid-cols-2 gap-4">
           <div className="surface-raised rounded-[1.4rem] p-5 text-center">
-            <div className="font-display text-[2.8rem] font-semibold text-fg-strong leading-none">{stats.referredCount}</div>
+            <div className="font-display text-[2.8rem] font-semibold text-fg-strong leading-none">{stats?.referredCount ?? 0}</div>
             <div className="mt-2 text-xs text-fg-muted">Friends referred</div>
           </div>
           <div className="surface-raised rounded-[1.4rem] p-5 text-center">
-            <div className="font-display text-[2.8rem] font-semibold text-accent leading-none">{stats.referredCount * 75}</div>
+            <div className="font-display text-[2.8rem] font-semibold text-accent leading-none">{(stats?.referredCount ?? 0) * 75}</div>
             <div className="mt-2 text-xs text-fg-muted">Seeds earned from referrals</div>
           </div>
         </div>

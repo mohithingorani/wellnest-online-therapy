@@ -91,7 +91,7 @@ const REDEMPTIONS = [
 /* ═══════════════════════════════════════════════════════════════ */
 export default function Rewards() {
   const navigate = useNavigate();
-  const { total, lifetimeEarned, todayEarned, weekEarned, transactions, currentLevel, progressPct, seedsToNext, nextLevel, activeDays, loading } = useSeeds();
+  const { total, lifetimeEarned, todayEarned, weekEarned, transactions, currentLevel, progressPct, seedsToNext, nextLevel, activeDays } = useSeeds();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
 
   useEffect(() => { getAchievements().then(setAchievements).catch(() => {}); }, []);
@@ -119,15 +119,10 @@ export default function Rewards() {
     seen.get(lbl)!.items.push(tx);
   }
 
-  if (loading) return (
-    <div className="bg-bg min-h-[calc(100vh-68px)] grid place-items-center">
-      <div className="w-8 h-8 rounded-full border-2 border-border border-t-accent animate-spin" />
-    </div>
-  );
 
   return (
     <div className="bg-bg min-h-[calc(100vh-68px)]">
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 animate-page">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8">
 
         {/* ══════════════════ HERO ══════════════════════════════ */}
         <div className="relative overflow-hidden bg-night rounded-[1.4rem] px-6 md:px-8 pt-7 pb-8 mt-6">
@@ -162,7 +157,7 @@ export default function Rewards() {
                     <span>{progressPct}%</span>
                   </div>
                   <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
-                    <div className="h-full rounded-full animate-ring-fill transition-all duration-700"
+                    <div className="h-full rounded-full animate-ring-fill transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                       style={{ width: `${progressPct}%`, background: currentLevel.ring }} />
                   </div>
                   <div className="mt-2 flex items-center gap-4 text-[11px] text-night-muted/60">
@@ -317,7 +312,7 @@ export default function Rewards() {
                             </div>
                           ) : (
                             <div className="mt-1.5 h-1 rounded-full bg-border/40 overflow-hidden">
-                              <div className={`h-full rounded-full bg-gradient-to-r ${r.color} transition-all duration-700`} style={{ width: `${pct}%` }} />
+                              <div className={`h-full rounded-full bg-gradient-to-r ${r.color} transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]`} style={{ width: `${pct}%` }} />
                             </div>
                           )}
                         </div>
@@ -350,7 +345,7 @@ export default function Rewards() {
 
             {/* progress bar */}
             <div className="h-1 rounded-full bg-border/40 overflow-hidden mb-5">
-              <div className="h-full rounded-full bg-gradient-to-r from-sage-400 to-ochre-400 transition-all duration-700"
+              <div className="h-full rounded-full bg-gradient-to-r from-sage-400 to-ochre-400 transition-[width,stroke-dashoffset] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 style={{ width: `${(earned.size / Object.keys(ACH).length) * 100}%` }} />
             </div>
 

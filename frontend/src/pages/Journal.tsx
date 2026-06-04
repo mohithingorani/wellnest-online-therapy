@@ -10,9 +10,11 @@ import JournalEmptyState from "../components/JournalEmptyState";
 type ViewMode = "list" | "view" | "edit" | "create";
 
 export default function Journal() {
-  const [entries, setEntries] = useState<JournalEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [entries, setEntries] = useState<JournalEntry[]>([]);
+
+
   const [streak, setStreak] = useState(0);
   const [activeEntry, setActiveEntry] = useState<JournalEntry | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("list");
@@ -146,7 +148,7 @@ export default function Journal() {
     }
   }, [viewMode, activeEntry]);
 
-  if (loading) return null;
+
 
   if (error && entries.length === 0) {
     return (
@@ -261,7 +263,7 @@ export default function Journal() {
 
   return (
     <div className="bg-bg min-h-[calc(100vh-68px)]">
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 space-y-8 animate-page">
+      <div className="mx-auto max-w-[1180px] px-5 md:px-8 py-8 md:py-12 space-y-8">
         <JournalHeader
           totalEntries={entries.length}
           streak={streak}

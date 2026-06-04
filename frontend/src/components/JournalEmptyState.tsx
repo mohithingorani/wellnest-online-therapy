@@ -32,7 +32,7 @@ export default function JournalEmptyState({
 
   return (
     <div className="bg-bg min-h-[calc(100vh-68px)]">
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-68px)] px-6 py-14 animate-page">
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-68px)] px-6 py-14">
         <div className="max-w-xl w-full text-center">
           <div className="w-20 h-20 rounded-[1.75rem] bg-gradient-to-br from-clay-300 to-ochre-300 text-white grid place-items-center mx-auto mb-6 shadow-[0_8px_20px_-10px_rgba(120,58,40,0.4)]">
             <svg
@@ -73,7 +73,7 @@ export default function JournalEmptyState({
               </p>
               <button
                 onClick={onCreate}
-                className="mt-5 h-11 px-5 rounded-full bg-ochre-300 text-night font-semibold text-sm hover:bg-ochre-200 transition-colors shadow-soft inline-flex items-center gap-1.5"
+                className="mt-5 h-11 px-5 rounded-full bg-accent text-primary-fg font-semibold text-sm hover:bg-accent-hover transition-colors shadow-soft inline-flex items-center gap-1.5"
               >
                 Write your first entry
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { getSeeds } from "../services/seeds";
 import { getLevel, getProgressPct } from "../data/levels";
@@ -13,7 +14,7 @@ const NAV = [
   { to: "/dashboard",  label: "Overview",    icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
   { to: "/bookings",   label: "Sessions",    icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
   { to: "/journal",    label: "Journal",     icon: "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" },
-  { to: "/breathe",    label: "Breathing",   icon: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" },
+  { to: "/breathe",    label: "Breathing",   icon: "M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2" },
   { to: "/assess",     label: "Assessments", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
   { to: "/resources",  label: "Resources",   icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
   { to: "/messages",   label: "Messages",    icon: "M8 12h8m-8-4h8m-6 8H7l-4 3V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-7z" },
@@ -23,6 +24,7 @@ const NAV = [
 export default function DashboardShell() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [seeds, setSeeds] = useState<number | null>(null);
   const [seedsPct, setSeedsPct] = useState(0);
 
@@ -53,13 +55,13 @@ export default function DashboardShell() {
             to={n.to}
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${isActive ? "bg-surface text-accent font-semibold shadow-[0_1px_2px_rgba(42,36,32,0.04),0_4px_10px_-8px_rgba(42,36,32,0.14)] ring-1 ring-border/70" : "text-fg hover:bg-white/60 hover:text-fg-strong"}`
+              `group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-[180ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? "bg-surface text-accent font-semibold shadow-[0_1px_2px_rgba(42,36,32,0.04),0_4px_10px_-8px_rgba(42,36,32,0.14)] ring-1 ring-border/70" : "text-fg hover:bg-white/60 hover:text-fg-strong"}`
             }
           >
             {({ isActive }) => (
               <>
-                <span className={`absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-accent transition-all duration-300 ${isActive ? "opacity-100 scale-y-100" : "opacity-0 scale-y-50"}`} />
-                <svg className={`w-[18px] h-[18px] transition-colors duration-200 ${isActive ? "text-accent" : "text-fg-muted group-hover:text-fg-strong"}`} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={n.icon} /></svg>
+                <span className={`absolute left-0 top-1/2 -translate-y-1/2 h-5 w-1 rounded-r-full bg-accent transition-all duration-[180ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? "opacity-100 scale-y-100" : "opacity-0 scale-y-50"}`} />
+                <svg className={`w-[18px] h-[18px] transition-colors duration-[180ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${isActive ? "text-accent" : "text-fg-muted group-hover:text-fg-strong"}`} fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d={n.icon} /></svg>
                 {n.label}
               </>
             )}
@@ -89,7 +91,7 @@ export default function DashboardShell() {
           </div>
           <div className="h-1 rounded-full bg-white/10 overflow-hidden">
             <div
-              className="h-full rounded-full bg-ochre-300 transition-all duration-700"
+              className="h-full rounded-full bg-ochre-300 transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
               style={{ width: `${seedsPct}%` }}
             />
           </div>
@@ -122,10 +124,20 @@ export default function DashboardShell() {
         </div>
       )}
 
-      {/* content — plain block so pages keep their own mx-auto width
-          (auto margins on a flex child disable stretch and collapse the page) */}
+      {/* content with framer-motion page transitions */}
+      {/* overflow visible — overflow-hidden clips drop shadows on cards */}
       <div className="flex-1 min-w-0">
-        <Outlet />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
