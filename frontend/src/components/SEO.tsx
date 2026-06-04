@@ -7,8 +7,8 @@ export const SITE = {
   title:       "WellNest — Online Therapy & Mental Wellness",
   description: "Find your matched therapist, take free mental health assessments, and build lasting wellbeing with WellNest. Compassionate, confidential, and accessible care.",
   logoUrl:     "https://wellnest.mohit.systems/wellnest-logo.svg",
-  ogImage:     "https://wellnest.mohit.systems/og-default.svg",
-  twitter:     "@mohitdotsystems",
+  ogImage:     "https://wellnest.mohit.systems/og-default.png",
+  twitter:     "@wellnestin",
   themeColor:  "#4a6b52",
 };
 
