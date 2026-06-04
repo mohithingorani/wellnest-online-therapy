@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from "react";
 import Reveal from "../components/Reveal";
-import CountUp from "../components/CountUp";
 
 
 
@@ -18,7 +17,7 @@ export default function LandingPage() {
       <Marquee />
       <Promise />
       <Journey />
-      <Outcomes />
+      <WhyFree />
       <Privacy />
       <Testimonials />
       <FAQ />
@@ -65,13 +64,33 @@ function Hero() {
 
           <Reveal delay={300}>
             <div className="mt-9 flex flex-col sm:flex-row gap-3">
-              <button onClick={() => navigate("/therapists")} className={btnAccent}>
+              <button onClick={() => navigate("/assess/burnout")} className={btnAccent}>
                 {/* pulsing glow ring */}
                 <span aria-hidden className="absolute inset-0 rounded-full bg-accent/40 blur-lg -z-10 animate-pulse-soft" />
-                Find your therapist
+                Take the free burnout test
                 <span className="transition-transform duration-300">→</span>
               </button>
               <button onClick={() => scrollTo("journey")} className={btnOutline}>See how it works</button>
+            </div>
+          </Reveal>
+
+          <Reveal delay={370}>
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {[
+                { label: "Burnout", sub: "2 min", path: "/assess/burnout" },
+                { label: "Anxiety", sub: "2 min", path: "/assess/gad7" },
+                { label: "Stress", sub: "1 min", path: "/assess/stress" },
+                { label: "Mood", sub: "1 min", path: "/assess/mood" },
+              ].map((a) => (
+                <button
+                  key={a.label}
+                  onClick={() => navigate(a.path)}
+                  className="flex flex-col gap-0.5 rounded-2xl bg-surface/60 ring-1 ring-border/70 px-3.5 py-3 text-left hover:bg-surface hover:ring-border transition-all duration-200 backdrop-blur"
+                >
+                  <span className="text-[0.82rem] font-semibold text-fg-strong">{a.label}</span>
+                  <span className="text-[0.72rem] text-fg-muted">{a.sub} · Free</span>
+                </button>
+              ))}
             </div>
           </Reveal>
 
@@ -469,70 +488,81 @@ function ProgressMock() {
   );
 }
 
-/* ============================================================== OUTCOMES === */
-/* Atmospheric espresso focal section. Metrics are PLACEHOLDER. */
+/* ============================================================= WHY FREE === */
 
-function Outcomes() {
+function WhyFree() {
+  const navigate = useNavigate();
+  const props = [
+    {
+      title: "No account required to start",
+      body: "Take any assessment, read every resource, and try the breathing tool — all without signing up. No paywall, no trial.",
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.7} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" /></svg>,
+    },
+    {
+      title: "Clinically-grounded tools",
+      body: "Our assessments use the same validated frameworks (GAD-7, Maslach, PSS-4) used by therapists worldwide — not generic quizzes.",
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.7} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
+    },
+    {
+      title: "Track your score over time",
+      body: "Create a free account and retake assessments every two weeks. See if what you're doing is actually working — with a clear score history.",
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.7} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
+    },
+    {
+      title: "Therapist matching, when you're ready",
+      body: "When you're ready for professional support, we match you with an RCI-licensed therapist in under 48 hours. The tools make sure you go in prepared.",
+      icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.7} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+    },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-night text-night-fg my-8 md:my-12 mx-3 md:mx-6 rounded-[2.25rem] ring-1 ring-night-border">
       <Blob className="absolute -top-24 right-6 h-[420px] w-[420px] bg-clay-500/40 blur-[110px]" />
-      <Blob className="absolute -bottom-28 -left-12 h-[380px] w-[380px] bg-ochre-500/25 blur-[120px]" style={{ animationDelay: "5s" }} />
-      <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-10%,rgba(220,166,75,0.12),transparent_60%)]" />
+      <Blob className="absolute -bottom-28 -left-12 h-[380px] w-[380px] bg-sage-500/20 blur-[120px]" style={{ animationDelay: "5s" }} />
+      <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-10%,rgba(95,126,85,0.10),transparent_60%)]" />
       <div className="relative mx-auto max-w-[1080px] px-6 md:px-12 py-20 md:py-28">
-
-        {/* eyebrow + heading */}
         <Reveal>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-ochre-300">Proof it works</div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-sage-400">Free forever</div>
           <h2 className="mt-4 font-display font-medium text-4xl md:text-[3rem] md:leading-[1.05] tracking-[-0.025em] text-balance max-w-xl">
-            Care that actually moves the needle.
+            Better mental health shouldn't require a subscription.
           </h2>
+          <p className="mt-5 text-night-muted text-lg leading-relaxed max-w-xl">
+            Start with our free tools — no account, no credit card, no catch. The assessments, journal, and breathing exercises are yours to use today.
+          </p>
         </Reveal>
 
-        {/* top row — two dominant stats split by a vertical hairline */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] items-start gap-0">
-          <Reveal delay={80}>
-            <div className="pr-0 md:pr-12 pb-10 md:pb-0">
-              <div className="font-display font-medium leading-none tracking-tight text-ochre-300 text-[clamp(4.5rem,11vw,8rem)]">
-                <CountUp to={92} suffix="%" />
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {props.map((p, i) => (
+            <Reveal key={p.title} delay={80 + i * 70}>
+              <div className="flex gap-4 rounded-[1.4rem] ring-1 ring-night-border bg-night-2/60 p-6">
+                <span className="shrink-0 w-9 h-9 rounded-xl bg-sage-600/30 text-sage-400 grid place-items-center">
+                  {p.icon}
+                </span>
+                <div>
+                  <p className="font-semibold text-night-fg">{p.title}</p>
+                  <p className="mt-1.5 text-sm text-night-muted leading-relaxed">{p.body}</p>
+                </div>
               </div>
-              <p className="mt-4 text-base text-night-muted leading-relaxed max-w-xs">
-                of clients say they would recommend WellNest to a friend in need.
-              </p>
-            </div>
-          </Reveal>
-          <div className="hidden md:block w-px self-stretch bg-night-border mx-4" />
-          <Reveal delay={160}>
-            <div className="pl-0 md:pl-12 pt-10 md:pt-0 border-t border-night-border md:border-0">
-              <div className="font-display font-medium leading-none tracking-tight text-ochre-300 text-[clamp(3.5rem,8vw,6rem)]">
-                <CountUp to={4.9} decimals={1} suffix="/5" />
-              </div>
-              <p className="mt-4 text-base text-night-muted leading-relaxed max-w-xs">
-                average rating from 3,847 verified client reviews on the platform.
-              </p>
-            </div>
-          </Reveal>
+            </Reveal>
+          ))}
         </div>
 
-        {/* bottom row — two supporting stats as a horizontal band */}
-        <div className="mt-12 border-t border-night-border/60 pt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
-          <Reveal delay={240}>
-            <div className="flex items-baseline gap-4">
-              <div className="font-display font-medium text-[2.8rem] leading-none text-night-fg/80 tracking-tight">
-                <CountUp to={14200} suffix="+" />
-              </div>
-              <p className="text-sm text-night-muted leading-snug max-w-[18ch]">therapy sessions completed to date</p>
-            </div>
-          </Reveal>
-          <Reveal delay={300}>
-            <div className="flex items-baseline gap-4">
-              <div className="font-display font-medium text-[2.8rem] leading-none text-night-fg/80 tracking-tight">
-                <CountUp to={38} suffix="h" />
-              </div>
-              <p className="text-sm text-night-muted leading-snug max-w-[18ch]">average wait to your first session</p>
-            </div>
-          </Reveal>
-        </div>
-
+        <Reveal delay={380}>
+          <div className="mt-10 flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => navigate("/assess")}
+              className="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full font-semibold text-sm bg-sage-600 text-white hover:bg-sage-500 transition-all duration-300 shadow-soft"
+            >
+              Try an assessment — it's free →
+            </button>
+            <button
+              onClick={() => navigate("/join")}
+              className="inline-flex items-center justify-center gap-2 h-12 px-7 rounded-full font-semibold text-sm ring-1 ring-night-border text-night-fg hover:bg-night-2 transition-all duration-300"
+            >
+              Create free account
+            </button>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
