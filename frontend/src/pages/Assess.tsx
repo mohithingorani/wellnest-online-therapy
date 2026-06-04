@@ -8,7 +8,7 @@ const CARD_STYLES: Record<string, {
   bg: string; accent: string; num: string; glow: string;
 }> = {
   // Each card has a clearly distinct color identity
-  gad7:    { bg: "bg-night",          accent: "bg-sage-400/25 hover:bg-sage-400/35",   num: "text-white/[0.06]", glow: "from-sage-400/20 to-transparent" },
+  gad7:    { bg: "bg-[#1e2535]",      accent: "bg-blue-400/20 hover:bg-blue-400/30",   num: "text-white/[0.06]", glow: "from-blue-400/15 to-transparent" },
   burnout: { bg: "bg-[#2c1c12]",      accent: "bg-ochre-300/20 hover:bg-ochre-300/30", num: "text-white/[0.06]", glow: "from-ochre-300/25 to-transparent" },
   stress:  { bg: "bg-sage-700",       accent: "bg-white/12 hover:bg-white/22",          num: "text-white/[0.06]", glow: "from-sage-300/25 to-transparent" },
   mood:    { bg: "bg-ochre-600",       accent: "bg-white/12 hover:bg-white/22",          num: "text-white/[0.06]", glow: "from-white/10 to-transparent" },

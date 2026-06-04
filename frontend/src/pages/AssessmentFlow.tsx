@@ -109,12 +109,6 @@ export default function AssessmentFlow() {
           </div>
         </div>
 
-        {saving && (
-          <div className="flex items-center gap-2 justify-center py-4 text-sm text-fg-muted">
-            <span className="w-4 h-4 rounded-full border-2 border-border border-t-accent animate-spin" />
-            Saving your results…
-          </div>
-        )}
       </div>
     </div>
   );
