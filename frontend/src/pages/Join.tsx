@@ -89,6 +89,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
   const googleInitRef = useRef(false);
   const googleLoading = useRef(false);
   const modeRef = useRef(mode);
+  const googleBtnRef = useRef<HTMLDivElement>(null);
   useEffect(() => { modeRef.current = mode; }, [mode]);
 
   const handleGoogleCredential = async (credential: string) => {
@@ -118,9 +119,13 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
         client_id: clientId,
         callback: ({ credential }) => { handleGoogleCredential(credential); },
       });
-      // One Tap — silently prompts returning users with an active Google session.
-      // The browser may suppress it; that's fine — the custom button always works.
+      // One Tap for returning users — may be suppressed (incognito, FedCM off, etc.)
       google.accounts.id.prompt();
+      // Render a hidden native button; custom button proxies clicks to it.
+      // Native button uses a proper OAuth popup that works even when One Tap is blocked.
+      if (googleBtnRef.current) {
+        google.accounts.id.renderButton(googleBtnRef.current, { type: "standard", size: "large" });
+      }
     };
     poll();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -221,9 +226,19 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
             {/* Google sign-in — primary action, above the fold.
                 Uses a custom button that calls GSI prompt(). One Tap also fires
                 automatically on mount for returning users. */}
+            {/* Hidden native Google button — proxied by custom button for incognito/FedCM compat */}
+            <div ref={googleBtnRef} className="hidden" aria-hidden="true" />
+
             <button
               type="button"
-              onClick={() => google.accounts.id.prompt()}
+              onClick={() => {
+                // Try One Tap first; if suppressed (incognito, no session), fall back to native button click
+                google.accounts.id.prompt((notification) => {
+                  if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                    googleBtnRef.current?.querySelector<HTMLElement>("[role=button],button,div[tabindex]")?.click();
+                  }
+                });
+              }}
               disabled={loading}
               className="flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-[#e2ddd6] bg-white text-sm font-semibold text-fg-strong transition-all duration-200 hover:bg-[#faf8f5] hover:border-[#d4cfc7] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 group"
             >
