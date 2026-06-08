@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import CookieConsent from "./CookieConsent";
@@ -12,6 +13,7 @@ export default function Layout() {
       </main>
       <Footer />
       <CookieConsent />
+      <Analytics />
     </div>
   );
 }
