@@ -150,7 +150,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
         Back
       </Link>
 
-      <div className="flex flex-col w-full max-w-[1180px] lg:flex-row lg:h-[min(740px,88vh)] lg:rounded-2xl lg:overflow-hidden lg:shadow-[0_20px_60px_-30px_rgba(47,58,50,0.35)]">
+      <div className="flex flex-col w-full max-w-[1180px] lg:flex-row lg:h-[min(820px,92vh)] lg:rounded-2xl lg:overflow-hidden lg:shadow-[0_20px_60px_-30px_rgba(47,58,50,0.35)]">
 
         {/* ── LEFT image panel ── */}
         <div className="relative hidden lg:block lg:w-[46%] shrink-0">
@@ -178,7 +178,7 @@ export default function Join({ mode: initialMode = "login" }: { mode?: "login" |
         {/* ── RIGHT form panel ── */}
         {/* overflow-y-auto scrolls naturally from top — no justify-center (causes flex overflow
             to push content above the viewport where it can't be scrolled back to) */}
-        <div className="flex flex-1 flex-col bg-white overflow-y-auto lg:min-h-0 px-5 sm:px-8 lg:px-12 xl:px-16">
+        <div className="flex flex-1 flex-col bg-white lg:overflow-y-auto lg:min-h-0 px-5 sm:px-8 lg:px-12 xl:px-16">
           <div className="mx-auto w-full max-w-[380px] py-8 lg:py-10"
             style={{ paddingBottom: "max(2rem, env(safe-area-inset-bottom, 2rem))" }}>
 

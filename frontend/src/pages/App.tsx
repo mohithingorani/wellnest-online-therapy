@@ -402,7 +402,7 @@ function JourneyStep({ step, index }: { step: (typeof journeySteps)[number]; ind
         {/* CONTENT */}
         <div className={reversed ? "lg:order-2 lg:pl-6" : "lg:order-1 lg:pr-6"} style={slide(reversed ? 44 : -44)}>
           <div className="relative">
-            
+
             <div className="relative pl-5 lg:pl-8">
               <span className="inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-accent">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Step {step.n}
