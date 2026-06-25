@@ -2,7 +2,7 @@
 
 A mental health platform connecting users with licensed therapists. WELLNEST provides a secure, confidential environment for individuals to find and connect with verified mental health professionals, alongside self-assessment tools, journaling, breathing exercises, and a gamified rewards system.
 
-> **Live:** [wellnest-online-therapy.vercel.app](https://wellnest-online-therapy.vercel.app)
+> **Live:** [WEBSITE](https://wellnest.mohit.systems)
 
 ---
 
